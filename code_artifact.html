@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدرسة التسبيح - المرحلة الإعدادية والثانوية</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Cairo & Tajawal) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#111b33',
+                            900: '#0a1128',
+                            950: '#050915',
+                        },
+                        gold: {
+                            300: '#f6d57d',
+                            400: '#e5be53',
+                            500: '#c59b27',
+                            600: '#a37b19',
+                        },
+                        coptic: {
+                            red: '#8b0000',
+                            blue: '#002b49',
+                            cream: '#fdfbf7',
+                            sand: '#f4efe6'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fdfbf7;
+            color: #1a202c;
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #f6d57d 0%, #c59b27 100%);
+        }
+        .navy-gradient {
+            background: linear-gradient(135deg, #0a1128 0%, #1c2b53 100%);
+        }
+        .coptic-pattern {
+            background-color: #0a1128;
+            background-image: radial-gradient(#c59b27 0.75px, transparent 0.75px), radial-gradient(#c59b27 0.75px, #0a1128 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.98;
+        }
+        .tab-active {
+            border-bottom: 3px solid #c59b27;
+            color: #c59b27;
+            font-weight: 700;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4efe6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c59b27;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a37b19;
+        }
+    </style>
+</head>
+<body class="bg-coptic-cream min-h-screen flex flex-col justify-between selection:bg-gold-400 selection:text-navy-900">
+
+    <!-- Top Announcement / Info Bar -->
+    <div class="bg-navy-950 text-gold-300 text-xs sm:text-sm py-2 px-4 border-b border-gold-500/30">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <span class="bg-gold-500 text-navy-950 px-2 py-0.5 rounded text-xs font-bold animate-pulse">تنبيه</span>
+                <span>تعلن إدارة المدرسة عن بدء التصفيات الأولى لمسابقة الألحان الأسبوع القادم</span>
+            </div>
+            <div class="flex items-center gap-4 text-xs">
+                <span><i class="fa-solid fa-clock text-gold-400 ml-1"></i>الجمعة والأحد بعد القداس</span>
+                <span><i class="fa-solid fa-location-dot text-gold-400 ml-1"></i>كنيسة العذراء مريم</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-xl border-b-2 border-gold-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & School Name -->
+                <div class="flex items-center space-x-3 space-x-reverse cursor-pointer" onclick="switchMainTab('home')">
+                    <div class="w-12 h-12 rounded-full gold-gradient flex items-center justify-center text-navy-900 font-bold text-2xl shadow-lg border-2 border-white">
+                        <i class="fa-solid fa-cross"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-black text-gold-400 tracking-wide font-tajawal">مدرسة التسبيح</h1>
+                        <p class="text-xs text-gray-300">لإعداد الشمامسة - إعدادي وثانوي</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Tabs -->
+                <nav class="hidden md:flex space-x-1 space-x-reverse text-sm font-semibold">
+                    <button onclick="switchMainTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg transition hover:bg-navy-800 hover:text-gold-300 active-nav text-gold-400">
+                        <i class="fa-solid fa-house ml-1"></i>الرئيسية
+                    </button>
+                    <button onclick="switchMainTab('prep')" id="nav-prep" class="nav-btn px-4 py-2 rounded-lg transition hover:bg-navy-800 hover:text-gold-300 text-gray-200">
+                        <i class="fa-solid fa-book-open ml-1"></i>المرحلة الإعدادية
+                    </button>
+                    <button onclick="switchMainTab('sec')" id="nav-sec" class="nav-btn px-4 py-2 rounded-lg transition hover:bg-navy-800 hover:text-gold-300 text-gray-200">
+                        <i class="fa-solid fa-graduation-cap ml-1"></i>المرحلة الثانوية
+                    </button>
+                    <button onclick="switchMainTab('results')" id="nav-results" class="nav-btn px-4 py-2 rounded-lg transition hover:bg-navy-800 hover:text-gold-300 text-gray-200">
+                        <i class="fa-solid fa-square-poll-vertical ml-1"></i>نتائج الطلاب
+                    </button>
+                    <button onclick="switchMainTab('schedule')" id="nav-schedule" class="nav-btn px-4 py-2 rounded-lg transition hover:bg-navy-800 hover:text-gold-300 text-gray-200">
+                        <i class="fa-solid fa-calendar-days ml-1"></i>المواعيد والتواصل
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-gold-400 p-2 rounded-lg hover:bg-navy-800 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy-950 border-t border-navy-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchMainTab('home'); toggleMobileMenu()" class="block w-full text-right px-3 py-2 rounded-md text-gold-400 font-semibold bg-navy-900">الرئيسية</button>
+            <button onclick="switchMainTab('prep'); toggleMobileMenu()" class="block w-full text-right px-3 py-2 rounded-md text-gray-200 hover:bg-navy-800">المرحلة الإعدادية</button>
+            <button onclick="switchMainTab('sec'); toggleMobileMenu()" class="block w-full text-right px-3 py-2 rounded-md text-gray-200 hover:bg-navy-800">المرحلة الثانوية</button>
+            <button onclick="switchMainTab('results'); toggleMobileMenu()" class="block w-full text-right px-3 py-2 rounded-md text-gray-200 hover:bg-navy-800">نتائج الطلاب</button>
+            <button onclick="switchMainTab('schedule'); toggleMobileMenu()" class="block w-full text-right px-3 py-2 rounded-md text-gray-200 hover:bg-navy-800">المواعيد والتواصل</button>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <div class="coptic-pattern text-white py-12 px-4 shadow-inner relative overflow-hidden">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div class="space-y-4 text-center md:text-right max-w-2xl">
+                <div class="inline-block bg-gold-500/20 text-gold-300 border border-gold-500/50 px-3 py-1 rounded-full text-xs font-semibold">
+                    <i class="fa-solid fa-church ml-1"></i> كنيسة القديسين الأرثوذكسية
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight font-tajawal">
+                    "رَنِّمُوا لِلرَّبِّ تَرْنِيمَةً جَدِيدَةً"
+                </h2>
+                <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                    مرحباً بكم في المنصة الرقمية لمدرسة التسبيح. نهتم بتنمية الفكر الكتابي والطقسي واللحني واللغوي لأبنائنا في مرحلتي إعدادي وثانوي لتنشئة جيل محب للكنيسة والتسبيح.
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center md:justify-start pt-2">
+                    <button onclick="switchMainTab('results')" class="gold-gradient text-navy-950 font-bold px-6 py-2.5 rounded-lg shadow-lg hover:brightness-110 transition flex items-center">
+                        <i class="fa-solid fa-magnifying-glass ml-2"></i> استعلام عن النتيجة
+                    </button>
+                    <button onclick="switchMainTab('prep')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-2.5 rounded-lg border border-white/20 transition flex items-center">
+                        <i class="fa-solid fa-book ml-2"></i> تصفح المناهج
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Icon / Cross Graphic Decorative Display -->
+            <div class="flex items-center justify-center">
+                <div class="relative w-48 h-48 sm:w-60 sm:h-60 rounded-full border-4 border-gold-500/40 p-4 flex items-center justify-center bg-navy-900/60 backdrop-blur shadow-2xl">
+                    <i class="fa-solid fa-cross text-7xl sm:text-8xl text-gold-400 drop-shadow-lg"></i>
+                    <div class="absolute -bottom-2 bg-gold-500 text-navy-950 font-black px-4 py-1 rounded-full text-xs shadow-md">
+                        مدرسة التسبيح
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- SECTION 1: HOME & ANNOUNCEMENTS -->
+        <section id="section-home" class="main-section space-y-8">
+            
+            <!-- Quick Stats / Subjects Overview Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-gold-300/40 shadow-sm hover:shadow-md transition text-center space-y-2">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-red-100 text-red-800 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-book-bible"></i>
+                    </div>
+                    <h3 class="font-bold text-navy-900">الكتاب المقدس</h3>
+                    <p class="text-xs text-gray-500">دراسة وأسفار وتفسير</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-gold-300/40 shadow-sm hover:shadow-md transition text-center space-y-2">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-place-of-worship"></i>
+                    </div>
+                    <h3 class="font-bold text-navy-900">الطقس الكنسي</h3>
+                    <p class="text-xs text-gray-500">دراسة القداس والمفاهيم</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-gold-300/40 shadow-sm hover:shadow-md transition text-center space-y-2">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-music"></i>
+                    </div>
+                    <h3 class="font-bold text-navy-900">الألحان والتسبحة</h3>
+                    <p class="text-xs text-gray-500">تسجيلات وهزات الألحان</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-gold-300/40 shadow-sm hover:shadow-md transition text-center space-y-2">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <h3 class="font-bold text-navy-900">اللغة القبطية</h3>
+                    <p class="text-xs text-gray-500">قواعد ونصوص وحفظ</p>
+                </div>
+            </div>
+
+            <!-- Announcements Header & Filters -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 pb-4 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-black text-navy-900 font-tajawal flex items-center gap-2">
+                            <i class="fa-solid fa-bullhorn text-gold-500"></i> إعلانات الأخبار والتنبيهات
+                        </h2>
+                        <p class="text-sm text-gray-500">آخر المستجدات والمواعيد الهامة لمدرسة التسبيح</p>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                        <button onclick="filterAnnouncements('all')" class="announce-filter-btn px-3 py-1.5 rounded-full bg-navy-900 text-gold-300 active-filter" id="filter-all">الكل</button>
+                        <button onclick="filterAnnouncements('important')" class="announce-filter-btn px-3 py-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" id="filter-important">هام جداً</button>
+                        <button onclick="filterAnnouncements('prep')" class="announce-filter-btn px-3 py-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" id="filter-prep">إعدادي</button>
+                        <button onclick="filterAnnouncements('sec')" class="announce-filter-btn px-3 py-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300" id="filter-sec">ثانوي</button>
+                    </div>
+                </div>
+
+                <!-- Announcements Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="announcements-container">
+                    
+                    <!-- Announcement 1 -->
+                    <div class="announce-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition space-y-3 p-5 flex flex-col justify-between" data-category="important prep sec">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-red-100 text-red-800 text-xs font-bold px-2.5 py-1 rounded-full"><i class="fa-solid fa-triangle-exclamation ml-1"></i>هام جداً</span>
+                                <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar ml-1"></i>15 أكتوبر 2026</span>
+                            </div>
+                            <h3 class="font-bold text-lg text-navy-900">موعد امتحانات منتصف الفصل الدراسي الأول</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
+                                نسترعي انتباه أولياء الأمور والطلاب بأن امتحانات منتصف الفصل ستكون يوم الأحد الموافق 25 أكتوبر في تمام الساعة 6 مساءً بملحق الكنيسة.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-gray-100 flex justify-between items-center text-xs text-navy-800 font-semibold">
+                            <span><i class="fa-solid fa-user-check ml-1 text-gold-500"></i>إدارة المدرسة</span>
+                            <span class="text-gold-600">لجميع المراحل</span>
+                        </div>
+                    </div>
+
+                    <!-- Announcement 2 -->
+                    <div class="announce-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition space-y-3 p-5 flex flex-col justify-between" data-category="prep">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-full">المرحلة الإعدادية</span>
+                                <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar ml-1"></i>10 أكتوبر 2026</span>
+                            </div>
+                            <h3 class="font-bold text-lg text-navy-900">رفع ملفات لحن "آبؤرو" بصوت معلّمي المدرسة</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
+                                تم إضافة التسجيل الصوتي للحان الهزات والتسبيحة المخصصة لصفوف المرحلة الإعدادية مع النص القبطي بالمعرب.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-gray-100 flex justify-between items-center text-xs text-navy-800 font-semibold">
+                            <span><i class="fa-solid fa-music ml-1 text-gold-500"></i>قسم الألحان</span>
+                            <button onclick="switchMainTab('prep')" class="text-gold-600 hover:underline">انتقل للمناهج &larr;</button>
+                        </div>
+                    </div>
+
+                    <!-- Announcement 3 -->
+                    <div class="announce-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition space-y-3 p-5 flex flex-col justify-between" data-category="sec">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">المرحلة الثانوية</span>
+                                <span class="text-xs text-gray-400"><i class="fa-regular fa-calendar ml-1"></i>05 أكتوبر 2026</span>
+                            </div>
+                            <h3 class="font-bold text-lg text-navy-900">ورشة عمل دراسات الكتاب المقدس (رسائل بولس)</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
+                                تقام ورشة خادمي ومخدومي المرحلة الثانوية يوم الجمعة القادمة عقب القداس الثانى بقاعة مارجرجس للتفاسير والبحث الكتابي.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-gray-100 flex justify-between items-center text-xs text-navy-800 font-semibold">
+                            <span><i class="fa-solid fa-book-bible ml-1 text-gold-500"></i>أسرة الكتاب المقدس</span>
+                            <button onclick="switchMainTab('sec')" class="text-gold-600 hover:underline">انتقل للمناهج &larr;</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: PREPARATORY SCHOOL (المرحلة الإعدادية) -->
+        <section id="section-prep" class="main-section hidden space-y-6">
+            <div class="bg-navy-900 text-white p-6 rounded-2xl shadow-lg border-r-4 border-gold-500 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-gold-400 font-tajawal"><i class="fa-solid fa-book-open ml-2"></i>مناهج المرحلة الإعدادية</h2>
+                    <p class="text-sm text-gray-300">اختر المادة لعرض الدروس، الملفات، التسجيلات الصوتية والقاموس</p>
+                </div>
+                <div class="bg-navy-800 px-4 py-2 rounded-lg text-xs font-semibold text-gold-300 border border-gold-500/30">
+                    العام الدراسي 2026 / 2027 - الفصل الدراسي الأول
+                </div>
+            </div>
+
+            <!-- Subject Tabs -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-2 flex overflow-x-auto gap-2">
+                <button onclick="switchPrepSubject('bible')" id="prep-tab-bible" class="prep-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition bg-navy-900 text-gold-400">
+                    <i class="fa-solid fa-book-bible block text-lg mb-1"></i> الكتاب المقدس
+                </button>
+                <button onclick="switchPrepSubject('ritual')" id="prep-tab-ritual" class="prep-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition text-gray-600 hover:bg-gray-100">
+                    <i class="fa-solid fa-church block text-lg mb-1"></i> الطقس الكنسي
+                </button>
+                <button onclick="switchPrepSubject('hymns')" id="prep-tab-hymns" class="prep-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition text-gray-600 hover:bg-gray-100">
+                    <i class="fa-solid fa-music block text-lg mb-1"></i> الألحان والتسبحة
+                </button>
+                <button onclick="switchPrepSubject('coptic')" id="prep-tab-coptic" class="prep-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition text-gray-600 hover:bg-gray-100">
+                    <i class="fa-solid fa-language block text-lg mb-1"></i> اللغة القبطية
+                </button>
+            </div>
+
+            <!-- Prep Subject Content Panels -->
+            <div id="prep-content-container">
+                
+                <!-- Bible Panel -->
+                <div id="prep-sub-bible" class="prep-sub-panel space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:border-gold-400 transition">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded">الدرس الأول</span>
+                                <span class="text-xs text-gray-400">PDF - 2.4 MB</span>
+                            </div>
+                            <h4 class="font-bold text-navy-900 text-lg mb-2">مقدمة في العهد القديم وأسفار الشريعة</h4>
+                            <p class="text-sm text-gray-600 mb-4">نظرة عامة على أسفار التوراة الستة وتقسيمات العهد القديم التاريخية والشعرية.</p>
+                            <div class="flex gap-2">
+                                <a href="#" onclick="alert('جاري تحميل مذكرة الدرس الأول PDF...')" class="text-xs font-bold bg-navy-900 text-gold-300 px-3 py-2 rounded hover:bg-navy-800 transition"><i class="fa-solid fa-download ml-1"></i> تحميل المذكرة</a>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:border-gold-400 transition">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded">الدرس الثاني</span>
+                                <span class="text-xs text-gray-400">PDF - 1.8 MB</span>
+                            </div>
+                            <h4 class="font-bold text-navy-900 text-lg mb-2">حياة وإيمان إبراهيم أبو الآباء</h4>
+                            <p class="text-sm text-gray-600 mb-4">دراسة تفصيلية لدعوة إبراهيم، الذبيحة، وعقود العهد الإلهي.</p>
+                            <div class="flex gap-2">
+                                <a href="#" onclick="alert('جاري تحميل ملف الدرس الثاني PDF...')" class="text-xs font-bold bg-navy-900 text-gold-300 px-3 py-2 rounded hover:bg-navy-800 transition"><i class="fa-solid fa-download ml-1"></i> تحميل المذكرة</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ritual Panel -->
+                <div id="prep-sub-ritual" class="prep-sub-panel hidden space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:border-gold-400 transition">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">طقس كنسي</span>
+                                <span class="text-xs text-gray-400">ملف ملخص</span>
+                            </div>
+                            <h4 class="font-bold text-navy-900 text-lg mb-2">طقس المزامير ورفع بخور عشية وباكر</h4>
+                            <p class="text-sm text-gray-600 mb-4">شرح أواني المذبح، ملابس الشمامسة، ومعاني بخور العشية والباكر.</p>
+                            <a href="#" onclick="alert('جاري فتح ملف الطقس الكنسي...')" class="text-xs font-bold bg-navy-900 text-gold-300 px-3 py-2 rounded hover:bg-navy-800 transition inline-block"><i class="fa-solid fa-file-pdf ml-1"></i> فتح مذكرة الطقس</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hymns Panel with Audio Player -->
+                <div id="prep-sub-hymns" class="prep-sub-panel hidden space-y-4">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                        <h4 class="font-bold text-navy-900 text-lg border-b pb-2"><i class="fa-solid fa-circle-play text-gold-500 ml-2"></i>ألحان الأيام والتسبيحة (إعدادي)</h4>
+                        
+                        <!-- Mini Audio Player Box -->
+                        <div class="bg-navy-900 text-white p-4 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-gold-500 text-navy-950 flex items-center justify-center text-xl font-bold">
+                                    <i class="fa-solid fa-music"></i>
+                                </div>
+                                <div>
+                                    <h5 id="current-hymn-title" class="font-bold text-gold-300">لحن آليلويا فاي بي بي (إدريس)</h5>
+                                    <p id="current-hymn-desc" class="text-xs text-gray-300">لحن يقال في الأعياد والمواسم - بصوت معلم المدرسة</p>
+                                </div>
+                            </div>
+                            
+                            <!-- HTML Audio Controls -->
+                            <audio id="hymn-audio-player" controls class="w-full md:w-auto h-10 accent-gold-500">
+                                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                                متصفحك لا يدعم مشغل الصوت.
+                            </audio>
+                        </div>
+
+                        <!-- Hymns Playlist Table -->
+                        <div class="space-y-2 pt-2">
+                            <div class="flex justify-between items-center p-3 rounded-lg border border-gray-100 hover:bg-gold-300/10 transition cursor-pointer" onclick="playHymn('لحن آليلويا فاي بي بي', 'لحن الأعياد والمواسم القبطية')">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-play text-gold-600"></i>
+                                    <span class="font-bold text-sm">1. لحن آليلويا فاي بي بي</span>
+                                </div>
+                                <span class="text-xs text-gray-500">03:45</span>
+                            </div>
+
+                            <div class="flex justify-between items-center p-3 rounded-lg border border-gray-100 hover:bg-gold-300/10 transition cursor-pointer" onclick="playHymn('لحن ذوكصولوجية باكر', 'تقال في تسبيحة باكر وتسبحة الأيام')">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-play text-gold-600"></i>
+                                    <span class="font-bold text-sm">2. ذوكصولوجية باكر (أيها النور الحقيقي)</span>
+                                </div>
+                                <span class="text-xs text-gray-500">04:20</span>
+                            </div>
+
+                            <div class="flex justify-between items-center p-3 rounded-lg border border-gray-100 hover:bg-gold-300/10 transition cursor-pointer" onclick="playHymn('لحن آمنويس القبطي', 'لحن حمل الله الخافض لخطايا العالم')">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-play text-gold-600"></i>
+                                    <span class="font-bold text-sm">3. لحن آمنويس (Amnos)</span>
+                                </div>
+                                <span class="text-xs text-gray-500">02:15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coptic Panel -->
+                <div id="prep-sub-coptic" class="prep-sub-panel hidden space-y-4">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                        <h4 class="font-bold text-navy-900 text-lg border-b pb-2"><i class="fa-solid fa-spell-check text-gold-500 ml-2"></i>قاموس الكلمات والقواعد الأساسية (إعدادي)</h4>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Coptic Card 1 -->
+                            <div class="p-4 rounded-xl border border-gold-300/60 bg-coptic-cream space-y-2">
+                                <div class="text-2xl font-black text-navy-900 text-center font-serif">ϯϩⲓⲣⲏⲛⲏ</div>
+                                <div class="text-xs text-center text-gold-600 font-bold">طى هيرينى</div>
+                                <div class="text-sm text-center text-gray-700 font-semibold border-t pt-2">المعنى: السلام</div>
+                            </div>
+
+                            <!-- Coptic Card 2 -->
+                            <div class="p-4 rounded-xl border border-gold-300/60 bg-coptic-cream space-y-2">
+                                <div class="text-2xl font-black text-navy-900 text-center font-serif">Ⲡϭⲟⲓⲥ</div>
+                                <div class="text-xs text-center text-gold-600 font-bold">بشويس</div>
+                                <div class="text-sm text-center text-gray-700 font-semibold border-t pt-2">المعنى: الرب / الرب الإله</div>
+                            </div>
+
+                            <!-- Coptic Card 3 -->
+                            <div class="p-4 rounded-xl border border-gold-300/60 bg-coptic-cream space-y-2">
+                                <div class="text-2xl font-black text-navy-900 text-center font-serif">ϯⲁⲅⲁⲡⲏ</div>
+                                <div class="text-xs text-center text-gold-600 font-bold">طى أغابى</div>
+                                <div class="text-sm text-center text-gray-700 font-semibold border-t pt-2">المعنى: المحبة</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: SECONDARY SCHOOL (المرحلة الثانوية) -->
+        <section id="section-sec" class="main-section hidden space-y-6">
+            <div class="bg-navy-900 text-white p-6 rounded-2xl shadow-lg border-r-4 border-gold-500 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-gold-400 font-tajawal"><i class="fa-solid fa-graduation-cap ml-2"></i>مناهج المرحلة الثانوية</h2>
+                    <p class="text-sm text-gray-300">مناهج متقدمة في اللاهوت الكتابي والطقسي والألحان الكبيرة والقبطي</p>
+                </div>
+                <div class="bg-navy-800 px-4 py-2 rounded-lg text-xs font-semibold text-gold-300 border border-gold-500/30">
+                    العام الدراسي 2026 / 2027
+                </div>
+            </div>
+
+            <!-- Subject Tabs -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-2 flex overflow-x-auto gap-2">
+                <button onclick="switchSecSubject('bible')" id="sec-tab-bible" class="sec-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition bg-navy-900 text-gold-400">
+                    <i class="fa-solid fa-book-bible block text-lg mb-1"></i> الكتاب المقدس
+                </button>
+                <button onclick="switchSecSubject('ritual')" id="sec-tab-ritual" class="sec-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition text-gray-600 hover:bg-gray-100">
+                    <i class="fa-solid fa-church block text-lg mb-1"></i> الطقس الكنسي
+                </button>
+                <button onclick="switchSecSubject('hymns')" id="sec-tab-hymns" class="sec-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition text-gray-600 hover:bg-gray-100">
+                    <i class="fa-solid fa-music block text-lg mb-1"></i> الألحان والتسبحة
+                </button>
+                <button onclick="switchSecSubject('coptic')" id="sec-tab-coptic" class="sec-sub-btn flex-1 min-w-[130px] py-3 px-4 rounded-lg font-bold text-sm text-center transition text-gray-600 hover:bg-gray-100">
+                    <i class="fa-solid fa-language block text-lg mb-1"></i> اللغة القبطية
+                </button>
+            </div>
+
+            <!-- Sec Subject Content Panels -->
+            <div id="sec-content-container">
+                <!-- Secondary Bible Panel -->
+                <div id="sec-sub-bible" class="sec-sub-panel space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:border-gold-400 transition">
+                            <span class="text-xs bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded">دراسات ثانوية</span>
+                            <h4 class="font-bold text-navy-900 text-lg my-2">دراسة في رسالة رومية لمدارس الأحد</h4>
+                            <p class="text-sm text-gray-600 mb-4">شرح العقيدة والبر بالإيمان وتبرير النعمة في فكر القديس بولس الرسول.</p>
+                            <a href="#" onclick="alert('جاري تحميل ملف رسالة رومية...')" class="text-xs font-bold bg-navy-900 text-gold-300 px-3 py-2 rounded hover:bg-navy-800 transition inline-block"><i class="fa-solid fa-download ml-1"></i> تحميل مذكرة ثانوي</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Ritual Panel -->
+                <div id="sec-sub-ritual" class="sec-sub-panel hidden space-y-4">
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-navy-900 text-lg mb-2">دراسة طقس القداس الإلهي لغريغوريوس الناطق بالإلهيات</h4>
+                        <p class="text-sm text-gray-600 mb-4">التأملات اللاهوتية في صلوات الصلح والقداس الغريغوري.</p>
+                        <a href="#" onclick="alert('جاري فتح ملف القداس الغريغوري...')" class="text-xs font-bold bg-navy-900 text-gold-300 px-3 py-2 rounded"><i class="fa-solid fa-file-pdf ml-1"></i> فتح المنهج</a>
+                    </div>
+                </div>
+
+                <!-- Secondary Hymns Panel -->
+                <div id="sec-sub-hymns" class="sec-sub-panel hidden space-y-4">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-navy-900 text-lg mb-4">ألحان المناسبات الكبرى (المرحلة الثانوية)</h4>
+                        <div class="space-y-3">
+                            <div class="p-3 border rounded-lg flex justify-between items-center hover:bg-amber-50 cursor-pointer" onclick="playHymn('لحن غولغوثا Coptic Hymn', 'لحن الجمعة العظيمة الكبير')">
+                                <span class="font-bold text-sm">1. لحن غولغوثا (لحن دفنة الجمعة العظيمة)</span>
+                                <span class="text-xs text-gold-600 font-bold"><i class="fa-solid fa-play ml-1"></i>استماع</span>
+                            </div>
+                            <div class="p-3 border rounded-lg flex justify-between items-center hover:bg-amber-50 cursor-pointer" onclick="playHymn('لحن بيك أثرونوس', 'لحن الكيرياليسون والكباش القيامي')">
+                                <span class="font-bold text-sm">2. لحن بيك أثرونوس (كرسيك يا الله)</span>
+                                <span class="text-xs text-gold-600 font-bold"><i class="fa-solid fa-play ml-1"></i>استماع</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Coptic Panel -->
+                <div id="sec-sub-coptic" class="sec-sub-panel hidden space-y-4">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-bold text-navy-900 text-lg mb-3">قواعد اللغة القبطية المتقدمة (تصريف الأفعال والأزمنة)</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                            يتضمن منهج مرحلة ثانوي ترجمة أجزاء كاملة من ثيوطوكية الأحد وقراءة القبطي البحيري بطلاقة.
+                        </p>
+                        <a href="#" onclick="alert('جاري تحميل القاموس القبطي المتقدم...')" class="text-xs font-bold bg-navy-900 text-gold-300 px-4 py-2 rounded inline-block"><i class="fa-solid fa-book ml-1"></i> تحميل قاموس ثانوي PDF</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: STUDENT RESULTS SYSTEM (نتائج الطلاب) -->
+        <section id="section-results" class="main-section hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-md border border-gold-300/50 p-6 md:p-8 max-w-3xl mx-auto space-y-6">
+                
+                <div class="text-center space-y-2 border-b border-gray-100 pb-6">
+                    <div class="w-16 h-16 rounded-full gold-gradient mx-auto flex items-center justify-center text-navy-950 text-2xl shadow-md">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="text-2xl font-black text-navy-900 font-tajawal">نظام الاستعلام عن نتائج مدرسة التسبيح</h2>
+                    <p class="text-sm text-gray-500">أدخل رقم الجلوس الكودي الخاص بالظالب للاطلاع على النتيجة</p>
+                </div>
+
+                <!-- Search Input Form -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="student-code-input" placeholder="أدخل رقم الجلوس الكودي (مثال: 101, 102, 201)" 
+                           class="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-gold-500 focus:outline-none text-center font-bold text-lg">
+                    <button onclick="searchResult()" class="gold-gradient text-navy-950 font-black px-8 py-3 rounded-xl shadow-md hover:brightness-105 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> بحث عن النتيجة
+                    </button>
+                </div>
+
+                <!-- Demo codes hint -->
+                <div class="bg-navy-900/5 p-3 rounded-lg text-center text-xs text-navy-800">
+                    <span class="font-bold">أرقام جلوس تجريبية للاختبار:</span> 
+                    <span class="bg-white border px-2 py-0.5 rounded mx-1 font-mono font-bold cursor-pointer" onclick="document.getElementById('student-code-input').value='101'">101</span> (إعدادي) - 
+                    <span class="bg-white border px-2 py-0.5 rounded mx-1 font-mono font-bold cursor-pointer" onclick="document.getElementById('student-code-input').value='102'">102</span> (إعدادي) - 
+                    <span class="bg-white border px-2 py-0.5 rounded mx-1 font-mono font-bold cursor-pointer" onclick="document.getElementById('student-code-input').value='201'">201</span> (ثانوي)
+                </div>
+
+                <!-- Result Result Container (Hidden by default) -->
+                <div id="result-display-card" class="hidden space-y-6 pt-4 border-t border-gray-200">
+                    
+                    <!-- Student Header Details -->
+                    <div class="bg-navy-900 text-white p-5 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h3 id="res-student-name" class="text-xl font-bold text-gold-300">اسم الطالب</h3>
+                            <p id="res-student-stage" class="text-xs text-gray-300">المرحلة الإعدادية - الصف الأول</p>
+                        </div>
+                        <div class="bg-gold-500 text-navy-950 font-black px-4 py-1.5 rounded-lg text-sm text-center">
+                            التقدير العام: <span id="res-student-grade">ممتاز</span>
+                        </div>
+                    </div>
+
+                    <!-- Subject Marks Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-right border-collapse">
+                            <thead>
+                                <tr class="bg-navy-950 text-gold-300">
+                                    <th class="p-3 rounded-r-lg">المادة</th>
+                                    <th class="p-3 text-center">الدرجة العظمى</th>
+                                    <th class="p-3 text-center">درجة الطالب</th>
+                                    <th class="p-3 rounded-l-lg text-center">التقدير</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr>
+                                    <td class="p-3 font-semibold"><i class="fa-solid fa-book-bible text-red-700 ml-2"></i>الكتاب المقدس</td>
+                                    <td class="p-3 text-center">50</td>
+                                    <td id="res-mark-bible" class="p-3 text-center font-bold text-navy-900">48</td>
+                                    <td class="p-3 text-center text-emerald-600 font-bold">ممتاز</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold"><i class="fa-solid fa-church text-amber-700 ml-2"></i>الطقس الكنسي</td>
+                                    <td class="p-3 text-center">50</td>
+                                    <td id="res-mark-ritual" class="p-3 text-center font-bold text-navy-900">46</td>
+                                    <td class="p-3 text-center text-emerald-600 font-bold">ممتاز</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold"><i class="fa-solid fa-music text-blue-700 ml-2"></i>الألحان والتسبحة</td>
+                                    <td class="p-3 text-center">50</td>
+                                    <td id="res-mark-hymns" class="p-3 text-center font-bold text-navy-900">50</td>
+                                    <td class="p-3 text-center text-emerald-600 font-bold">امتياز مع مرتبة الشرف</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold"><i class="fa-solid fa-language text-emerald-700 ml-2"></i>اللغة القبطية</td>
+                                    <td class="p-3 text-center">50</td>
+                                    <td id="res-mark-coptic" class="p-3 text-center font-bold text-navy-900">44</td>
+                                    <td class="p-3 text-center text-emerald-600 font-bold">جيد جداً</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-gray-50 font-bold text-navy-900">
+                                    <td class="p-3">المجموع الكلي</td>
+                                    <td class="p-3 text-center">200</td>
+                                    <td id="res-mark-total" class="p-3 text-center text-gold-600 text-base">188</td>
+                                    <td class="p-3 text-center text-emerald-600">نسبة 94%</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- Remarks Box -->
+                    <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs text-amber-900 space-y-1">
+                        <span class="font-bold block text-sm"><i class="fa-solid fa-comment-dots ml-1"></i>ملاحظات خادم الفصل:</span>
+                        <p id="res-student-notes">طالب مواظب ومنتظم في تسبيحة باكر والألحان. مع أطيب أمنيات خدام المدرسة بالتوفيق الدائم.</p>
+                    </div>
+
+                </div>
+
+                <!-- Error Message Banner -->
+                <div id="result-error-msg" class="hidden bg-red-50 text-red-700 p-4 rounded-xl text-center text-sm font-bold border border-red-200">
+                    <i class="fa-solid fa-circle-xmark ml-1 text-lg"></i> رقم الجلوس غير موجود. يرجى التأكد من الرقم والمحاولة مرة أخرى.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 5: SCHEDULE & CONTACT (المواعيد والتواصل) -->
+        <section id="section-schedule" class="main-section hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- School Timetable Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 space-y-4">
+                    <h3 class="text-xl font-bold text-navy-900 border-b pb-3 font-tajawal flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-week text-gold-500"></i> جدول المواعيد والحصص الأسبوعي
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <!-- Day 1 -->
+                        <div class="bg-coptic-cream p-4 rounded-xl border-r-4 border-gold-500 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-navy-900">يوم الجمعة (عقب القداس الثاني)</h4>
+                                <p class="text-xs text-gray-600">من 11:00 صباحاً - 1:30 ظهراً</p>
+                            </div>
+                            <span class="text-xs bg-navy-900 text-gold-300 font-bold px-3 py-1 rounded-full">إعدادي وثانوي</span>
+                        </div>
+
+                        <!-- Day 2 -->
+                        <div class="bg-coptic-cream p-4 rounded-xl border-r-4 border-navy-900 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-navy-900">يوم الأحد (التسبيحة والألحان)</h4>
+                                <p class="text-xs text-gray-600">من 6:00 مساءً - 8:00 مساءً</p>
+                            </div>
+                            <span class="text-xs bg-gold-500 text-navy-950 font-bold px-3 py-1 rounded-full">فصول الألحان</span>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Accordion -->
+                    <div class="pt-4 border-t space-y-3">
+                        <h4 class="font-bold text-navy-900 text-md">الأسئلة الشائعة لأولياء الأمور:</h4>
+                        
+                        <details class="group bg-gray-50 p-3 rounded-lg border text-xs">
+                            <summary class="font-bold text-navy-900 cursor-pointer flex justify-between items-center">
+                                كيف يمكنني استلام الرقم الكودي الخاص بابني؟
+                                <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                            </summary>
+                            <p class="mt-2 text-gray-600 leading-relaxed">
+                                يتم تسليم أرقام الجلوس الكودية عن طريق خادم الفصل المسئول في أول جلسة من كل فصل دراسي.
+                            </p>
+                        </details>
+
+                        <details class="group bg-gray-50 p-3 rounded-lg border text-xs">
+                            <summary class="font-bold text-navy-900 cursor-pointer flex justify-between items-center">
+                                هل توجد اختبارات شفاهية في مادة الألحان والقبطي؟
+                                <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                            </summary>
+                            <p class="mt-2 text-gray-600 leading-relaxed">
+                                نعم، تشمل تقييمات مدرسة التسبيح اختبارات شفاهية أسبوعية وشهرية لضمان ضبط الهزات والنطق القبطي الصحيح.
+                            </p>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Contact / Inquiry Form -->
+                <div class="bg-navy-900 text-white p-6 rounded-2xl shadow-md space-y-4">
+                    <h3 class="text-xl font-bold text-gold-400 border-b border-navy-800 pb-3 font-tajawal flex items-center gap-2">
+                        <i class="fa-solid fa-envelope-open-text"></i> تواصل مع أمين المدرسة
+                    </h3>
+                    <p class="text-xs text-gray-300">يسعدنا استقبال استفسارات وملاحظات أولياء الأمور والطلاب</p>
+
+                    <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-gold-300">اسم ولي الأمر / الطالب</label>
+                            <input type="text" required placeholder="أدخل الاسم الكامل" class="w-full px-3 py-2 rounded-lg bg-navy-950 border border-navy-800 text-white text-sm focus:border-gold-500 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-gold-300">المرحلة الدراسية</label>
+                            <select class="w-full px-3 py-2 rounded-lg bg-navy-950 border border-navy-800 text-white text-sm focus:border-gold-500 focus:outline-none">
+                                <option>المرحلة الإعدادية</option>
+                                <option>المرحلة الثانوية</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold mb-1 text-gold-300">نص الرسالة أو الاستفسار</label>
+                            <textarea rows="4" required placeholder="اكتب سؤالك أو استفسارك هنا..." class="w-full px-3 py-2 rounded-lg bg-navy-950 border border-navy-800 text-white text-sm focus:border-gold-500 focus:outline-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full gold-gradient text-navy-950 font-bold py-2.5 rounded-lg shadow hover:brightness-110 transition">
+                            إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy-950 text-white border-t-2 border-gold-500 pt-8 pb-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-right">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center text-navy-950 font-bold">
+                        <i class="fa-solid fa-cross"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gold-400">مدرسة التسبيح - الأرثوذكسية</h4>
+                        <p class="text-xs text-gray-400">تحت رعاية كنيسة العذراء مريم والآباء الكهنة</p>
+                    </div>
+                </div>
+
+                <div class="text-xs text-gray-400 space-y-1">
+                    <p><i class="fa-solid fa-location-dot text-gold-500 ml-1"></i> ملحق خدمات الكنيسة - الدور الثاني</p>
+                    <p><i class="fa-solid fa-phone text-gold-500 ml-1"></i> للتواصل مع خدام المرحلة: 01200000000</p>
+                </div>
+            </div>
+
+            <div class="border-t border-navy-800 pt-4 text-center text-xs text-gray-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+                <p>© 2026 جميع الحقوق محفوظة لمدرسة التسبيح الأرثوذكسية.</p>
+                <p class="text-gold-400/80">"سبحوا الله في جميع قديسيه"</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT INTERACTIVE LOGIC -->
+    <script>
+        
+        // Mock Students Results Database
+        const studentsDatabase = {
+            "101": {
+                name: "ميرنا جرجس كامل",
+                stage: "المرحلة الإعدادية - الصف الأول",
+                bible: 49,
+                ritual: 47,
+                hymns: 50,
+                coptic: 48,
+                total: 194,
+                grade: "امتياز 🌟",
+                notes: "طالبة ممتازة وملتزمة بألحان باكر والتسبحة وتتفوق في قواعد القبطي."
+            },
+            "102": {
+                name: "يوحنا سامح فايز",
+                stage: "المرحلة الإعدادية - الصف الثاني",
+                bible: 44,
+                ritual: 42,
+                hymns: 48,
+                coptic: 40,
+                total: 174,
+                grade: "جيد جدا مرتفع",
+                notes: "مستوى ممتاز في حفظ الألحان. يرجى التركيز أكثر على مراجعة دروس القبطي."
+            },
+            "201": {
+                name: "مينا بيشوي رأفت",
+                stage: "المرحلة الثانوية - الصف الثاني",
+                bible: 50,
+                ritual: 49,
+                hymns: 48,
+                coptic: 47,
+                total: 194,
+                grade: "امتياز 🌟",
+                notes: "أداء لاهوتي وطقسي رفيع. مرشح للمشاركة في كورال الكنيسة والرسم شمامسة."
+            }
+        };
+
+        // Tab Switching Logic
+        function switchMainTab(tabId) {
+            // Hide all sections
+            document.querySelectorAll('.main-section').forEach(sec => sec.classList.add('hidden'));
+            
+            // Show target section
+            const target = document.getElementById('section-' + tabId);
+            if (target) target.classList.remove('hidden');
+
+            // Reset navigation tab styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-gold-400', 'bg-navy-800');
+                btn.classList.add('text-gray-200');
+            });
+
+            // Highlight active tab
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.classList.add('text-gold-400', 'bg-navy-800');
+                activeNav.classList.remove('text-gray-200');
+            }
+
+            // Scroll smoothly to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Mobile Navigation Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Filter Announcements by Category
+        function filterAnnouncements(category) {
+            const cards = document.querySelectorAll('.announce-card');
+            const btns = document.querySelectorAll('.announce-filter-btn');
+
+            // Style active filter button
+            btns.forEach(btn => {
+                btn.classList.remove('bg-navy-900', 'text-gold-300');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+
+            const activeBtn = document.getElementById('filter-' + category);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-navy-900', 'text-gold-300');
+                activeBtn.classList.remove('bg-gray-200', 'text-gray-700');
+            }
+
+            // Filter cards
+            cards.forEach(card => {
+                const cardCategories = card.getAttribute('data-category');
+                if (category === 'all' || cardCategories.includes(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Switch Preparatory Subject Tabs
+        function switchPrepSubject(subId) {
+            document.querySelectorAll('.prep-sub-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('prep-sub-' + subId).classList.remove('hidden');
+
+            document.querySelectorAll('.prep-sub-btn').forEach(b => {
+                b.classList.remove('bg-navy-900', 'text-gold-400');
+                b.classList.add('text-gray-600');
+            });
+
+            const btn = document.getElementById('prep-tab-' + subId);
+            btn.classList.add('bg-navy-900', 'text-gold-400');
+            btn.classList.remove('text-gray-600');
+        }
+
+        // Switch Secondary Subject Tabs
+        function switchSecSubject(subId) {
+            document.querySelectorAll('.sec-sub-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('sec-sub-' + subId).classList.remove('hidden');
+
+            document.querySelectorAll('.sec-sub-btn').forEach(b => {
+                b.classList.remove('bg-navy-900', 'text-gold-400');
+                b.classList.add('text-gray-600');
+            });
+
+            const btn = document.getElementById('sec-tab-' + subId);
+            btn.classList.add('bg-navy-900', 'text-gold-400');
+            btn.classList.remove('text-gray-600');
+        }
+
+        // Play Selected Hymn Logic
+        function playHymn(title, desc) {
+            document.getElementById('current-hymn-title').innerText = title;
+            document.getElementById('current-hymn-desc').innerText = desc;
+            
+            const player = document.getElementById('hymn-audio-player');
+            player.play().catch(e => console.log('Audio autoplay prevented by browser'));
+        }
+
+        // Search Student Result Logic
+        function searchResult() {
+            const inputVal = document.getElementById('student-code-input').value.trim();
+            const displayCard = document.getElementById('result-display-card');
+            const errorMsg = document.getElementById('result-error-msg');
+
+            if (studentsDatabase[inputVal]) {
+                const data = studentsDatabase[inputVal];
+                
+                document.getElementById('res-student-name').innerText = data.name;
+                document.getElementById('res-student-stage').innerText = data.stage;
+                document.getElementById('res-student-grade').innerText = data.grade;
+                document.getElementById('res-mark-bible').innerText = data.bible;
+                document.getElementById('res-mark-ritual').innerText = data.ritual;
+                document.getElementById('res-mark-hymns').innerText = data.hymns;
+                document.getElementById('res-mark-coptic').innerText = data.coptic;
+                document.getElementById('res-mark-total').innerText = data.total;
+                document.getElementById('res-student-notes').innerText = data.notes;
+
+                displayCard.classList.remove('hidden');
+                errorMsg.classList.add('hidden');
+            } else {
+                displayCard.classList.add('hidden');
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        // Form Submission Handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            alert('تم استلام رسالتكم بنجاح! سيتم التواصل معكم من قبل أمين مدرسة التسبيح قريبًا.');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
