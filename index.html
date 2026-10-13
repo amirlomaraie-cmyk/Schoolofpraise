@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدرسة التسبيح - كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coptic: {
+                            gold: '#D4AF37',
+                            darkGold: '#AA7C11',
+                            navy: '#0F172A',
+                            sky: '#0284C7',
+                            lightSky: '#E0F2FE',
+                            deepSky: '#0369A1',
+                            burgundy: '#800020',
+                            cream: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #F8FAFC; text-align: center; }
+        .sky-pattern {
+            background-color: #0284C7;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .animated-word {
+            opacity: 0;
+            transform: translateY(15px);
+            display: inline-block;
+            animation: fadeInWord 0.5s forwards;
+        }
+        @keyframes fadeInWord {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between" onload="loadDailyVerseWithAnimation()">
+
+    <!-- Header / Navbar -->
+    <header class="bg-coptic-sky text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center border-b border-sky-400/30 gap-2">
+            <div class="flex items-center justify-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/50">
+                    <i class="fa-solid fa-cross text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white leading-tight">مدرسة التسبيح</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="text-center text-xs md:text-sm text-sky-100 font-semibold flex items-center gap-2 bg-coptic-deepSky/50 px-3 py-1.5 rounded-full border border-sky-300/30">
+                    <i class="fa-solid fa-church text-coptic-gold"></i>
+                    <span>كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</span>
+                </div>
+                <button onclick="toggleMobileMenu()" class="text-white text-2xl p-1.5 bg-coptic-deepSky/80 rounded-lg border border-sky-300/30 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <nav class="max-w-7xl mx-auto px-4">
+            <ul class="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm font-semibold py-2">
+                <li><a href="index.html" class="px-3 py-2 rounded-lg bg-white text-coptic-sky transition duration-200">الرئيسية</a></li>
+                
+                <li class="relative dropdown">
+                    <button class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition duration-200 flex items-center gap-1">
+                        كنيستنا <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="dropdown-menu hidden absolute right-0 w-52 bg-coptic-deepSky border border-sky-300 rounded-lg shadow-2xl py-2 z-50 text-right">
+                        <li><a href="index.html#church-history" class="block px-4 py-2 hover:bg-white hover:text-coptic-sky">تاريخ الكنيسة</a></li>
+                        <li><a href="index.html#about-ebrahim" class="block px-4 py-2 hover:bg-white hover:text-coptic-sky">القُمُّص إبراهيم البسيط</a></li>
+                        <li><a href="index.html#fathers" class="block px-4 py-2 hover:bg-white hover:text-coptic-sky">الآباء كهنة الكنيسة</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="school.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition duration-200">مدرسة التسبيح والمكتبات</a></li>
+                <li><a href="mangaleya.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition duration-200 font-bold text-amber-200">المنجلية</a></li>
+                <li><a href="publications.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition duration-200">الإصدارات</a></li>
+                <li><a href="contact.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition duration-200">إتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity duration-300">
+        <div class="fixed top-0 left-0 w-72 h-full bg-coptic-deepSky text-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto text-right">
+            <div>
+                <div class="flex justify-between items-center mb-6 pb-3 border-b border-sky-400/30">
+                    <h3 class="font-bold text-lg text-coptic-gold">قائمة الموقع</h3>
+                    <button onclick="toggleMobileMenu()" class="text-white text-xl p-1"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <ul class="space-y-4 text-sm font-semibold">
+                    <li><a href="index.html" class="block py-2 px-3 rounded-lg hover:bg-white/10">الرئيسية</a></li>
+                    <li><a href="school.html" class="block py-2 px-3 rounded-lg hover:bg-white/10">مدرسة التسبيح والمكتبات</a></li>
+                    <li><a href="mangaleya.html" class="block py-2 px-3 rounded-lg hover:bg-white/10 text-amber-200">المنجلية</a></li>
+                    <li><a href="publications.html" class="block py-2 px-3 rounded-lg hover:bg-white/10">الإصدارات</a></li>
+                    <li><a href="contact.html" class="block py-2 px-3 rounded-lg hover:bg-white/10">إتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="text-center text-xs text-sky-200 pt-4 border-t border-sky-400/30">مدرسة التسبيح ببني صامت © 2026</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow">
+        <!-- الآية المتحركة -->
+        <section class="sky-pattern text-white py-16 px-4 text-center relative overflow-hidden border-b-4 border-coptic-gold flex flex-col items-center justify-center">
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div id="daily-verse" class="text-2xl md:text-4xl font-extrabold text-amber-200 leading-tight drop-shadow-md min-h-[90px] flex flex-wrap items-center justify-center gap-2"></div>
+                <div id="daily-intro" class="text-sky-50 text-lg max-w-2xl mx-auto pt-2 flex flex-wrap justify-center gap-1.5"></div>
+            </div>
+        </section>
+
+        <!-- الأقسام الرئيسية -->
+        <section class="max-w-7xl mx-auto px-4 py-12">
+            <h3 class="text-2xl md:text-3xl font-extrabold text-center text-coptic-deepSky mb-2">أقسام ومحتويات الموقع</h3>
+            <p class="text-center text-slate-600 mb-10">اختر القسم للاستعراض</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div onclick="location.href='#church-history'" class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-sky p-8 cursor-pointer hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-coptic-sky text-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fa-solid fa-church"></i></div>
+                    <h4 class="font-bold text-2xl text-coptic-deepSky mb-2">كنيستنا</h4>
+                    <p class="text-slate-500 text-sm">تاريخ الكنيسة، سيرة القمص إبراهيم البسيط، والآباء الكهنة.</p>
+                </div>
+                <div onclick="location.href='school.html'" class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-burgundy p-8 cursor-pointer hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-coptic-burgundy text-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h4 class="font-bold text-2xl text-coptic-burgundy mb-2">مدرسة التسبيح</h4>
+                    <p class="text-slate-500 text-sm">اللائحة، نتائج الطلاب، والمكتبات الدراسية والصوتية.</p>
+                </div>
+                <div onclick="location.href='mangaleya.html'" class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-gold p-8 cursor-pointer hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-coptic-gold text-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fa-solid fa-book-open-reader"></i></div>
+                    <h4 class="font-bold text-2xl text-coptic-darkGold mb-2">المنجلية</h4>
+                    <p class="text-slate-500 text-sm">الأجبية، القطمارس، والسنكسار القبطي.</p>
+                </div>
+                <div onclick="location.href='publications.html'" class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-deepSky p-8 cursor-pointer hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-coptic-deepSky text-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fa-solid fa-book-bookmark"></i></div>
+                    <h4 class="font-bold text-2xl text-coptic-deepSky mb-2">الإصدارات</h4>
+                    <p class="text-slate-500 text-sm">مكتبة الكتب والإصدارات الليتورجية أونلاين.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم كنيستنا التاريخ والكهنة -->
+        <section id="church-history" class="max-w-4xl mx-auto px-4 py-12 text-right">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 space-y-6 mb-8">
+                <h3 class="text-3xl font-bold text-coptic-deepSky mb-4 text-center">تاريخ كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</h3>
+                <p class="text-slate-700 leading-loose text-base">تعتبر كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت منارة روحية وتعليمية مباركة تخدم أبناء القرية والمنطقة المحيطة. تأسست الكنيسة لخدمة النفوس وبث روح التسبيح والتعليم الكنسي الأرثوذكسي الأصيل.</p>
+            </div>
+        </section>
+
+        <section id="fathers" class="max-w-4xl mx-auto px-4 py-6 text-right">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+                <h3 class="text-3xl font-bold text-coptic-deepSky mb-6 text-center">آباء كهنة الكنيسة</h3>
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-6 text-center">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 border-t-4 border-coptic-sky max-w-sm mx-auto">
+                        <div class="w-16 h-16 bg-coptic-sky text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fa-solid fa-user-tie"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-1">القس كاراس سمير</h4>
+                        <span class="inline-block bg-sky-100 text-coptic-sky text-xs font-semibold px-2.5 py-1 rounded-full">راعي الكنيسة ومُشرف المدرسة</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-coptic-deepSky text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+            <p class="text-xs text-sky-200">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+        </div>
+    </footer>
+
+    <script>
+        const dailyVerses = [
+            { text: '"أُرَنِّمُ لِلرَّبِّ فِي حَيَاتِي. أَزْمُرُ لإِلهِي مَا دُمْتُ مَوْجُوداً"', ref: "(مز 104: 33)" },
+            { text: '"سِرَاجٌ لِرِجْلِي كَلاَمُكَ وَنُورٌ لِسَبِيلِي"', ref: "(مز 119: 105)" },
+            { text: '"الرَّبُّ رَاعِيَّ فَلاَ يُعْوِزُنِي شَيْءٌ"', ref: "(مز 23: 1)" }
+        ];
+        const introTextString = "مرحباً بكم في المنصة التعليمية لـ مدرسة التسبيح - لتعليم الكتاب المقدس والطقس والألحان واللغة القبطية.";
+
+        function loadDailyVerseWithAnimation() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const selectedVerse = dailyVerses[dayOfYear % dailyVerses.length];
+
+            const verseElement = document.getElementById('daily-verse');
+            const introElement = document.getElementById('daily-intro');
+
+            if (verseElement) {
+                const words = `${selectedVerse.text}  ${selectedVerse.ref}`.split(' ');
+                words.forEach((word, index) => {
+                    const span = document.createElement('span');
+                    span.className = 'animated-word';
+                    span.style.animationDelay = `${index * 0.08}s`;
+                    span.textContent = word + ' ';
+                    verseElement.appendChild(span);
+                });
+            }
+            if (introElement) {
+                const words = introTextString.split(' ');
+                words.forEach((word, index) => {
+                    const span = document.createElement('span');
+                    span.className = 'animated-word';
+                    span.style.animationDelay = `${(10 + index) * 0.05}s`;
+                    span.textContent = word + ' ';
+                    introElement.appendChild(span);
+                });
+            }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-sidebar').classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
