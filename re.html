@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أرشيف نتائج الطلاب - مدرسة التسبيح ببني صامت</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo & Tajawal) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coptic: {
+                            gold: '#D4AF37',
+                            darkGold: '#AA7C11',
+                            navy: '#0F172A',
+                            sky: '#0284C7',
+                            lightSky: '#E0F2FE',
+                            deepSky: '#0369A1',
+                            burgundy: '#800020',
+                            cream: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #F8FAFC; text-align: center; }
+        .fail-grade { color: #dc2626; font-weight: 900; }
+    </style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-coptic-sky text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center border-b border-sky-400/30 gap-2">
+            <div class="flex items-center justify-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/50">
+                    <i class="fa-solid fa-cross text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white leading-tight">مدرسة التسبيح - أرشيف نتائج الطلاب</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="text-center text-xs md:text-sm text-sky-100 font-semibold flex items-center gap-2 bg-coptic-deepSky/50 px-3 py-1.5 rounded-full border border-sky-300/30">
+                    <i class="fa-solid fa-church text-coptic-gold"></i>
+                    <span>كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 text-right w-full">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+            
+            <!-- القائمة المنسدلة لاختيار السنة الدراسية -->
+            <div class="text-center mb-8 pb-6 border-b border-slate-200">
+                <label for="academicYearSelect" class="block text-slate-700 font-bold mb-2 text-base">اختر العام الدراسي:</label>
+                <select id="academicYearSelect" class="w-full max-w-md p-3 border-2 border-coptic-sky rounded-xl text-center font-bold text-coptic-deepSky bg-slate-50 focus:outline-none focus:ring-2 focus:ring-coptic-sky" onchange="switchAcademicYear(this.value)">
+                    <option value="">-- اضغط هنا لاختيار السنة الدراسية --</option>
+                    <option value="2022-2023" selected>نتيجة العام الدراسي 2022-2023م</option>
+                    <option value="2023-2024">نتيجة العام الدراسي 2023-2024م (قريباً)</option>
+                    <option value="2024-2025">نتيجة العام الدراسي 2024-2025م (قريباً)</option>
+                </select>
+            </div>
+
+            <!-- قسم نتيجة 2022-2023م المربوط تحت القائمة -->
+            <div id="section-2022-2023" class="year-section block">
+                <div class="text-center mb-6 pb-4 border-b border-slate-100">
+                    <h3 class="text-2xl md:text-3xl font-bold text-coptic-deepSky mb-2">نتيجة العام الدراسي 2022-2023م</h3>
+                    <p class="text-slate-600 text-sm">البحث بالكود أو بالاسم للاطلاع على النتيجة بالتفصيل</p>
+                </div>
+
+                <div>
+                    <!-- مربع البحث -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm mb-4">
+                        <div class="search-controls flex gap-2 justify-center mb-4 flex-wrap">
+                            <select id="searchType22" class="p-2.5 border-2 border-slate-200 rounded-lg text-sm font-bold bg-white" onchange="updatePlaceholder22()">
+                                <option value="code">بحث بالكود</option>
+                                <option value="name">بحث بالاسم</option>
+                            </select>
+                            <input type="text" id="searchInput22" placeholder="أدخل كود الطالب هنا..." class="p-2.5 border-2 border-slate-200 rounded-lg text-sm font-bold flex-1 bg-white" autocomplete="off">
+                            <button type="button" onclick="searchResult22()" class="bg-coptic-sky text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-coptic-deepSky transition">بحث</button>
+                        </div>
+                        <div id="errorMsg22" class="bg-red-100 text-red-700 p-3 rounded-lg text-center font-bold text-xs hidden">عذراً، لم يتم العثور على طالب بهذا البحث.</div>
+                    </div>
+
+                    <!-- بطاقة النتيجة (تظهر عند البحث الصحيح) -->
+                    <div id="resultCard22" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 hidden font-tajawal">
+                        <div class="grid grid-cols-2 gap-4 pb-4 mb-4 border-b border-slate-200 text-right">
+                            <div>
+                                <span class="text-xs text-slate-500 block">اسم الطالب:</span>
+                                <strong id="resName22" class="text-base text-slate-800">-</strong>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 block">كود الطالب:</span>
+                                <strong id="resCode22" class="text-base text-slate-800">-</strong>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 block">الصف الدراسي:</span>
+                                <strong id="resClass22" class="text-base text-slate-800">-</strong>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 block">المستوى:</span>
+                                <strong id="resLevel22" class="text-base text-slate-800">-</strong>
+                            </div>
+                        </div>
+
+                        <table class="w-full border-collapse mb-4 text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-slate-200 text-slate-700">
+                                    <th class="p-2 text-center">المادة / العنصر</th>
+                                    <th class="p-2 text-center">الدرجة العظمى</th>
+                                    <th class="p-2 text-center">درجة الطالب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-200">
+                                    <td class="p-2 text-center font-semibold">الألحان</td>
+                                    <td class="p-2 text-center">25</td>
+                                    <td id="gradeHymns22" class="p-2 text-center">-</td>
+                                </tr>
+                                <tr class="border-b border-slate-200">
+                                    <td class="p-2 text-center font-semibold">الكتاب المقدس</td>
+                                    <td class="p-2 text-center">25</td>
+                                    <td id="gradeBible22" class="p-2 text-center">-</td>
+                                </tr>
+                                <tr class="border-b border-slate-200">
+                                    <td class="p-2 text-center font-semibold">اللغة القبطية</td>
+                                    <td class="p-2 text-center">20</td>
+                                    <td id="gradeCoptic22" class="p-2 text-center">-</td>
+                                </tr>
+                                <tr class="border-b border-slate-200">
+                                    <td class="p-2 text-center font-semibold">الطقس الكنسي</td>
+                                    <td class="p-2 text-center">20</td>
+                                    <td id="gradeRituals22" class="p-2 text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 text-center font-semibold">الحضور والسلوك</td>
+                                    <td class="p-2 text-center">30</td>
+                                    <td id="gradeBehavior22" class="p-2 text-center">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="bg-white p-3 rounded-xl flex justify-between items-center text-xs sm:text-sm font-bold flex-wrap gap-2">
+                            <div>
+                                المجموع: <span id="resTotal22" class="text-coptic-deepSky">-</span>/100
+                                <span class="block text-[10px] text-slate-400 font-normal">(120-20)</span>
+                            </div>
+                            <div>النسبة: <span id="resPercentage22" class="text-coptic-deepSky">-</span></div>
+                            <div>التقدير: <span id="resEvaluation22" class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أقسام السنوات الأخرى -->
+            <div id="section-other" class="year-section hidden py-12 text-center text-slate-500">
+                <p class="text-lg font-semibold">عذراً، بيانات هذا العام الدراسي غير متوفرة حالياً أو سيتم إضافتها قريباً.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-coptic-deepSky text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+            <p class="text-xs text-sky-200">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function switchAcademicYear(yearVal) {
+            const sec22 = document.getElementById('section-2022-2023');
+            const secOther = document.getElementById('section-other');
+            
+            if (yearVal === '2022-2023') {
+                sec22.classList.remove('hidden');
+                sec22.style.display = 'block';
+                secOther.classList.add('hidden');
+                secOther.style.display = 'none';
+            } else {
+                sec22.classList.add('hidden');
+                sec22.style.display = 'none';
+                secOther.classList.remove('hidden');
+                secOther.style.display = 'block';
+            }
+        }
+
+        const studentsDatabase22 = [
+            { code: "2101", name: "مارينا مينا سمير", class: "الأول الابتدائي", level: "الأول", hymns: "25", bible: "24", coptic: "20", rituals: "19", behavior: "29.25", total: "97.25", percentage: "97%", evaluation: "إمتياز" },
+            { code: "2102", name: "كاراس هاني صلاح", class: "الأول الابتدائي", level: "الأول", hymns: "22.25", bible: "20.5", coptic: "20", rituals: "18", behavior: "29.25", total: "90", percentage: "90%", evaluation: "إمتياز" },
+            { code: "2103", name: "مریم مدحت صلاح", class: "الأول الإبتدائي", level: "الأول", hymns: "22.25", bible: "20.25", coptic: "19.5", rituals: "17", behavior: "29.25", total: "88.25", percentage: "88%", evaluation: "جيد جداً" },
+            { code: "2104", name: "أبانوب مينا مكرم", class: "الأول الإبتدائي", level: "الأول", hymns: "24.25", bible: "20.25", coptic: "19", rituals: "18", behavior: "30", total: "91.5", percentage: "92%", evaluation: "امتياز" },
+            { code: "2105", name: "كرستين عدلي فايز", class: "الأول الإبتدائي", level: "الأول", hymns: "24", bible: "20", coptic: "20", rituals: "18", behavior: "28.5", total: "90.5", percentage: "91%", evaluation: "إمتياز" },
+            { code: "2112", name: "ميرنا عبد المسيح مرعي", class: "الأول الإبتدائي", level: "الأول", hymns: "22.75", bible: "22.25", coptic: "17.5", rituals: "20", behavior: "28.5", total: "91", percentage: "91%", evaluation: "إمتياز" },
+            { code: "2115", name: "جويس أنطونيوس يونان", class: "الأول الابتدائي", level: "الأول", hymns: "25", bible: "23.5", coptic: "19.5", rituals: "18", behavior: "30", total: "96", percentage: "96%", evaluation: "إمتياز" },
+            { code: "2119", name: "جوي مايكل ميشيل", class: "الأول الإبتدائي", level: "الأول", hymns: "24", bible: "23.5", coptic: "20", rituals: "20", behavior: "29.25", total: "96.75", percentage: "97%", evaluation: "امتياز" },
+            { code: "2120", name: "بيشوي أمير ملاك", class: "الأول الابتدائي", level: "الأول", hymns: "24.5", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "99.5", percentage: "100%", evaluation: "إمتياز" },
+            { code: "2121", name: "بتول شنودة ملاك", class: "الأول الابتدائي", level: "الأول", hymns: "22.25", bible: "21", coptic: "16", rituals: "18", behavior: "30", total: "87.25", percentage: "87%", evaluation: "جيد جداً" },
+            { code: "2122", name: "مريم كيرلس مكرم", class: "الأول الإبتدائي", level: "الأول", hymns: "25", bible: "25", coptic: "20", rituals: "19", behavior: "30", total: "99", percentage: "99%", evaluation: "إمتياز" },
+            { code: "2123", name: "رانيا فيليب بولس", class: "الأول الإبتدائي", level: "الأول", hymns: "25", bible: "25", coptic: "20", rituals: "18", behavior: "30", total: "98", percentage: "98%", evaluation: "امتياز" },
+            { code: "2127", name: "مريم عبد المسيح إسحق", class: "الأول الإبتدائي", level: "الأول", hymns: "25", bible: "21.5", coptic: "20", rituals: "17", behavior: "30", total: "93.5", percentage: "94%", evaluation: "إمتياز" },
+            { code: "2128", name: "يؤانا صموئيل سمير", class: "الأول الإبتدائي", level: "الأول", hymns: "22.75", bible: "19", coptic: "17.5", rituals: "15", behavior: "28.5", total: "82.75", percentage: "83%", evaluation: "جيد جداً" },
+            { code: "2129", name: "كاراس مينا ملاك صموئيل", class: "الأول الابتدائي", level: "الأول", hymns: "22.75", bible: "20.75", coptic: "19.5", rituals: "17", behavior: "30", total: "90", percentage: "90%", evaluation: "إمتياز" },
+            { code: "2140", name: "مريم كامل حنس", class: "الأول الإبتدائي", level: "الأول", hymns: "24", bible: "22.5", coptic: "20", rituals: "18", behavior: "30", total: "94.5", percentage: "95%", evaluation: "إمتياز" },
+            { code: "2141", name: "ابانوب أمير عزت", class: "الأول الإبتدائي", level: "الأول", hymns: "19.75", bible: "19.75", coptic: "15", rituals: "17", behavior: "28.5", total: "80", percentage: "80%", evaluation: "جيد جداً" },
+            { code: "2142", name: "كيرلس عبد الملاك شفيق", class: "الأول الإبتدائي", level: "الأول", hymns: "24.5", bible: "25", coptic: "20", rituals: "18", behavior: "30", total: "97.5", percentage: "98%", evaluation: "إمتياز" },
+            { code: "2201", name: "فيرينا أيمن يوسف", class: "الأول الإبتدائي", level: "الأول", hymns: "21.25", bible: "20", coptic: "18.5", rituals: "18", behavior: "27.75", total: "85.5", percentage: "86%", evaluation: "جيد جداً" },
+            { code: "2146", name: "مارفل أمجد إسحق", class: "الأول الابتدائي", level: "الأول", hymns: "24", bible: "22.5", coptic: "20", rituals: "18", behavior: "28.5", total: "93", percentage: "93%", evaluation: "إمتياز" },
+            { code: "2202", name: "جوي سامح نادي", class: "الأول الإبتدائي.", level: "الأول", hymns: "22.5", bible: "19.75", coptic: "19.5", rituals: "17", behavior: "27", total: "85.75", percentage: "86%", evaluation: "جيد جداً" },
+            { code: "2203", name: "كارن مراد حنا", class: "الأول الابتدائي", level: "الأول", hymns: "24.5", bible: "21.25", coptic: "18.5", rituals: "18", behavior: "28.5", total: "90.75", percentage: "91%", evaluation: "إمتياز" },
+            { code: "2204", name: "أبانوب كيرلس مرقس", class: "الأول الإبتدائي", level: "الأول", hymns: "18", bible: "20.75", coptic: "15", rituals: "17", behavior: "29.25", total: "80", percentage: "80%", evaluation: "جيد جداً" },
+            { code: "2205", name: "شنودة مرقس نادي", class: "الأول الإبتدائي", level: "الأول", hymns: "23.75", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "98.75", percentage: "99%", evaluation: "امتياز" },
+            { code: "2206", name: "ماري مينا حنس", class: "الأول الإبتدائي", level: "الأول", hymns: "25", bible: "20.5", coptic: "18.5", rituals: "18", behavior: "30", total: "92.", percentage: "92%", evaluation: "إمتياز" },
+            { code: "2207", name: "مارتينا بطرس شفيق", class: "الأول الإبتدائي", level: "الأول", hymns: "19.5", bible: "19", coptic: "18.5", rituals: "15", behavior: "30", total: "82", percentage: "82%", evaluation: "جيد جداً" },
+            { code: "2208", name: "جرجس مجدي فايز", class: "الأول الإبتدائي", level: "الأول", hymns: "13.75", bible: "19", coptic: "15", rituals: "15", behavior: "28.5", total: "71.25", percentage: "71%", evaluation: "جيد" },
+            { code: "2209", name: "روبن غطاس إبراهيم", class: "الأول الابتدائي", level: "الأول", hymns: "21.5", bible: "21.25", coptic: "19.5", rituals: "18", behavior: "29.25", total: "89.5", percentage: "90%", evaluation: "جيد جداً" },
+            { code: "2210", name: "يوستينا مدحت ملاك", class: "الأول الابتدائي", level: "الأول", hymns: "23.5", bible: "19.75", coptic: "18.5", rituals: "18", behavior: "28.5", total: "88.25", percentage: "88%", evaluation: "جيد جداً" },
+            { code: "2211", name: "دميانة ميلاد محروس", class: "الأول الابتدائي", level: "الأول", hymns: "22.75", bible: "21.5", coptic: "15", rituals: "18", behavior: "27.75", total: "85", percentage: "85%", evaluation: "جيد جداً" },
+            { code: "2212", name: "تينا مدحت ملاك لبيب", class: "الأول الإبتدائي", level: "الأول", hymns: "23.5", bible: "20.5", coptic: "20", rituals: "17", behavior: "29.25", total: "90.25", percentage: "90%", evaluation: "إمتياز" },
+            { code: "2213", name: "كاراس أبانوب ملاك السيد", class: "الأول الإبتدائي", level: "الأول", hymns: "21.25", bible: "20.5", coptic: "20", rituals: "18", behavior: "27.75", total: "87.5", percentage: "88%", evaluation: "جيد جدا" },
+            { code: "2214", name: "ماركو هاني لطفي", class: "الأول الابتدائي", level: "الأول", hymns: "15.5", bible: "19.75", coptic: "16.5", rituals: "18", behavior: "29.25", total: "79", percentage: "79%", evaluation: "جيد" },
+            { code: "2215", name: "بيشوي مينا مرقس فوزي", class: "الأول الإبتدائي", level: "الأول", hymns: "18.25", bible: "19.25", coptic: "16", rituals: "17", behavior: "29.25", total: "79.75", percentage: "80%", evaluation: "جيد" },
+            { code: "2236", name: "مريم عيد ثابت", class: "الأول الإبتدائي", level: "الأول", hymns: "17", bible: "18.75", coptic: "15", rituals: "14", behavior: "29.25", total: "74", percentage: "74%", evaluation: "جيد" },
+            { code: "2143", name: "ماري مينا صبحي", class: "الثاني الإبتدائي", level: "الأول", hymns: "24.25", bible: "23.5", coptic: "19", rituals: "15", behavior: "29.25", total: "91", percentage: "91%", evaluation: "إمتياز" },
+            { code: "2144", name: "شنودة أبانوب صبحي", class: "الثاني الابتدائي", level: "الأول", hymns: "18.25", bible: "20.5", coptic: "12", rituals: "17.5", behavior: "30", total: "78.25", percentage: "78%", evaluation: "جيد" },
+            { code: "2145", name: "جورج أبانوب محروس", class: "الثاني الابتدائي", level: "الأول", hymns: "19.25", bible: "23", coptic: "18", rituals: "18", behavior: "29.25", total: "87.5", percentage: "88%", evaluation: "جيد جدا" },
+            { code: "2147", name: "إيريني حنا نجيب", class: "الثاني الإبتدائي", level: "الأول", hymns: "24.75", bible: "24.75", coptic: "13", rituals: "17.5", behavior: "29.25", total: "88.5", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "2148", name: "بارثينيا أنطونيوس إبراهيم", class: "الثاني الإبتدائي", level: "الأول", hymns: "24", bible: "25", coptic: "17", rituals: "19.5", behavior: "30", total: "95.5", percentage: "96%", evaluation: "إمتياز" },
+            { code: "2149", name: "مكاري رأفت صدقي", class: "الثاني الابتدائي", level: "الأول", hymns: "17.75", bible: "20.75", coptic: "12", rituals: "15", behavior: "27", total: "72.5", percentage: "73%", evaluation: "جيد" },
+            { code: "2150", name: "فيلوباتير عبد الشهيد ملاك", class: "الثاني الابتدائي", level: "الأول", hymns: "20.5", bible: "24.25", coptic: "13", rituals: "18.5", behavior: "28.5", total: "84.75", percentage: "85%", evaluation: "جيد جداً" },
+            { code: "2151", name: "إيلاريا صموئيل فرج", class: "الثاني الابتدائي", level: "الأول", hymns: "23.25", bible: "25", coptic: "19", rituals: "17.5", behavior: "29.25", total: "94", percentage: "94%", evaluation: "إمتياز" },
+            { code: "2152", name: "ترنیم شنوده وليم", class: "الثاني الإبتدائي", level: "الأول", hymns: "23.5", bible: "24.75", coptic: "16", rituals: "18.5", behavior: "24", total: "86.75", percentage: "87%", evaluation: "جيد جداً" },
+            { code: "2153", name: "نيفان أبانوب نادي", class: "الثاني الابتدائي", level: "الأول", hymns: "23.25", bible: "25", coptic: "16", rituals: "17.5", behavior: "30", total: "91.75", percentage: "92%", evaluation: "إمتياز" },
+            { code: "2154", name: "جرجس إبراهيم جرجس", class: "الثاني الابتدائي", level: "الأول", hymns: "19", bible: "17.5", coptic: "12", rituals: "16", behavior: "26.25", total: "70.75", percentage: "71%", evaluation: "جيد" },
+            { code: "2155", name: "لوزیانه مینا فايز", class: "الثاني الإبتدائي", level: "الأول", hymns: "22.25", bible: "24.75", coptic: "17", rituals: "15", behavior: "30", total: "89", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "2156", name: "شنودة محروس صديق", class: "الثاني الإبتدائي", level: "الأول", hymns: "19.5", bible: "23.25", coptic: "12", rituals: "15", behavior: "30", total: "79.75", percentage: "80%", evaluation: "جيد" },
+            { code: "2157", name: "إبراهيم ملاك شحاته", class: "الثاني الابتدائي", level: "الأول", hymns: "17.5", bible: "18", coptic: "12", rituals: "17.5", behavior: "30", total: "75", percentage: "75%", evaluation: "جيد" },
+            { code: "2158", name: "يوسف أمير هاني", class: "الثاني الابتدائي", level: "الأول", hymns: "25", bible: "25", coptic: "20", rituals: "20", behavior: "29.25", total: "99.25", percentage: "99%", evaluation: "إمتياز" },
+            { code: "2159", name: "شنودة مينا نادي", class: "الثاني الابتدائي", level: "الأول", hymns: "17.75", bible: "22.25", coptic: "13", rituals: "18.5", behavior: "28.5", total: "80", percentage: "80%", evaluation: "جيد جداً" },
+            { code: "2160", name: "أنستاسيا ملاك ثابت", class: "الثاني الإبتدائي", level: "الأول", hymns: "21.75", bible: "24.5", coptic: "14", rituals: "18.5", behavior: "29.25", total: "88", percentage: "88%", evaluation: "جيد جدا" },
+            { code: "2161", name: "كارن مرقس ملاك", class: "الثاني الإبتدائي", level: "الأول", hymns: "25", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "100", percentage: "100%", evaluation: "إمتياز" },
+            { code: "2162", name: "مريم ميلاد نادي", class: "الثاني الابتدائي", level: "الأول", hymns: "23.75", bible: "25", coptic: "17", rituals: "19", behavior: "30", total: "94.75", percentage: "95%", evaluation: "إمتياز" },
+            { code: "2163", name: "جونير مرقس لمعي", class: "الثاني الابتدائي", level: "الأول", hymns: "25", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "100", percentage: "100%", evaluation: "إمتياز" },
+            { code: "2164", name: "بولا مينا بطرس", class: "الثاني الإبتدائي", level: "الأول", hymns: "18.25", bible: "23.25", coptic: "16", rituals: "17.5", behavior: "27", total: "82", percentage: "82%", evaluation: "جيد جداً" },
+            { code: "2165", name: "مارلي حليم ملاك", class: "الثاني الابتدائي", level: "الأول", hymns: "25", bible: "25", coptic: "18", rituals: "20", behavior: "30", total: "98", percentage: "98%", evaluation: "إمتياز" },
+            { code: "2216", name: "كارن روماني عيد", class: "الثاني الإبتدائي", level: "الأول", hymns: "22", bible: "24.25", coptic: "17", rituals: "18.5", behavior: "30", total: "91.75", percentage: "92%", evaluation: "امتياز" },
+            { code: "2217", name: "ماثيو غطاس إبراهيم", class: "الثاني الابتدائي", level: "الأول", hymns: "22.25", bible: "24.75", coptic: "17", rituals: "19.5", behavior: "29.25", total: "92.75", percentage: "93%", evaluation: "إمتياز" },
+            { code: "2218", name: "مارينا حنا شحاته", class: "الثاني الابتدائي", level: "الأول", hymns: "23.25", bible: "25", coptic: "16", rituals: "17.5", behavior: "30", total: "91.75", percentage: "92%", evaluation: "إمتياز" },
+            { code: "2219", name: "حبيبة رأفت سمير", class: "الثاني الإبتدائي", level: "الأول", hymns: "23.5", bible: "22.5", coptic: "14", rituals: "18.5", behavior: "29.25", total: "87.75", percentage: "88%", evaluation: "جيد جداً" },
+            { code: "2220", name: "مهرائيل أمير متي", class: "الأول", level: "الثاني الإيكاني", hymns: "23", bible: "22", coptic: "14", rituals: "19", behavior: "28.5", total: "86.5", percentage: "87%", evaluation: "جيد جداً" },
+            { code: "2221", name: "مادونا عبد المسيح حكيم", class: "الثاني الإبتدائي", level: "الأول", hymns: "22.25", bible: "24.5", coptic: "15", rituals: "19", behavior: "27", total: "87.75", percentage: "88%", evaluation: "جيد جداً" },
+            { code: "2166", name: "ماري مدحت ناجح", class: "الثالث الإبتدائي", level: "الثاني", hymns: "24.5", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "99.5", percentage: "100%", evaluation: "إمتياز" },
+            { code: "2167", name: "ساره مدحت لویس", class: "الثالث الإبتدائي", level: "الثاني", hymns: "25", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "100", percentage: "100%", evaluation: "إمتياز" },
+            { code: "2168", name: "كيرلس أمير ميلاد", class: "الثالث الابتدائي", level: "الثاني", hymns: "16.25", bible: "15.75", coptic: "17.5", rituals: "14", behavior: "29.25", total: "72.75", percentage: "73%", evaluation: "جيد" },
+            { code: "2169", name: "كارن يوسف إسحق", class: "الثالث الابتدائي", level: "الثاني", hymns: "23.75", bible: "24", coptic: "20", rituals: "20", behavior: "30", total: "97.75", percentage: "98%", evaluation: "إمتياز" },
+            { code: "2170", name: "آدم ميلاد عبد الساتر", class: "الثالث الابتدائي", level: "الثاني", hymns: "21.25", bible: "16.25", coptic: "17.5", rituals: "17", behavior: "30", total: "82", percentage: "82%", evaluation: "جيد جداً" },
+            { code: "2171", name: "شنوده صموئيل سمير", class: "الثالث الإبتدائي", level: "الثاني", hymns: "18.75", bible: "13.75", coptic: "15", rituals: "16", behavior: "29.25", total: "72.75", percentage: "73%", evaluation: "جيد" },
+            { code: "2172", name: "شنودة مرقس عيد نعيم", class: "الثالث الابتدائي", level: "الثاني", hymns: "23.75", bible: "25", coptic: "19", rituals: "20", behavior: "30", total: "97.75", percentage: "98%", evaluation: "امتياز" },
+            { code: "2173", name: "إيريني مدحت ملاك", class: "الثالث الابتدائي", level: "الثاني", hymns: "23.75", bible: "24", coptic: "19.5", rituals: "18", behavior: "30", total: "95.25", percentage: "95%", evaluation: "إمتياز" },
+            { code: "2174", name: "مرقس ملاك مرقس", class: "الثالث الإبتدائي", level: "الثاني", hymns: "21.5", bible: "19.75", coptic: "15", rituals: "16", behavior: "30", total: "82.25", percentage: "82%", evaluation: "جيد جداً" },
+            { code: "2175", name: "شنودة باسم نادي", class: "الثالث الإبتدائي", level: "الثاني", hymns: "16.25", bible: "16", coptic: "5", rituals: "14", behavior: "29.25", total: "60.5", percentage: "61%", evaluation: "مقبول" },
+            { code: "2176", name: "كاراس عماد سمير", class: "الثالث الابتدائي", level: "الثاني", hymns: "14.5", bible: "12.25", coptic: "7.5", rituals: "12", behavior: "30", total: "56.25", percentage: "56%", evaluation: "راسب" },
+            { code: "2177", name: "ميرونيا رأفت فوزي", class: "الثالث الابتدائي", level: "الثاني", hymns: "21.75", bible: "21.5", coptic: "19", rituals: "15", behavior: "28.5", total: "85.75", percentage: "86%", evaluation: "جيد جداً" },
+            { code: "2178", name: "مريم مينا صفوت", class: "الثالث الابتدائي", level: "الثاني", hymns: "23.5", bible: "21.5", coptic: "19.5", rituals: "18", behavior: "24.75", total: "87.25", percentage: "87%", evaluation: "جيد جدا" },
+            { code: "2179", name: "سارة ايمن يوسف", class: "الثالث الابتدائي", level: "الثاني", hymns: "23.5", bible: "15", coptic: "19.5", rituals: "16", behavior: "30", total: "84", percentage: "84%", evaluation: "جيد جداً" },
+            { code: "2180", name: "إيلاريا مينا سمير", class: "الثالث الابتدائي", level: "الثاني", hymns: "19.5", bible: "20", coptic: "17.5", rituals: "14", behavior: "30", total: "81", percentage: "81%", evaluation: "جيد جداً" },
+            { code: "2181", name: "رویس شنوده خلیل", class: "الثالث الابتدائي", level: "الثاني", hymns: "22.25", bible: "22.5", coptic: "19.5", rituals: "20", behavior: "28.5", total: "92.75", percentage: "93%", evaluation: "إمتياز" },
+            { code: "2182", name: "ساندي بطرس شفيق", class: "الثالث الإبتدائي", level: "الثاني", hymns: "22.5", bible: "18.75", coptic: "19", rituals: "14", behavior: "29.25", total: "83.5", percentage: "84%", evaluation: "جيد جداً" },
+            { code: "2183", name: "كيرمينا عادل مليكة", class: "الثالث الابتدائي", level: "الثاني", hymns: "22.5", bible: "17", coptic: "15", rituals: "19", behavior: "28.5", total: "82", percentage: "82%", evaluation: "جيد جدا" },
+            { code: "2184", name: "مارسلينو جاك إسحق", class: "الثالث الإبتدائي", level: "الثاني", hymns: "24", bible: "21.5", coptic: "20", rituals: "16", behavior: "29.25", total: "90.75", percentage: "91%", evaluation: "امتياز" },
+            { code: "2222", name: "فيلوباتير صلاح إسطفانوس", class: "الثالث الابتدائي", level: "الثاني", hymns: "18.25", bible: "11", coptic: "5", rituals: "14", behavior: "29.25", total: "57.5", percentage: "58%", evaluation: "راسب" },
+            { code: "2223", name: "توماس رضا عوض", class: "الثالث الإبتدائي", level: "الثاني", hymns: "15.75", bible: "16", coptic: "7.5", rituals: "14", behavior: "28.5", total: "61.75", percentage: "62%", evaluation: "مقبول" },
+            { code: "2239", name: "إسحاق عيد ثابت", class: "الثالث الابتدائي", level: "الثاني", hymns: "15.25", bible: "12.25", coptic: "12.5", rituals: "11", behavior: "26.25", total: "57.25", percentage: "57%", evaluation: "راسب" },
+            { code: "2185", name: "مورا شنودة ملاك", class: "الرابع الابتدائي", level: "الثاني", hymns: "15.75", bible: "23.75", coptic: "20", rituals: "18", behavior: "30", total: "87.5", percentage: "88%", evaluation: "جيد جداً" },
+            { code: "2186", name: "ماري جرجس عيد", class: "الرابع الإبتدائي", level: "الثاني", hymns: "16.25", bible: "18.75", coptic: "7.5", rituals: "18", behavior: "30", total: "70.5", percentage: "71%", evaluation: "جيد" },
+            { code: "2187", name: "مهرائيل مجدي ميلاد", class: "الرابع الابتدائي", level: "الثاني", hymns: "17.75", bible: "17.5", coptic: "7.5", rituals: "16", behavior: "30", total: "68.75", percentage: "69%", evaluation: "مقبول" },
+            { code: "2188", name: "بيشوي أنطونيوس يونان", class: "الرابع الابتدائي", level: "الثاني", hymns: "21.25", bible: "20", coptic: "17.5", rituals: "20", behavior: "30", total: "88.75", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "2189", name: "مريم عدلي فايز", class: "الرابع الإبتدائي", level: "الثاني", hymns: "19.5", bible: "20", coptic: "20", rituals: "12", behavior: "29.25", total: "80.75", percentage: "81%", evaluation: "جيد جدا" },
+            { code: "2190", name: "سيمون سامح بولس", class: "الرابع الابتدائي", level: "الثاني", hymns: "23.25", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "98.25", percentage: "98%", evaluation: "إمتياز" },
+            { code: "2191", name: "شنودة عبد الشهيد ملاك", class: "الرابع الابتدائي", level: "الثاني", hymns: "15.75", bible: "15", coptic: "15", rituals: "16", behavior: "30", total: "71.75", percentage: "72%", evaluation: "جيد" },
+            { code: "2193", name: "يوستينا رضا محروس", class: "الرابع الابتدائي", level: "الثاني", hymns: "23.25", bible: "25", coptic: "20", rituals: "20", behavior: "30", total: "98.25", percentage: "98%", evaluation: "إمتياز" },
+            { code: "2194", name: "جورج عبد المسيح عيد", class: "الرابع الابتدائي", level: "الثاني", hymns: "24.5", bible: "23.75", coptic: "20", rituals: "20", behavior: "30", total: "98.25", percentage: "98%", evaluation: "إمتياز" },
+            { code: "2195", name: "يوستينا سامح ميلاد", class: "الرابع الابتدائي", level: "الثاني", hymns: "15", bible: "18.75", coptic: "20", rituals: "14", behavior: "28.5", total: "76.25", percentage: "76%", evaluation: "جيد" },
+            { code: "2196", name: "ماريز حزين صليب", class: "الرابع الابتدائي", level: "الثاني", hymns: "18.75", bible: "21.25", coptic: "20", rituals: "20", behavior: "28.5", total: "88.5", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "2197", name: "دميانه صبحي عيد", class: "الرابع الابتدائي", level: "الثاني", hymns: "16.25", bible: "17.5", coptic: "7.5", rituals: "18", behavior: "27.75", total: "67", percentage: "67%", evaluation: "مقبول" },
+            { code: "2198", name: "ماریهان شهير ملاك", class: "الرابع الابتدائي", level: "الثاني", hymns: "22", bible: "22.5", coptic: "17.5", rituals: "20", behavior: "29.25", total: "91.25", percentage: "91%", evaluation: "إمتياز" },
+            { code: "2199", name: "ميخائيل ملاك لطفي", class: "الرابع الإبتدائي", level: "الثاني", hymns: "25", bible: "20", coptic: "20", rituals: "20", behavior: "29.25", total: "94.25", percentage: "94%", evaluation: "إمتياز" },
+            { code: "21100", name: "مريم رضا حنا", class: "الرابع الإيكاني", level: "الثاني", hymns: "18.25", bible: "23.75", coptic: "12.5", rituals: "20", behavior: "28.5", total: "83", percentage: "83%", evaluation: "جيد جداً" },
+            { code: "21102", name: "دولاجي عازر خليل", class: "الرابع الإبتدائي", level: "الثاني", hymns: "16.75", bible: "11.25", coptic: "0", rituals: "12", behavior: "29.25", total: "49.25", percentage: "49%", evaluation: "راسب" },
+            { code: "21104", name: "نظير عبد الشهيد متي", class: "الرابع الابتدائي", level: "الثاني", hymns: "12.5", bible: "15", coptic: "0", rituals: "12", behavior: "25.5", total: "45", percentage: "45%", evaluation: "راسب" },
+            { code: "21105", name: "مريم عبد الشهيد ملاك", class: "الرابع الابتدائي", level: "الثاني", hymns: "19.75", bible: "11.25", coptic: "12.5", rituals: "16", behavior: "30", total: "69.5", percentage: "70%", evaluation: "مقبول" },
+            { code: "2224", name: "شنودة أنطون عزت", class: "الرابع الابتدائي", level: "الثاني", hymns: "22.75", bible: "22.5", coptic: "20", rituals: "20", behavior: "30", total: "95.25", percentage: "95%", evaluation: "إمتياز" },
+            { code: "2225", name: "كيرلس وجيه شارود", class: "الرابع الابتدائي", level: "الثاني", hymns: "12.5", bible: "12.5", coptic: "15", rituals: "20", behavior: "27.75", total: "67.75", percentage: "68%", evaluation: "مقبول" },
+            { code: "21106", name: "إستيفن زكريا مكرم", class: "الخامس الإبتدائي", level: "الثالث", hymns: "14", bible: "12.5", coptic: "7.5", rituals: "10", behavior: "27", total: "51", percentage: "51%", evaluation: "راسب" },
+            { code: "21107", name: "ماركو مينا مرقس", class: "الخامس الابتدائي", level: "الثالث", hymns: "22", bible: "13.75", coptic: "17.5", rituals: "16", behavior: "30", total: "79.25", percentage: "79%", evaluation: "جيد" },
+            { code: "21108", name: "إيلاريا مينا مكرم", class: "الخامس الابتدائي", level: "الثالث", hymns: "23", bible: "17.5", coptic: "20", rituals: "18", behavior: "30", total: "88.5", percentage: "89%", evaluation: "جيد جدا" },
+            { code: "21109", name: "جورج معوض مصباح", class: "الخامس الإبتدائي", level: "الثالث", hymns: "7.5", bible: "10", coptic: "20", rituals: "0", behavior: "27.75", total: "45.25", percentage: "45%", evaluation: "راسب" },
+            { code: "21111", name: "اردينا مدحت ملاك", class: "الخامس الابتدائي", level: "الثالث", hymns: "15", bible: "16.25", coptic: "12.5", rituals: "16", behavior: "30", total: "69.75", percentage: "70%", evaluation: "مقبول" },
+            { code: "21112", name: "جونير ملاك يوسف", class: "الخامس الابتدائي", level: "الثالث", hymns: "0", bible: "0", coptic: "0", rituals: "0", behavior: "21", total: "1", percentage: "1%", evaluation: "راسب" },
+            { code: "21113", name: "جومانا ملاك مرقس", class: "الخامس الابتدائي", level: "الثالث", hymns: "22.75", bible: "17.5", coptic: "12.5", rituals: "18", behavior: "30", total: "80.75", percentage: "81%", evaluation: "جيد جداً" },
+            { code: "21114", name: "صموئيل ملاك شحاته", class: "الخامس الابتدائي", level: "الثالث", hymns: "16.5", bible: "16.25", coptic: "5", rituals: "12", behavior: "24.75", total: "54.5", percentage: "55%", evaluation: "راسب" },
+            { code: "21115", name: "كاراس عبد الشهيد سمير", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.75", bible: "22.5", coptic: "20", rituals: "18", behavior: "30", total: "95.25", percentage: "95%", evaluation: "إمتياز" },
+            { code: "21116", name: "ملك حنا شحاته", class: "الخامس الابتدائي", level: "الثالث", hymns: "18.75", bible: "13.75", coptic: "15", rituals: "18", behavior: "30", total: "75.5", percentage: "76%", evaluation: "جيد" },
+            { code: "21117", name: "جورج ميلاد صفوت", class: "الخامس الابتدائي", level: "الثالث", hymns: "14", bible: "13.75", coptic: "2.5", rituals: "6", behavior: "28.5", total: "44.75", percentage: "45%", evaluation: "راسب" },
+            { code: "21118", name: "صموئيل اشرف ملاك", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.75", bible: "23.75", coptic: "20", rituals: "14", behavior: "29.25", total: "91.75", percentage: "92%", evaluation: "إمتياز" },
+            { code: "21119", name: "کاراس ملاك صليب", class: "الخامس الابتدائي", level: "الثالث", hymns: "14", bible: "15", coptic: "15", rituals: "14", behavior: "27", total: "65", percentage: "65%", evaluation: "مقبول" },
+            { code: "21120", name: "ماري مرقس رشدي", class: "الخامس الابتدائي", level: "الثالث", hymns: "14", bible: "16.25", coptic: "15", rituals: "16", behavior: "30", total: "71.25", percentage: "71%", evaluation: "جيد" },
+            { code: "21121", name: "مارفي مينا ملاك", class: "الخامس الإبتدائي", level: "الثالث", hymns: "24.75", bible: "20", coptic: "17.5", rituals: "18", behavior: "29.25", total: "89.5", percentage: "90%", evaluation: "جيد جداً" },
+            { code: "21122", name: "كيرلس مينا فايز", class: "الخامس الابتدائي", level: "الثالث", hymns: "14", bible: "16.25", coptic: "0", rituals: "14", behavior: "30", total: "54.25", percentage: "54%", evaluation: "راسب" },
+            { code: "21123", name: "صموئيل حنا نجيب", class: "الخامس الابتدائي", level: "الثالث", hymns: "14", bible: "8.75", coptic: "7.5", rituals: "10", behavior: "30", total: "50.25", percentage: "50%", evaluation: "راسب" },
+            { code: "21124", name: "جوزيف مينا بطرس", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.75", bible: "22.5", coptic: "15", rituals: "18", behavior: "30", total: "90.25", percentage: "90%", evaluation: "إمتياز" },
+            { code: "21125", name: "انطون امير ملاك", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.75", bible: "21.25", coptic: "17.5", rituals: "18", behavior: "30", total: "91.5", percentage: "92%", evaluation: "إمتياز" },
+            { code: "21127", name: "أردينا مينا ميخائيل", class: "الخامس الابتدائي", level: "الثالث", hymns: "14.5", bible: "16.25", coptic: "10", rituals: "20", behavior: "30", total: "70.75", percentage: "71%", evaluation: "جيد" },
+            { code: "21128", name: "إنجي صليب ملاك", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.5", bible: "20", coptic: "17.5", rituals: "12", behavior: "30", total: "84", percentage: "84%", evaluation: "جيد جدا" },
+            { code: "21129", name: "جومانا ملاك يوسف", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.25", bible: "16.25", coptic: "17.5", rituals: "18", behavior: "28.5", total: "84.5", percentage: "85%", evaluation: "جيد جداً" },
+            { code: "21130", name: "ابانوب مرقس نادي", class: "الخامس الإبتدائي", level: "الثالث", hymns: "24.25", bible: "23.75", coptic: "20", rituals: "14", behavior: "30", total: "92", percentage: "92%", evaluation: "امتياز" },
+            { code: "21131", name: "ماري جرجس ملاك", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.75", bible: "18.75", coptic: "15", rituals: "18", behavior: "30", total: "86.5", percentage: "87%", evaluation: "جيد جداً" },
+            { code: "21132", name: "سالي مجدي يوسف", class: "الخامس الابتدائي", level: "الثالث", hymns: "22.25", bible: "17.5", coptic: "10", rituals: "18", behavior: "30", total: "77.75", percentage: "78%", evaluation: "جيد" },
+            { code: "21133", name: "ساندي صليب حنا", class: "الخامس الابتدائي", level: "الثالث", hymns: "24.75", bible: "16.25", coptic: "12.5", rituals: "18", behavior: "30", total: "81.5", percentage: "82%", evaluation: "جيد جداً" },
+            { code: "21134", name: "ريموندا نبيل سلامه", class: "الخامس الابتدائي", level: "الثالث", hymns: "19", bible: "16.25", coptic: "10", rituals: "18", behavior: "29.25", total: "72.5", percentage: "73%", evaluation: "جيد" },
+            { code: "21135", name: "أرميا شنودة صبحي", class: "الخامس الابتدائي", level: "الثالث", hymns: "14.5", bible: "11.25", coptic: "2.5", rituals: "14", behavior: "26.25", total: "48.5", percentage: "49%", evaluation: "راسب" },
+            { code: "21136", name: "مريم ملاك خليل", class: "الخامس الإبتدائي", level: "الثالث", hymns: "15", bible: "16.25", coptic: "12.5", rituals: "14", behavior: "30", total: "67.75", percentage: "68%", evaluation: "مقبول" },
+            { code: "2226", name: "ناردين أسامة إسحق", class: "الخامس الابتدائي", level: "الثالث", hymns: "15", bible: "16.25", coptic: "12.5", rituals: "16", behavior: "30", total: "69.75", percentage: "70%", evaluation: "مقبول" },
+            { code: "2227", name: "روفائيل صموئيل لويس", class: "الخامس الإبتدائي", level: "الثالث", hymns: "14", bible: "12.5", coptic: "12.5", rituals: "10", behavior: "29.25", total: "58.25", percentage: "58%", evaluation: "راسب" },
+            { code: "2228", name: "مينا جابر عياد", class: "الخامس الابتدائي", level: "الثالث", hymns: "0", bible: "0", coptic: "0", rituals: "0", behavior: "18.75", total: "-1.25", percentage: "-1%", evaluation: "راسب" },
+            { code: "21138", name: "فادي شنودة ملاك", class: "السادس الابتدائي", level: "الثالث", hymns: "23", bible: "17.5", coptic: "14", rituals: "16", behavior: "30", total: "80.5", percentage: "81%", evaluation: "جيد جدا" },
+            { code: "21139", name: "صبري جرجس عيد", class: "السادس الإبتدائي", level: "الثالث", hymns: "20.75", bible: "17.5", coptic: "20", rituals: "12", behavior: "30", total: "80.25", percentage: "80%", evaluation: "جيد جداً" },
+            { code: "21140", name: "كيرلس ميخائيل فهمي", class: "السادس الابتدائي", level: "الثالث", hymns: "20.5", bible: "17.5", coptic: "18", rituals: "6", behavior: "27", total: "69", percentage: "69%", evaluation: "مقبول" },
+            { code: "21141", name: "كيرلس يوسف اسحق", class: "السادس الابتدائي", level: "الثالث", hymns: "22", bible: "18.75", coptic: "20", rituals: "18", behavior: "30", total: "88.75", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "21142", name: "ميخائيل عدلي فايز", class: "السادس الابتدائي", level: "الثالث", hymns: "12.75", bible: "11.25", coptic: "10", rituals: "10", behavior: "28.5", total: "52.5", percentage: "53%", evaluation: "راسب" },
+            { code: "21143", name: "بولا جيد حنا", class: "السادس الابتدائي", level: "الثالث", hymns: "24.75", bible: "20", coptic: "20", rituals: "14", behavior: "29.25", total: "88", percentage: "88%", evaluation: "جيد جداً" },
+            { code: "21144", name: "كيرلس ملاك شحاته", class: "السادس الابتدائي", level: "الثالث", hymns: "13.75", bible: "12.5", coptic: "10", rituals: "14", behavior: "28.5", total: "58.75", percentage: "59%", evaluation: "راسب" },
+            { code: "21145", name: "اوليفيا رضا محروس", class: "السادس الابتدائي", level: "الثالث", hymns: "24.75", bible: "17.5", coptic: "20", rituals: "20", behavior: "30", total: "92.25", percentage: "92%", evaluation: "إمتياز" },
+            { code: "21146", name: "جونير عبد المسيح عيد", class: "السادس الابتدائي", level: "الثالث", hymns: "25", bible: "18.75", coptic: "20", rituals: "14", behavior: "30", total: "87.75", percentage: "88%", evaluation: "جيد جدا" },
+            { code: "21147", name: "مینا رضا صلاح", class: "السادس الابتدائي", level: "الثالث", hymns: "22.25", bible: "16.25", coptic: "18", rituals: "12", behavior: "30", total: "78.5", percentage: "79%", evaluation: "جيد" },
+            { code: "21148", name: "كيرلس عماد خليل", class: "السادس الابتدائي", level: "الثالث", hymns: "13.25", bible: "16.25", coptic: "14", rituals: "4", behavior: "29.25", total: "56.75", percentage: "57%", evaluation: "راسب" },
+            { code: "21149", name: "مريم عبد المسيح حكيم", class: "السادس الابتدائي", level: "الثالث", hymns: "25", bible: "20", coptic: "20", rituals: "12", behavior: "30", total: "87", percentage: "87%", evaluation: "جيد جداً" },
+            { code: "21150", name: "كيرلس مينا نصحي", class: "السادس الابتدائي", level: "الثالث", hymns: "22.5", bible: "18.75", coptic: "20", rituals: "16", behavior: "30", total: "87.25", percentage: "87%", evaluation: "جيد جداً" },
+            { code: "21151", name: "ايريني مينا مكرم", class: "السادس الابتدائي", level: "الثالث", hymns: "18.5", bible: "10", coptic: "20", rituals: "16", behavior: "30", total: "74.5", percentage: "75%", evaluation: "جيد" },
+            { code: "21153", name: "مريم مجدي ميلاد", class: "السادس الابتدائي", level: "الثالث", hymns: "12.75", bible: "7.5", coptic: "0", rituals: "12", behavior: "27.75", total: "40", percentage: "40%", evaluation: "راسب" },
+            { code: "21154", name: "ريمون فيليب بولس", class: "السادس الإبتدائي", level: "الثالث", hymns: "20", bible: "11.25", coptic: "20", rituals: "16", behavior: "28.5", total: "75.75", percentage: "76%", evaluation: "جيد" },
+            { code: "21155", name: "كاراس ماجد مقار", class: "السادس الابتدائي", level: "الثالث", hymns: "24.5", bible: "13.75", coptic: "20", rituals: "12", behavior: "30", total: "80.25", percentage: "80%", evaluation: "جيد جداً" },
+            { code: "21156", name: "مينا أمير هاني", class: "السادس الابتدائي", level: "الثالث", hymns: "22.75", bible: "20", coptic: "20", rituals: "14", behavior: "29.25", total: "86", percentage: "86%", evaluation: "جيد جداً" },
+            { code: "21157", name: "ماركو رضا عوض", class: "السادس الابتدائي", level: "الثالث", hymns: "12.75", bible: "11.25", coptic: "6", rituals: "10", behavior: "30", total: "50", percentage: "50%", evaluation: "راسب" },
+            { code: "21158", name: "كاراس أمير متي", class: "السادس الإبتدائي", level: "الثالث", hymns: "12.75", bible: "8.75", coptic: "6", rituals: "14", behavior: "27.75", total: "49.25", percentage: "49%", evaluation: "راسب" },
+            { code: "21159", name: "سيلفيا عبد الشهيد متي", class: "السادس الإبتدائي", level: "الثالث", hymns: "15", bible: "21.25", coptic: "20", rituals: "18", behavior: "30", total: "84.25", percentage: "84%", evaluation: "جيد جداً" },
+            { code: "21160", name: "كيرلس ميلاد محروس", class: "السادس الإبتدائي", level: "الثالث", hymns: "13.25", bible: "13.75", coptic: "20", rituals: "14", behavior: "27.75", total: "68.75", percentage: "69%", evaluation: "مقبول" },
+            { code: "21161", name: "توماس عبد الشهيد ملاك", class: "السادس الابتدائي", level: "الثالث", hymns: "20.5", bible: "16.25", coptic: "18", rituals: "14", behavior: "30", total: "78.75", percentage: "79%", evaluation: "جيد" },
+            { code: "21162", name: "مریم رافت شارود", class: "السادس الإبتدائي", level: "الثالث", hymns: "17.5", bible: "16.25", coptic: "14", rituals: "14", behavior: "28.5", total: "70.25", percentage: "70%", evaluation: "جيد" },
+            { code: "21163", name: "ساره هاني كامل", class: "السكس الابتدائي", level: "الثالث", hymns: "12.75", bible: "15", coptic: "16", rituals: "16", behavior: "28.5", total: "66.75", percentage: "68%", evaluation: "مقبول" },
+            { code: "21164", name: "ساندي مرقس لويس", class: "السادس الابتدائي", level: "الثالث", hymns: "15.5", bible: "15", coptic: "12", rituals: "15", behavior: "29.25", total: "66.75", percentage: "67%", evaluation: "مقبول" },
+            { code: "21165", name: "كيرلس حنا لطفي", class: "السادس الابتدائي", level: "الثالث", hymns: "13.25", bible: "10", coptic: "12", rituals: "10", behavior: "24.75", total: "50", percentage: "50%", evaluation: "راسب" },
+            { code: "2229", name: "مينا صبحي نجيب", class: "السادس الإبتدائي", level: "الثالث", hymns: "22.5", bible: "17.5", coptic: "14", rituals: "12", behavior: "29.25", total: "75.25", percentage: "75%", evaluation: "جيد" },
+            { code: "2230", name: "موسي أشرف نجيب", class: "السادس الإبتدائي", level: "الثالث", hymns: "16.25", bible: "15", coptic: "20", rituals: "12", behavior: "28.5", total: "71.75", percentage: "72%", evaluation: "جيد" },
+            { code: "2231", name: "جومانا مجدي فايز", class: "السادس الابتدائي", level: "الثالث", hymns: "15", bible: "20", coptic: "16", rituals: "18.5", behavior: "30", total: "79.5", percentage: "80%", evaluation: "جيد" },
+            { code: "2232", name: "مريم عطية حنا", class: "السادس الابتدائي", level: "الثالث", hymns: "12.75", bible: "10", coptic: "4", rituals: "14", behavior: "26.25", total: "47", percentage: "47%", evaluation: "راسب" },
+            { code: "2233", name: "إبراهيم عادل إبراهيم", class: "السادس الإبتدائي", level: "الثالث", hymns: "15.75", bible: "15", coptic: "10", rituals: "12", behavior: "27.75", total: "60.5", percentage: "61%", evaluation: "مقبول" },
+            { code: "2234", name: "إبراهيم عيد ثابت عبد الملاك", class: "السادس الابتدائي", level: "الثالث", hymns: "12.75", bible: "12.5", coptic: "6", rituals: "6", behavior: "27.75", total: "45", percentage: "45%", evaluation: "راسب" },
+            { code: "21167", name: "أبانوب زكريا مكرم", class: "الأول الاعدادي", level: "الرابع", hymns: "23.25", bible: "17.5", coptic: "16", rituals: "20", behavior: "29.25", total: "86", percentage: "86%", evaluation: "جيد جدا" },
+            { code: "21168", name: "أندرو عماد يوسف", class: "الأول الإعدادي", level: "الرابع", hymns: "20.25", bible: "14.25", coptic: "13", rituals: "20", behavior: "28.5", total: "76", percentage: "76%", evaluation: "جيد" },
+            { code: "21169", name: "كيرلس مينا مرقس", class: "الأول الإعدادي", level: "الرابع", hymns: "22.75", bible: "15", coptic: "14", rituals: "18", behavior: "30", total: "79.75", percentage: "80%", evaluation: "جيد" },
+            { code: "21170", name: "كرستين صموئيل لويس", class: "الأول الإعدادي", level: "الرابع", hymns: "15", bible: "16.25", coptic: "8", rituals: "14", behavior: "29.25", total: "62.5", percentage: "63%", evaluation: "مقبول" },
+            { code: "21172", name: "مريم صبحي عيد", class: "الأول الإعدادي", level: "الرابع", hymns: "20.5", bible: "13.75", coptic: "16", rituals: "10", behavior: "30", total: "70.25", percentage: "70%", evaluation: "جيد" },
+            { code: "21173", name: "جوليا مينا بطرس", class: "الثالث الاعدادي", level: "الرابع", hymns: "24", bible: "20", coptic: "20", rituals: "20", behavior: "30", total: "94", percentage: "94%", evaluation: "إمتياز" },
+            { code: "21174", name: "يوسف هاني حبيب", class: "الأول الإعدادي", level: "الرابع", hymns: "21.25", bible: "16.25", coptic: "16", rituals: "14", behavior: "30", total: "77.5", percentage: "78%", evaluation: "جيد" },
+            { code: "21175", name: "إنجي هاني خليل", class: "الأول الإعدادي", level: "الرابع", hymns: "22.25", bible: "10", coptic: "16", rituals: "18", behavior: "30", total: "76.25", percentage: "76%", evaluation: "جيد" },
+            { code: "21178", name: "مرقس ملاك خليل", class: "الأول الإعدادي", level: "الرابع", hymns: "14", bible: "15", coptic: "12", rituals: "18", behavior: "30", total: "69", percentage: "69%", evaluation: "مقبول" },
+            { code: "21179", name: "رامي عازر نصحي", class: "الأول الإعدادي", level: "الرابع", hymns: "17.5", bible: "4.5", coptic: "14", rituals: "0", behavior: "27.75", total: "43.75", percentage: "44%", evaluation: "راسب" },
+            { code: "2235", name: "بولا ثروت شارود", class: "الأول الإعدادي", level: "الرابع", hymns: "6.5", bible: "0", coptic: "0", rituals: "0", behavior: "23.25", total: "9.75", percentage: "10%", evaluation: "راسب" },
+            { code: "21180", name: "مرقس ميخائيل فهمي", class: "الثاني الإعدادي", level: "الرابع", hymns: "5.75", bible: "8.75", coptic: "12", rituals: "0", behavior: "29.25", total: "35.75", percentage: "36%", evaluation: "راسب" },
+            { code: "21181", name: "مینا امیر میلاد", class: "الثاني الإعدادي", level: "الرابع", hymns: "12.75", bible: "16.5", coptic: "13", rituals: "10", behavior: "27", total: "59.25", percentage: "59%", evaluation: "راسب" },
+            { code: "21182", name: "ابانوب مينا عبد الملاك", class: "الثاني الإعدادي", level: "الرابع", hymns: "13.25", bible: "16.5", coptic: "17", rituals: "18", behavior: "28.5", total: "73.25", percentage: "73%", evaluation: "جيد" },
+            { code: "21183", name: "كيرلس عبد الشهيد سمير", class: "الثاني الإعدادي", level: "الرابع", hymns: "19.25", bible: "16", coptic: "18", rituals: "12", behavior: "28.5", total: "73.75", percentage: "74%", evaluation: "جيد" },
+            { code: "21184", name: "مريم هاني لطفي", class: "الثاني الاعدادي", level: "الرابع", hymns: "20.75", bible: "20.25", coptic: "18", rituals: "12", behavior: "30", total: "81", percentage: "81%", evaluation: "جيد جدا" },
+            { code: "21185", name: "كيرلس مينا صفوت", class: "الثاني الإعدادي", level: "الرابع", hymns: "12.75", bible: "14.75", coptic: "18", rituals: "16", behavior: "28.5", total: "70", percentage: "70%", evaluation: "جيد" },
+            { code: "21186", name: "جومانا ملاك صليب", class: "الثاني الاعدادي", level: "الرابع", hymns: "19", bible: "19.75", coptic: "17", rituals: "12", behavior: "28.5", total: "76.25", percentage: "76%", evaluation: "جيد" },
+            { code: "21187", name: "مريم ايمن ملاك", class: "الثاني الإعدادي", level: "الرابع", hymns: "19", bible: "20.25", coptic: "16", rituals: "12", behavior: "28.5", total: "75.75", percentage: "76%", evaluation: "جيد" },
+            { code: "21188", name: "ايريني اشرف مسعد", class: "الثاني الإعدادي", level: "الرابع", hymns: "21.25", bible: "18.25", coptic: "18", rituals: "12", behavior: "30", total: "79.5", percentage: "80%", evaluation: "جيد" },
+            { code: "21189", name: "يوسف اسحق عبد الملاك", class: "الثاني الإعدادي", level: "الرابع", hymns: "12.25", bible: "10", coptic: "18", rituals: "0", behavior: "26.25", total: "46.5", percentage: "47%", evaluation: "راسب" },
+            { code: "21190", name: "ابرام مينا نصحي", class: "الثاني الإعدادي", level: "الرابع", hymns: "24.5", bible: "23.75", coptic: "20", rituals: "18", behavior: "30", total: "96.25", percentage: "96%", evaluation: "إمتياز" },
+            { code: "21191", name: "ساره وجيه شارود", class: "الثاني الإعدادي", level: "الرابع", hymns: "20.75", bible: "17.5", coptic: "17", rituals: "12", behavior: "30", total: "77.25", percentage: "77%", evaluation: "جيد" },
+            { code: "21192", name: "مهرائيل مرقس عيد", class: "الثاني الإعدادي", level: "الرابع", hymns: "19.25", bible: "15.5", coptic: "20", rituals: "10", behavior: "29.25", total: "74", percentage: "74%", evaluation: "جيد" },
+            { code: "21193", name: "يوسف رأفت سمير", class: "الثاني الإعدادي", level: "الرابع", hymns: "14", bible: "15", coptic: "10", rituals: "12", behavior: "27", total: "58", percentage: "58%", evaluation: "راسب" },
+            { code: "21194", name: "كيرلس باسم نادي", class: "الثاني الإعدادي", level: "الرابع", hymns: "14.25", bible: "14.25", coptic: "12", rituals: "14", behavior: "27", total: "61.5", percentage: "62%", evaluation: "مقبول" },
+            { code: "21196", name: "مريم شنودة صبحي", class: "الثاني الإعدادي", level: "الرابع", hymns: "19", bible: "19", coptic: "16", rituals: "14", behavior: "29.25", total: "77.25", percentage: "77%", evaluation: "جيد" },
+            { code: "21198", name: "يسطس رضا رشدي", class: "الثاني الإعدادي", level: "الرابع", hymns: "12.75", bible: "14.25", coptic: "16", rituals: "12", behavior: "27.75", total: "62.75", percentage: "63%", evaluation: "مقبول" },
+            { code: "21199", name: "میخائیل هاني رشدي", class: "الثاني الإعدادي", level: "الرابع", hymns: "12", bible: "11.25", coptic: "12", rituals: "12", behavior: "28.5", total: "55.75", percentage: "56%", evaluation: "راسب" },
+            { code: "21204", name: "إيريني أسامة إسحاق", class: "الثاني الإعدادي", level: "الرابع", hymns: "16.5", bible: "17", coptic: "16", rituals: "12", behavior: "29.25", total: "70.75", percentage: "71%", evaluation: "جيد" },
+            { code: "21206", name: "جورج حليم ملاك", class: "الثاني الإعدادي", level: "الرابع", hymns: "12.25", bible: "15", coptic: "8", rituals: "10", behavior: "24.75", total: "50", percentage: "50%", evaluation: "راسب" },
+            { code: "2237", name: "فيرونيا بهجت عيد", class: "الثاني الإعدادي", level: "الرابع", hymns: "20", bible: "20.5", coptic: "16", rituals: "16", behavior: "28.5", total: "81", percentage: "81%", evaluation: "جيد جدا" },
+            { code: "2240", name: "جومانة صبري عيد", class: "الثاني الإعدادي", level: "الرابع", hymns: "18.75", bible: "17.5", coptic: "12", rituals: "14", behavior: "29.25", total: "71.5", percentage: "72%", evaluation: "جيد" },
+            { code: "21210", name: "مارينا مدحت لويس", class: "الثالث الإعدادي", level: "الخامس", hymns: "25", bible: "20", coptic: "20", rituals: "14", behavior: "30", total: "89", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "21211", name: "دينا صموئيل لويس", class: "الثالث الإعدادي", level: "الخامس", hymns: "20", bible: "17.5", coptic: "16", rituals: "16", behavior: "28.5", total: "78", percentage: "78%", evaluation: "جيد" },
+            { code: "21212", name: "ندي جيد حنا", class: "الثالث الاعدادي", level: "الخام", hymns: "23.25", bible: "17.5", coptic: "16", rituals: "18", behavior: "30", total: "84.75", percentage: "85%", evaluation: "جيد جداً" },
+            { code: "21213", name: "ساره ملاك مرقس", class: "الثالث الإعدادي", level: "الثالث الاعدادي", hymns: "23.75", bible: "22.5", coptic: "20", rituals: "18", behavior: "30", total: "94.25", percentage: "94%", evaluation: "إمتياز" },
+            { code: "21214", name: "حنا رضا حنا", class: "الثالث الإعدادي", level: "الخامس", hymns: "18.5", bible: "20", coptic: "18", rituals: "18", behavior: "29.25", total: "83.75", percentage: "84%", evaluation: "جيد جداً" },
+            { code: "21215", name: "انطونيوس حنا شحاته", class: "الثالث الإعدادي", level: "الخامس", hymns: "23.25", bible: "25", coptic: "20", rituals: "18", behavior: "28.5", total: "94.75", percentage: "95%", evaluation: "إمتياز" },
+            { code: "21216", name: "جون مجدي حنا", class: "الثالث الإعدادي.", level: "الثالث الإعدادي", hymns: "14", bible: "17.5", coptic: "14", rituals: "18", behavior: "27", total: "70.5", percentage: "71%", evaluation: "جيد" },
+            { code: "21217", name: "إسحاق ملاك إسحاق", class: "الثالث الإعدادي", level: "الثالث الإعدادي", hymns: "18.75", bible: "22.5", coptic: "18", rituals: "18", behavior: "27", total: "84.25", percentage: "84%", evaluation: "جيد جداً" },
+            { code: "21218", name: "مينا صليب حنا", class: "الثالث الاعدادي", level: "الثالث الاعدادي", hymns: "16", bible: "20", coptic: "14", rituals: "18", behavior: "26.25", total: "74.25", percentage: "74%", evaluation: "جيد" },
+            { code: "21219", name: "بيشوي أمير يونان", class: "الثالث الاعدادي", level: "الثالث الاعدادي", hymns: "24.25", bible: "22.5", coptic: "18", rituals: "18", behavior: "27", total: "89.75", percentage: "90%", evaluation: "جيد جداً" },
+            { code: "21220", name: "إيريني رضا عوض", class: "الثالث الإعدادي", level: "الثالث الإعدادي", hymns: "22", bible: "25", coptic: "20", rituals: "16", behavior: "30", total: "93", percentage: "93%", evaluation: "امتياز" },
+            { code: "21221", name: "سارة عيد ثابت", class: "الثالث الإعدادي", level: "الثالث الإعدادي", hymns: "18", bible: "22.5", coptic: "20", rituals: "12", behavior: "26.25", total: "78.75", percentage: "79%", evaluation: "جيد" },
+            { code: "21222", name: "عبد المسيح ماجد مقار", class: "الثالث الاعدادي", level: "الثالث الاعدادي", hymns: "25", bible: "25", coptic: "18", rituals: "18", behavior: "30", total: "96", percentage: "96%", evaluation: "إمتياز" },
+            { code: "21223", name: "سوسنة عازر خليل", class: "الثالث الاعدادي", level: "الثالث الاعدادي", hymns: "23.75", bible: "17.5", coptic: "20", rituals: "18", behavior: "30", total: "89.25", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "21224", name: "فادية كامل حنس", class: "الثالث الإعدادي.", level: "الثالث الإعدادي.", hymns: "20", bible: "22.5", coptic: "18", rituals: "16", behavior: "30", total: "86.5", percentage: "87%", evaluation: "جيد جداً" },
+            { code: "21225", name: "موسي مدحت ناجح", class: "الثالث الإعدادي", level: "الثالث الإعدادي", hymns: "18.5", bible: "22.5", coptic: "18", rituals: "20", behavior: "30", total: "89", percentage: "89%", evaluation: "جيد جداً" },
+            { code: "21227", name: "أنطون أمير عزت", class: "الثالث الاعدادي", level: "الثالث الاعدادي", hymns: "7.75", bible: "0", coptic: "0", rituals: "18", behavior: "24.75", total: "30.5", percentage: "31%", evaluation: "راسب" },
+            { code: "2238", name: "متي أمير متي", class: "الثالث الاعدادي", level: "الثالث الاعدادي", hymns: "6.75", bible: "0", coptic: "0", rituals: "12", behavior: "24.75", total: "23.5", percentage: "24%", evaluation: "راسب" },
+            { code: "2243", name: "فيلوباتير حنا لطفي", class: "الثالث الإعدادي", level: "الثالث الإعدادي", hymns: "7.25", bible: "0", coptic: "0", rituals: "18", behavior: "19.5", total: "24.75", percentage: "25%", evaluation: "راسب" },
+            { code: "21228", name: "جوليانا معوض مصباح", class: "الثانوي", level: "الأول الثانوي", hymns: "18.5", bible: "17.5", coptic: "18", rituals: "14", behavior: "27", total: "75", percentage: "75%", evaluation: "جيد" },
+            { code: "21229", name: "توفير اشرف ملاك", class: "الثانوي", level: "الأول الثانوي", hymns: "19.25", bible: "17.5", coptic: "12", rituals: "18", behavior: "24", total: "70.75", percentage: "71%", evaluation: "جيد" },
+            { code: "21233", name: "صموئيل مجدي يوسف", class: "الأول الثانوي", level: "الأول الثانوي", hymns: "11.5", bible: "0", coptic: "0", rituals: "18", behavior: "19.5", total: "29", percentage: "29%", evaluation: "راسب" },
+            { code: "21235", name: "ماركو عازر نصحي", class: "الأول الثانوي", level: "الأول الثانوي", hymns: "10", bible: "0", coptic: "0", rituals: "18", behavior: "18", total: "26", percentage: "26%", evaluation: "راسب" },
+            { code: "21244", name: "يسي رأفت صدقي", class: "الأول الثانوي", level: "الأول الثانوي", hymns: "14", bible: "15", coptic: "14", rituals: "18", behavior: "21.75", total: "62.75", percentage: "63%", evaluation: "مقبول" },
+            { code: "21238", name: "انطون صموئيل طلعت", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "15", bible: "20", coptic: "18", rituals: "16", behavior: "27", total: "76", percentage: "76%", evaluation: "جيد" },
+            { code: "21239", name: "سيلفيا باسم نادي", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "23.5", bible: "22.5", coptic: "20", rituals: "20", behavior: "30", total: "96", percentage: "96%", evaluation: "امتياز" },
+            { code: "21242", name: "جرجس مينا مكرم", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "20.5", bible: "17.5", coptic: "18", rituals: "18", behavior: "28.5", total: "82.5", percentage: "83%", evaluation: "جيد جداً" },
+            { code: "21243", name: "ميرنا عازر خليل", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "23.75", bible: "22.5", coptic: "20", rituals: "18", behavior: "27.75", total: "92", percentage: "92%", evaluation: "إمتياز" },
+            { code: "21245", name: "مرقس رأفت نشأت", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "24", bible: "20", coptic: "18", rituals: "16", behavior: "23.25", total: "81.25", percentage: "81%", evaluation: "جيد جداً" },
+            { code: "21246", name: "يوستينا حليم ملاك", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "23.5", bible: "25", coptic: "18", rituals: "16", behavior: "27.75", total: "90.25", percentage: "90%", evaluation: "إمتياز" },
+            { code: "21252", name: "كيرلس رضا صلاح", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "14.5", bible: "15", coptic: "16", rituals: "14", behavior: "25.5", total: "65", percentage: "65%", evaluation: "مقبول" },
+            { code: "21253", name: "ندي رافت سمير", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "14.5", bible: "15", coptic: "14", rituals: "14", behavior: "22.5", total: "60", percentage: "60%", evaluation: "مقبول" },
+            { code: "21241", name: "إبراهيم نادر نجيب", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "15", bible: "20", coptic: "14", rituals: "16", behavior: "27", total: "72", percentage: "72%", evaluation: "جيد" },
+            { code: "21237", name: "ملاك هاني لويس", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "7.5", bible: "0", coptic: "0", rituals: "16", behavior: "21.75", total: "25.25", percentage: "25%", evaluation: "راسب" },
+            { code: "2242", name: "سارة رضا عوض", class: "الثاني الثانوي", level: "الثاني الثانوي", hymns: "21.75", bible: "25", coptic: "20", rituals: "20", behavior: "25.5", total: "88.25", percentage: "88%", evaluation: "جيد جداً" }
+        ];
+
+        const maxGrades22 = { hymns: 25, bible: 25, coptic: 20, rituals: 20, behavior: 30 };
+
+        function normalizeText(text) {
+            return text.trim().toLowerCase().replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ');
+        }
+
+        function updatePlaceholder22() {
+            const searchType = document.getElementById('searchType22').value;
+            const input = document.getElementById('searchInput22');
+            input.placeholder = (searchType === 'code') ? 'أدخل كود الطالب هنا...' : 'أدخل اسم الطالب هنا...';
+        }
+
+        function formatGrade22(valStr, maxVal) {
+            const val = parseFloat(valStr);
+            const isFail = val < (maxVal / 2);
+            const td = document.createElement('td');
+            td.className = "p-2 text-center" + (isFail ? " fail-grade" : "");
+            td.innerText = valStr;
+            return td;
+        }
+
+        function searchResult22() {
+            const searchType = document.getElementById('searchType22').value;
+            const query = document.getElementById('searchInput22').value;
+            const resultCard = document.getElementById('resultCard22');
+            const errorMsg = document.getElementById('errorMsg22');
+
+            if (!query.trim()) {
+                alert('الرجاء إدخال بيانات البحث.');
+                return;
+            }
+
+            let student;
+            if (searchType === 'code') {
+                student = studentsDatabase22.find(s => s.code === query.trim());
+            } else {
+                const normQ = normalizeText(query);
+                student = studentsDatabase22.find(s => normalizeText(s.name).includes(normQ));
+            }
+
+            if (student) {
+                document.getElementById('resName22').innerText = student.name;
+                document.getElementById('resCode22').innerText = student.code;
+                document.getElementById('resClass22').innerText = student.class;
+                document.getElementById('resLevel22').innerText = student.level;
+
+                document.getElementById('gradeHymns22').replaceWith(formatGrade22(student.hymns, maxGrades22.hymns));
+                document.getElementById('gradeBible22').replaceWith(formatGrade22(student.bible, maxGrades22.bible));
+                document.getElementById('gradeCoptic22').replaceWith(formatGrade22(student.coptic, maxGrades22.coptic));
+                document.getElementById('gradeRituals22').replaceWith(formatGrade22(student.rituals, maxGrades22.rituals));
+                document.getElementById('gradeBehavior22').replaceWith(formatGrade22(student.behavior, maxGrades22.behavior));
+
+                document.querySelectorAll('#resultCard22 tbody tr')[0].children[2].id = 'gradeHymns22';
+                document.querySelectorAll('#resultCard22 tbody tr')[1].children[2].id = 'gradeBible22';
+                document.querySelectorAll('#resultCard22 tbody tr')[2].children[2].id = 'gradeCoptic22';
+                document.querySelectorAll('#resultCard22 tbody tr')[3].children[2].id = 'gradeRituals22';
+                document.querySelectorAll('#resultCard22 tbody tr')[4].children[2].id = 'gradeBehavior22';
+
+                document.getElementById('resTotal22').innerText = student.total;
+                document.getElementById('resPercentage22').innerText = student.percentage;
+                document.getElementById('resEvaluation22').innerText = student.evaluation;
+
+                resultCard22.classList.remove('hidden');
+                resultCard22.style.display = 'block';
+                errorMsg.classList.add('hidden');
+                errorMsg.style.display = 'none';
+            } else {
+                resultCard22.classList.add('hidden');
+                resultCard22.style.display = 'none';
+                errorMsg.classList.remove('hidden');
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        const searchInputEl = document.getElementById('searchInput22');
+        if (searchInputEl) {
+            searchInputEl.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') { searchResult22(); }
+            });
+        }
+    </script>
+</body>
+</html>
