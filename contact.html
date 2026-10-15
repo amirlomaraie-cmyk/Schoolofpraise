@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا - مدرسة التسبيح</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { coptic: { gold: '#D4AF37', darkGold: '#AA7C11', sky: '#0284C7', deepSky: '#0369A1', burgundy: '#800020', cream: '#F8FAFC' } } }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Cairo', sans-serif; background-color: #F8FAFC; text-align: center; }</style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between">
+
+    <header class="bg-coptic-sky text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center border-b border-sky-400/30">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/50">
+                    <i class="fa-solid fa-cross text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold text-white">مدرسة التسبيح</h1>
+            </div>
+        </div>
+        <nav class="max-w-7xl mx-auto px-4 py-2">
+            <ul class="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm font-semibold">
+                <li><a href="index.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">الرئيسية</a></li>
+                <li><a href="about-ebrahim.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">القُمُّص إبراهيم البسيط</a></li>
+                <li><a href="libraries.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">المكتبات</a></li>
+                <li><a href="results.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">نتائج الطلاب</a></li>
+                <li><a href="publications.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">الإصدارات</a></li>
+                <li><a href="contact.html" class="px-3 py-2 rounded-lg bg-white text-coptic-sky transition">إتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 text-right">
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 space-y-8">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-coptic-sky text-white rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-md">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-coptic-deepSky mb-2">اتصل بنا وفريق العمل</h3>
+                <p class="text-slate-600">يسعدنا تواصلكم واستفساراتكم دائماً بكنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl text-center shadow-sm hover:shadow-md transition border-t-4 border-coptic-sky flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-sky text-white rounded-xl flex items-center justify-center mx-auto mb-3 text-xl shadow"><i class="fa-solid fa-user-tie"></i></div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-1">القس كاراس سمير</h4>
+                        <span class="inline-block bg-sky-100 text-coptic-sky text-xs font-semibold px-2.5 py-1 rounded-full mb-4">مُشرف المدرسة</span>
+                    </div>
+                    <div class="pt-4 border-t border-slate-200">
+                        <p class="text-xs text-slate-500 mb-1">رقم الهاتف:</p>
+                        <a href="tel:01120439415" dir="ltr" class="font-bold text-coptic-deepSky text-sm hover:underline flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-phone text-xs"></i> 01120439415
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl text-center shadow-sm hover:shadow-md transition border-t-4 border-coptic-gold flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-gold text-white rounded-xl flex items-center justify-center mx-auto mb-3 text-xl shadow"><i class="fa-solid fa-user-gear"></i></div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-1">الأستاذ مرقس توفيق</h4>
+                        <span class="inline-block bg-amber-100 text-coptic-darkGold text-xs font-semibold px-2.5 py-1 rounded-full mb-4">مُدير المدرسة</span>
+                    </div>
+                    <div class="pt-4 border-t border-slate-200">
+                        <p class="text-xs text-slate-500 mb-1">رقم الهاتف:</p>
+                        <a href="tel:01145617227" dir="ltr" class="font-bold text-coptic-darkGold text-sm hover:underline flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-phone text-xs"></i> 01145617227
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl text-center shadow-sm hover:shadow-md transition border-t-4 border-coptic-burgundy flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-burgundy text-white rounded-xl flex items-center justify-center mx-auto mb-3 text-xl shadow"><i class="fa-solid fa-user-shield"></i></div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-1">الأستاذ عازر عيد</h4>
+                        <span class="inline-block bg-rose-100 text-coptic-burgundy text-xs font-semibold px-2.5 py-1 rounded-full mb-4">أمين عام الخدمة</span>
+                    </div>
+                    <div class="pt-4 border-t border-slate-200">
+                        <p class="text-xs text-slate-500 mb-1">رقم الهاتف:</p>
+                        <a href="tel:01129526795" dir="ltr" class="font-bold text-coptic-burgundy text-sm hover:underline flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-phone text-xs"></i> 01129526795
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-8 rounded-2xl text-center shadow-lg relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4 text-right">
+                    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-4xl shadow-inner flex-shrink-0">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold mb-1">جروب واتساب مدرسة التسبيح</h4>
+                        <p class="text-emerald-100 text-sm">انضم الآن إلى مجموعة الواتساب الرسمية لمتابعة الإشعارات والأخبار أولاً بأول.</p>
+                    </div>
+                </div>
+                <a href="https://chat.whatsapp.com/F8zIxrOdS5qBPNGSLzBG3l" target="_blank" class="bg-white text-emerald-700 font-extrabold px-8 py-3.5 rounded-xl hover:bg-emerald-50 transition shadow-md flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>انضم للجروب الآن</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-coptic-deepSky text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+        <p class="text-xs text-sky-200">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+    </footer>
+</body>
+</html>
