@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القُمُّص إبراهيم البسيط - مدرسة التسبيح</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { coptic: { gold: '#D4AF37', darkGold: '#AA7C11', sky: '#0284C7', deepSky: '#0369A1', burgundy: '#800020', cream: '#F8FAFC' } } }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Cairo', sans-serif; background-color: #F8FAFC; text-align: center; }</style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between">
+
+    <header class="bg-coptic-sky text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center border-b border-sky-400/30">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/50">
+                    <i class="fa-solid fa-cross text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold text-white">مدرسة التسبيح</h1>
+            </div>
+        </div>
+        <nav class="max-w-7xl mx-auto px-4 py-2">
+            <ul class="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm font-semibold">
+                <li><a href="index.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">الرئيسية</a></li>
+                <li><a href="about-ebrahim.html" class="px-3 py-2 rounded-lg bg-white text-coptic-sky transition">القُمُّص إبراهيم البسيط</a></li>
+                <li><a href="libraries.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">المكتبات</a></li>
+                <li><a href="results.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">نتائج الطلاب</a></li>
+                <li><a href="publications.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">الإصدارات</a></li>
+                <li><a href="contact.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">إتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-12 text-right">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-coptic-deepSky mb-2">القُمُّص إبراهيم البسيط</h3>
+                <p class="text-slate-600">سيرة عطرة، معجزات، وتعاليم مباركة</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition border-t-4 border-coptic-sky flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-sky text-white rounded-xl flex items-center justify-center mb-4 text-xl shadow"><i class="fa-solid fa-book-open"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">سيرته وتعاليمه ومعجزاته</h4>
+                        <p class="text-slate-500 text-sm mb-6">تصفح سيرة أبونا القمص إبراهيم البسيط المباركة وتعاليمه ومعجزاته المؤثرة.</p>
+                    </div>
+                    <a href="reader.html?title=سيرة%20القمص%20إبراهيم%20البسيط&url=https://drive.google.com/file/d/1dq9ybFY5U_022oj1QTkrbeBcz-iSP80S/preview" class="w-full bg-coptic-sky text-white font-bold py-3 rounded-xl hover:bg-coptic-deepSky transition text-sm text-center block">قراءة الملف أونلاين</a>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition border-t-4 border-coptic-gold flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-gold text-white rounded-xl flex items-center justify-center mb-4 text-xl shadow"><i class="fa-solid fa-music"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">التمجيد</h4>
+                        <p class="text-slate-500 text-sm mb-6">قراءة تمجيد القمص إبراهيم البسيط وألحان تكريماً لذكراه العطرة.</p>
+                    </div>
+                    <a href="reader.html?title=تمجيد%20القمص%20إبراهيم%20البسيط&url=https://drive.google.com/file/d/1RBWX3QyB16Ke-Jfdf_yLvePc5xZ214ou/preview" class="w-full bg-coptic-gold text-white font-bold py-3 rounded-xl hover:bg-coptic-darkGold transition text-sm text-center block">قراءة الملف أونلاين</a>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition border-t-4 border-coptic-burgundy flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-burgundy text-white rounded-xl flex items-center justify-center mb-4 text-xl shadow"><i class="fa-solid fa-scroll"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">الذكصولوجية</h4>
+                        <p class="text-slate-500 text-sm mb-6">تصفح ذكصولوجية القمص إبراهيم البسيط وقراءتها بوضع العرض الآمن.</p>
+                    </div>
+                    <a href="reader.html?title=ذكصولوجية%20القمص%20إبراهيم%20البسيط&url=https://drive.google.com/file/d/1yufjnp73bhq1qfp8gsjlBcZoL2JPGtgz/preview" class="w-full bg-coptic-burgundy text-white font-bold py-3 rounded-xl hover:opacity-90 transition text-sm text-center block">قراءة الملف أونلاين</a>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition border-t-4 border-coptic-deepSky flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-deepSky text-white rounded-xl flex items-center justify-center mb-4 text-xl shadow"><i class="fa-solid fa-landmark"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">السنكسار</h4>
+                        <p class="text-slate-500 text-sm mb-6">السنكسار الخاص بسيرة ونياحة القمص إبراهيم البسيط.</p>
+                    </div>
+                    <a href="reader.html?title=سنكسار%20القمص%20إبراهيم%20البسيط&url=https://drive.google.com/file/d/1IdpztvqP7EbzgsIOCLTfd3vkKlkX7xL7/preview" class="w-full bg-coptic-deepSky text-white font-bold py-3 rounded-xl hover:bg-coptic-sky transition text-sm text-center block">قراءة الملف أونلاين</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-coptic-deepSky text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+        <p class="text-xs text-sky-200">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+    </footer>
+</body>
+</html>
