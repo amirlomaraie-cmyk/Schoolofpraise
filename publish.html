@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الإصدارات - مدرسة التسبيح</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { coptic: { gold: '#D4AF37', sky: '#0284C7', deepSky: '#0369A1', cream: '#F8FAFC' } } }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Cairo', sans-serif; background-color: #F8FAFC; text-align: center; }</style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between" onload="renderBooks()">
+
+    <header class="bg-coptic-sky text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center border-b border-sky-400/30">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/50">
+                    <i class="fa-solid fa-cross text-white text-xl"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold text-white">مدرسة التسبيح</h1>
+            </div>
+        </div>
+        <nav class="max-w-7xl mx-auto px-4 py-2">
+            <ul class="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm font-semibold">
+                <li><a href="index.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">الرئيسية</a></li>
+                <li><a href="about-ebrahim.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">القُمُّص إبراهيم البسيط</a></li>
+                <li><a href="libraries.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">المكتبات</a></li>
+                <li><a href="results.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">نتائج الطلاب</a></li>
+                <li><a href="publications.html" class="px-3 py-2 rounded-lg bg-white text-coptic-sky transition">الإصدارات</a></li>
+                <li><a href="contact.html" class="px-3 py-2 rounded-lg hover:bg-white hover:text-coptic-sky transition">إتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-10">
+        <div class="bg-gradient-to-r from-coptic-deepSky to-coptic-sky text-white rounded-3xl p-8 md:p-12 mb-12 shadow-xl text-center border-b-4 border-coptic-gold">
+            <div class="max-w-3xl mx-auto">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl border border-white/30 text-coptic-gold">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <h3 class="text-3xl md:text-4xl font-extrabold mb-3">مكتبة الإصدارات والكتب الطقسية</h3>
+                <p class="text-sky-100 text-base md:text-lg">تصفح وقراءة الكتب والألحان والإصدارات الليتورجية والطقسية الصادرة عن مدرسة التسبيح أونلاين مباشرة.</p>
+            </div>
+        </div>
+
+        <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </main>
+
+    <footer class="bg-coptic-deepSky text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+        <p class="text-xs text-sky-200">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+    </footer>
+
+    <script>
+        const booksList = [
+            { name: "رَفع بَخور باكِرٍ لعيد القيامة المَجيد", icon: "fa-sun", bgGradient: "from-amber-500 to-amber-700", copticLink: "", copticArLink: "" },
+            { name: "ليتورجيَّة عيد القيامة المَجيد", icon: "fa-cross", bgGradient: "from-yellow-600 to-amber-800", copticLink: "", copticArLink: "https://drive.google.com/file/d/1vfSEPQei_nANQ2m_DjRKSRKRhUP2vo8x/preview" },
+            { name: "الطَقس السنوي (1) رَفعُ بَخورَي عشيَّةٍ وباكِرٍ", icon: "fa-smog", bgGradient: "from-blue-600 to-sky-800", copticLink: "", copticArLink: "https://drive.google.com/file/d/1HGl_Tb-L5nr1vEEPFpvoYwq-CC20mQbP/preview" },
+            { name: "ألحان صوم القديسة العَذراء مريَم", icon: "fa-star", bgGradient: "from-indigo-600 to-purple-800", copticLink: "https://drive.google.com/file/d/1g7BRF5dMjjDzFH9LWZ5EMMXoWUY2oVx_/preview", copticArLink: "https://drive.google.com/file/d/1bS40GuNB_D-lP4BMoTz9OX8eI_q2IsRb/preview" },
+            { name: "تَسبحة ليالي آحاد شَهر كيَهك المُبارَك", icon: "fa-moon", bgGradient: "from-purple-700 to-pink-900", copticLink: "https://drive.google.com/file/d/1xC_2ADnklyM_K1L6Sb8lJ0ZFWERCh0k6/preview", copticArLink: "https://drive.google.com/file/d/1uKmCO8PxN_Ea-sBd34N0TgnceW23xBYd/preview" },
+            { name: "ليتورجيَّة عيد الميلاد المجيد", icon: "fa-baby-carriage", bgGradient: "from-red-700 to-amber-900", copticLink: "", copticArLink: "https://drive.google.com/file/d/1KjHwZ8KL1zaOnj74lBn6yYn8BnZ9gU-G/preview" },
+            { name: "لقَّان وليتورجيَّة عيد الغِطاس المَجيد", icon: "fa-water", bgGradient: "from-teal-600 to-cyan-900", copticLink: "", copticArLink: "https://drive.google.com/file/d/1ISulqRCl5disAABcczvcwXz3NWCz1eld/preview" },
+            { name: "ليتورجيَّة الصوم المُقَدَّس الكبير", icon: "fa-dharmachakra", bgGradient: "from-purple-800 to-slate-900", copticLink: "", copticArLink: "https://drive.google.com/file/d/1Pb27HyCzEbZ_28pu3AU4uyJrqNmOJozJ/preview" }
+        ];
+
+        function renderBooks() {
+            const grid = document.getElementById('books-grid');
+            grid.innerHTML = booksList.map(book => {
+                let buttonsHtml = '';
+                if (book.copticArLink) {
+                    buttonsHtml += `<a href="reader.html?title=${encodeURIComponent(book.name + ' (قبطي مُعرَّب)')}&url=${encodeURIComponent(book.copticArLink)}" class="w-full bg-coptic-sky text-white font-bold py-2 px-3 rounded-lg hover:bg-coptic-deepSky transition text-xs mb-2 block">قبطي مُعرَّب</a>`;
+                }
+                if (book.copticLink) {
+                    buttonsHtml += `<a href="reader.html?title=${encodeURIComponent(book.name + ' (قبطي قبطي)')}&url=${encodeURIComponent(book.copticLink)}" class="w-full bg-amber-600 text-white font-bold py-2 px-3 rounded-lg hover:bg-amber-700 transition text-xs block">قبطي قبطي</a>`;
+                }
+                if (!book.copticArLink && !book.copticLink) {
+                    buttonsHtml += `<span class="text-xs text-slate-400 italic">قريباً...</span>`;
+                }
+
+                return `<div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden flex flex-col justify-between hover:shadow-xl transition">
+                    <div class="bg-gradient-to-r ${book.bgGradient} p-6 text-white text-center">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner"><i class="fa-solid ${book.icon}"></i></div>
+                        <h4 class="font-bold text-base leading-snug">${book.name}</h4>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-100 text-center">${buttonsHtml}</div>
+                </div>`;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
