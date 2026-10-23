@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدرسة التسبيح - كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coptic: {
+                            gold: '#D4AF37',
+                            darkGold: '#AA7C11',
+                            navy: '#0F172A',
+                            sky: '#0284C7',
+                            lightSky: '#E0F2FE',
+                            deepSky: '#0F172A',
+                            burgundy: '#800020',
+                            cream: '#FBF9F5'
+                        }
+                    },
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #FBF9F5; text-align: center; }
+        .coptic-pattern {
+            background-color: #0F172A;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dropdown:hover .dropdown-menu { display: block; }
+        
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .fade-word {
+            opacity: 0;
+            transform: translateY(10px);
+            display: inline-block;
+            animation: fadeInWord 0.5s forwards;
+        }
+        @keyframes fadeInWord {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between" onload="initHomeAnimations()">
+
+    <!-- Header / Navbar -->
+    <header class="bg-coptic-navy text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center border-b border-amber-500/20 gap-2">
+            <div class="flex items-center justify-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-coptic-gold/20 flex items-center justify-center border border-coptic-gold">
+                    <i class="fa-solid fa-cross text-coptic-gold text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white leading-tight">مدرسة التسبيح</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="text-center text-xs md:text-sm text-amber-100 font-semibold flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-full border border-coptic-gold/40">
+                    <i class="fa-solid fa-church text-coptic-gold"></i>
+                    <span>كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</span>
+                </div>
+                <button onclick="toggleMobileMenu()" class="text-white text-2xl p-1.5 bg-slate-800 rounded-lg border border-coptic-gold/40 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <nav class="max-w-7xl mx-auto px-4">
+            <ul id="main-nav-links" class="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm font-semibold py-2">
+                <li><button onclick="showPage('home')" class="nav-btn px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200">الرئيسية</button></li>
+                
+                <li class="relative dropdown">
+                    <button class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 flex items-center gap-1">
+                        كنيستنا <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="dropdown-menu hidden absolute right-0 w-52 bg-coptic-navy border border-coptic-gold/40 rounded-lg shadow-2xl py-2 z-50 text-right">
+                        <li><a href="#" onclick="showPage('church-history')" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">تاريخ الكنيسة</a></li>
+                    </ul>
+                </li>
+
+                <!-- قائمة مدرسة التسبيح -->
+                <li class="relative dropdown">
+                    <button class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 flex items-center gap-1">
+                        مدرسة التسبيح <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="dropdown-menu hidden absolute right-0 w-60 bg-coptic-navy border border-coptic-gold/40 rounded-lg shadow-2xl py-2 z-50 text-right">
+                        <li><a href="#" onclick="showPage('quizzes')" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy font-bold text-coptic-gold">الامتحانات</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity duration-300">
+        <div class="fixed top-0 left-0 w-72 h-full bg-coptic-navy text-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto text-right border-l border-coptic-gold/30">
+            <div>
+                <div class="flex justify-between items-center mb-6 pb-3 border-b border-coptic-gold/30">
+                    <h3 class="font-bold text-lg text-coptic-gold">قائمة الموقع</h3>
+                    <button onclick="toggleMobileMenu()" class="text-white text-xl p-1"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <ul class="space-y-4 text-sm font-semibold">
+                    <li><button onclick="showPage('home'); toggleMobileMenu();" class="w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">الرئيسية</button></li>
+                    <li><button onclick="showPage('quizzes'); toggleMobileMenu();" class="w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20 text-coptic-gold font-bold">الامتحانات</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow">
+        
+        <!-- HOME PAGE -->
+        <div id="page-home" class="page-content">
+            <section class="coptic-pattern text-white py-16 px-4 text-center relative overflow-hidden border-b-4 border-coptic-gold flex flex-col items-center justify-center">
+                <div class="max-w-4xl mx-auto space-y-4">
+                    <div id="daily-verse" class="text-2xl md:text-3xl font-extrabold text-coptic-gold leading-relaxed drop-shadow-md"></div>
+                    <p id="welcome-message" class="text-slate-200 text-lg max-w-2xl mx-auto pt-4"></p>
+                </div>
+            </section>
+
+            <section class="max-w-7xl mx-auto px-4 py-12 flex flex-col items-center justify-center text-right">
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-8 w-full max-w-md">
+                    <div class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-gold overflow-hidden flex flex-col justify-between">
+                        <div class="p-8 flex-grow flex flex-col items-start">
+                            <div class="w-16 h-16 bg-coptic-gold text-coptic-navy rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md"><i class="fa-solid fa-award"></i></div>
+                            <h4 class="font-bold text-2xl text-coptic-darkGold mb-2">قسم الامتحانات الرسمية</h4>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">أدخل كود الطالب لبدء الاختبار.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 w-full">
+                            <button onclick="showPage('quizzes')" class="w-full bg-coptic-gold text-coptic-navy font-bold py-3 px-4 rounded-xl hover:bg-coptic-darkGold hover:text-white transition flex items-center justify-center gap-2"><span>دخول الامتحانات</span><i class="fa-solid fa-arrow-left text-xs"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- QUIZZES / EXAMS PAGE -->
+        <div id="page-quizzes" class="page-content hidden max-w-5xl mx-auto px-4 py-12 text-right">
+            <button id="back-home-btn" onclick="showPage('home')" class="mb-6 text-coptic-navy font-bold hover:underline flex items-center gap-2"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></button>
+            
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-slate-200">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-coptic-gold/20 text-coptic-darkGold rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner border border-coptic-gold"><i class="fa-solid fa-award"></i></div>
+                    <h3 class="text-3xl font-extrabold text-coptic-navy mb-2">امتحانات مدرسة التسبيح</h3>
+                    <p class="text-slate-600">أدخل كود الطالب الخاص بك لإظهار بياناتك</p>
+                </div>
+
+                <!-- خطوة 1: إدخال كود الطالب -->
+                <div id="exam-login-section" class="space-y-6 max-w-xl mx-auto bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <div>
+                        <label class="block font-bold text-slate-700 text-sm mb-2">كود الطالب:</label>
+                        <input type="text" id="exam-student-code" placeholder="أدخل كود الطالب (مثال: 2601)..." class="w-full p-3 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:border-coptic-navy text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-slate-700 text-sm mb-2">اختر المادة الدراسية:</label>
+                        <select id="exam-subject" class="w-full p-3 bg-white border border-slate-300 rounded-xl font-bold text-coptic-navy focus:outline-none focus:border-coptic-navy text-sm">
+                            <option value="bible">الكتاب المقدس</option>
+                            <option value="ritual">الطقس الكنسي</option>
+                        </select>
+                    </div>
+
+                    <button onclick="verifyStudentCode()" class="w-full bg-coptic-navy text-coptic-gold font-bold py-3.5 rounded-xl hover:bg-slate-800 transition shadow-md border border-coptic-gold/40 flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>التحقق من كود الطالب</span>
+                    </button>
+                </div>
+
+                <!-- تنبيه الطالب الذي امتحن مسبقاً -->
+                <div id="exam-blocked-section" class="hidden space-y-6 max-w-xl mx-auto bg-rose-50 p-6 md:p-8 rounded-2xl border border-rose-200 text-center">
+                    <div class="w-16 h-16 bg-rose-100 text-rose-700 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner"><i class="fa-solid fa-lock"></i></div>
+                    <h4 class="text-2xl font-bold text-rose-800">عذراً، لقد أديت الامتحان مسبقاً</h4>
+                    <p class="text-sm text-slate-600">لا يمكنك إعادة الامتحان. يرجى التواصل مع الخادم إذا كنت بحاجة لإعادة الاختبار.</p>
+                    <div class="pt-2">
+                        <button onclick="resetQuiz()" class="bg-coptic-navy text-white font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800 transition text-sm">
+                            العودة للرئيسية
+                        </button>
+                    </div>
+                </div>
+
+                <!-- خطوة 2: عرض بيانات الطالب وإدخال كود الامتحان للبدء -->
+                <div id="exam-waiting-section" class="hidden space-y-6 max-w-xl mx-auto bg-amber-50/60 p-6 md:p-8 rounded-2xl border border-amber-200 text-center">
+                    <div class="w-16 h-16 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner"><i class="fa-solid fa-user-check"></i></div>
+                    <h4 class="text-2xl font-bold text-coptic-navy">بيانات الطالب</h4>
+                    
+                    <div class="bg-white p-4 rounded-xl border border-amber-200 text-right space-y-2 shadow-sm">
+                        <p class="text-slate-700 font-bold">الإسم: <span id="disp-name" class="text-coptic-navy"></span></p>
+                        <p class="text-slate-700 font-bold">المستوي: <span id="disp-level" class="text-coptic-darkGold"></span></p>
+                        <p class="text-slate-700 font-bold">الصف: <span id="disp-class" class="text-coptic-navy"></span></p>
+                        <p class="text-slate-700 font-bold">المادة المختارة: <span id="disp-subject" class="text-emerald-700 font-extrabold"></span></p>
+                    </div>
+
+                    <div class="p-4 bg-white rounded-xl border border-slate-200 text-center space-y-3">
+                        <label class="block font-bold text-slate-700 text-xs mb-1">أدخل كود الإمتحان:</label>
+                        <input type="text" id="received-code-input" placeholder="أدخل كود الإمتحان..." class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl font-bold text-center text-slate-800 text-lg focus:outline-none focus:border-coptic-navy">
+                        <button onclick="confirmAndStartExam()" class="w-full bg-emerald-600 text-white font-extrabold py-3.5 rounded-xl hover:bg-emerald-700 transition shadow flex items-center justify-center gap-2 text-base">
+                            <i class="fa-solid fa-play"></i>
+                            <span>بدء الامتحان الآن</span>
+                        </button>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="resetQuiz()" class="text-xs font-bold text-slate-500 hover:text-coptic-navy underline">
+                            <i class="fa-solid fa-arrow-right ml-1"></i> العودة لكتابة كود طالب جديد
+                        </button>
+                    </div>
+                </div>
+
+                <!-- خطوة 3: أسئلة الامتحان مع العداد -->
+                <div id="quiz-questions-section" class="hidden space-y-6 no-select" oncopy="return false;" oncut="return false;" onpaste="return false;" oncontextmenu="return false;">
+                    <div class="flex justify-between items-center bg-slate-100 p-4 rounded-xl border border-slate-200">
+                        <span id="quiz-info-header" class="font-bold text-coptic-navy text-sm">امتحان: <span id="active-subject-title"></span> - طالب: <span id="active-student-name"></span></span>
+                        <div class="flex items-center gap-4">
+                            <span id="exam-countdown-timer" class="bg-rose-600 text-white text-xs font-extrabold px-3 py-1 rounded-full animate-pulse"><i class="fa-solid fa-stopwatch ml-1"></i> الوقت المتبقي: <span id="timer-display">03:00</span></span>
+                            <span class="bg-coptic-navy text-coptic-gold text-xs font-bold px-3 py-1 rounded-full">سؤال <span id="current-q-num">1</span> من <span id="total-q-num">15</span></span>
+                        </div>
+                    </div>
+
+                    <div id="question-card" class="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6 text-right">
+                        <h4 id="question-text" class="text-xl font-bold text-slate-800 leading-relaxed select-none"></h4>
+                        <div id="options-container" class="space-y-3"></div>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button onclick="prevQuestion()" id="prev-btn" class="hidden bg-slate-200 text-slate-700 font-bold px-6 py-2.5 rounded-xl hover:bg-slate-300 transition text-sm">السابق</button>
+                        <button onclick="nextQuestion()" id="next-btn" class="mr-auto bg-coptic-navy text-coptic-gold font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800 transition text-sm border border-coptic-gold/30">التالي</button>
+                    </div>
+                </div>
+
+                <!-- خطوة 4: النتيجة النهائية -->
+                <div id="quiz-result-section" class="hidden text-center space-y-6 py-8">
+                    <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner border border-emerald-300"><i class="fa-solid fa-trophy"></i></div>
+                    <h4 class="text-3xl font-extrabold text-coptic-navy">أهلاً بك، <span id="result-student-name"></span></h4>
+                    <p class="text-xl text-slate-700 font-bold">لقد أنهيت الامتحان بنجاح وتم تسليمه بنجاح!</p>
+                    <div class="inline-block bg-coptic-navy text-coptic-gold px-8 py-4 rounded-2xl border-2 border-coptic-gold text-2xl font-extrabold shadow-lg">
+                        درجتك النهائية: <span id="final-score">0</span> / <span id="total-score">0</span>
+                    </div>
+
+                    <div class="pt-4">
+                        <button onclick="resetQuiz()" class="bg-coptic-gold text-coptic-navy font-bold px-8 py-3 rounded-xl hover:bg-coptic-darkGold hover:text-white transition shadow">إتمام والخروج لكتابة كود جديد</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHURCH HISTORY PAGE -->
+        <div id="page-church-history" class="page-content hidden max-w-4xl mx-auto px-4 py-12 text-right">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 space-y-6">
+                <button onclick="showPage('home')" class="text-coptic-navy font-bold hover:underline flex items-center gap-2 mb-4"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></button>
+                <h3 class="text-3xl font-bold text-coptic-navy mb-2 text-center">تاريخ كنيسة الشهيد العظيم مارمرقس ببني صامت</h3>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-coptic-navy text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+        <p class="text-xs text-slate-400">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+    </footer>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- JavaScript -->
+    <script>
+        const SUPABASE_URL = 'https://lbsesqswjizxhtimuzan.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_XdBm9Pdk2MFq8QCrWTXjqQ_Rel5TKDz';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const TARGET_TABLE = 'first_term2026_2027';
+
+        async function sendEmailViaSupabase(subjectText, plainTextBody, htmlBody) {
+            try {
+                const { data, error } = await supabaseClient.functions.invoke('send-email', {
+                    body: {
+                        to: 'amirlomaraie@gmail.com',
+                        subject: subjectText,
+                        text: plainTextBody,
+                        html: htmlBody
+                    }
+                });
+                if (error) console.error("Edge Function Error:", error);
+            } catch (err) {
+                console.error("خطأ في الاتصال بالسيرفر:", err);
+            }
+        }
+
+        const dailyVerses = [
+            { text: '"أُرَنِّمُ لِلرَّبِّ فِي حَيَاتِي. أَزْمُرُ لإِلهِي مَا دُمْتُ مَوْجُوداً"', ref: "(مز 104: 33)" },
+            { text: '"سِرَاجٌ لِرِجْلِي كَلاَمُكَ وَنُورٌ لِسَبِيلِي"', ref: "(مز 119: 105)" }
+        ];
+
+        function animateTextWordByWord(elementId, text, delayOffset = 0) {
+            const container = document.getElementById(elementId);
+            if (!container) return;
+            container.innerHTML = '';
+            text.split(' ').forEach((word, index) => {
+                const span = document.createElement('span');
+                span.className = 'fade-word mx-1';
+                span.style.animationDelay = `${delayOffset + (index * 0.08)}s`;
+                span.textContent = word;
+                container.appendChild(span);
+            });
+        }
+
+        function loadDailyVerse() {
+            animateTextWordByWord('daily-verse', dailyVerses[0].text, 0);
+            setTimeout(() => { animateTextWordByWord('welcome-message', "مرحباً بكم في الموقع الرسمي لـ مدرسة التسبيح.", 0.2); }, 500);
+        }
+
+        function initHomeAnimations() { loadDailyVerse(); }
+        function toggleMobileMenu() { document.getElementById('mobile-sidebar').classList.toggle('hidden'); }
+
+        let examInProgress = false;
+
+        function showPage(pageId) {
+            if (examInProgress && pageId !== 'quizzes') {
+                alert('عذراً، لا يمكنك مغادرة صفحة الامتحان حتى يتم التسليم أو انتهاء الوقت.');
+                return;
+            }
+
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (examInProgress) {
+                if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'v' || e.key === 'a' || e.key === 'u' || e.key === 's')) {
+                    e.preventDefault();
+                    alert('عذراً، هذه العملية محظورة أثناء فترة الامتحان.');
+                }
+            }
+        });
+
+        // قاعدة بيانات الطلاب (173 طالباً وطالبة)
+        const studentsDatabase = {
+            '2601': { name: 'مارفي بيشوي محروس', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2601', seq: '1' },
+            '2602': { name: 'أبانوب حنا عازر', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2602', seq: '2' },
+            '2603': { name: 'أناسيمون صموئيل فرج', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2603', seq: '3' },
+            '2604': { name: 'مريم عماد سمير', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2604', seq: '4' },
+            '2605': { name: 'كاراس حنا عزت', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2605', seq: '5' },
+            '2606': { name: 'يؤانا أمير شحاته', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2606', seq: '6' },
+            '2607': { name: 'نوفير أبانوب محروس', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2607', seq: '7' },
+            '2608': { name: 'كيفن رضا عزيز', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2608', seq: '8' },
+            '2609': { name: 'كيرلس أشرف سمير', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2609', seq: '9' },
+            '2610': { name: 'أربسيما ملاك ثابت', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2610', seq: '10' },
+            '2611': { name: 'ديفيد جورج راجي', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2611', seq: '11' },
+            '2612': { name: 'بيري عيد رشدي', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2612', seq: '12' },
+            '2613': { name: 'أبرام بولا جرجس', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2613', seq: '13' },
+            '2614': { name: 'ملاك عبد الشهيد ملاك', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2614', seq: '14' },
+            '2615': { name: 'مريم هاني أمجد', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2615', seq: '15' },
+            '2616': { name: 'إسحق سامح نادي', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2616', seq: '16' },
+            '2617': { name: 'كيرلس شحاته عياد', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2617', seq: '17' },
+            '2618': { name: 'نوفير يوسف فرج', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2618', seq: '18' },
+            '2619': { name: 'يوسف كيرلس شعبان', level: 'المستوى الأول', class: 'الأول الإبتدائي', code: '2619', seq: '19' },
+            '2501': { name: 'مكاري مينا حنس', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2501', seq: '20' },
+            '2505': { name: 'إبراهيم مينا نادي', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2505', seq: '21' },
+            '2506': { name: 'أوناي أبانوب إسحق', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2506', seq: '22' },
+            '2509': { name: 'مريم بيشوي صدقي', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2509', seq: '23' },
+            '2511': { name: 'بيشوي جيد حنا', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2511', seq: '24' },
+            '2512': { name: 'ماروسكا جرجس ثابت', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2512', seq: '25' },
+            '2513': { name: 'شنوده كيرلس مكرم', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2513', seq: '26' },
+            '2514': { name: 'مهرائيل مينا سمير', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2514', seq: '27' },
+            '2515': { name: 'داود مدحت صلاح', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2515', seq: '28' },
+            '2516': { name: 'يسطس مرقس ناجح', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2516', seq: '29' },
+            '2517': { name: 'بيشوي روماني ملاك', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2517', seq: '30' },
+            '2518': { name: 'جورج مرقس لمعي', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2518', seq: '31' },
+            '2519': { name: 'دانيال مرقس نبيل', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2519', seq: '32' },
+            '2521': { name: 'صموئيل غطاس صليب', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2521', seq: '33' },
+            '2523': { name: 'ماريلا إبراهيم يوسف', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2523', seq: '34' },
+            '2524': { name: 'توماس عازر خليل', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2524', seq: '35' },
+            '2622': { name: 'مارسلينو رامي ثابت', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2622', seq: '36' },
+            '2531': { name: 'مريم مينا مرقس', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2531', seq: '37' },
+            '2623': { name: 'ميرا عبد المسيح مرعي', level: 'المستوى الأول', class: 'الثاني الإبتدائي', code: '2623', seq: '38' },
+            '2401': { name: 'بارثينيا بيشوي محروس', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2401', seq: '39' },
+            '2402': { name: 'إسحاق عبد المسيح إسحاق', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2402', seq: '40' },
+            '2403': { name: 'يوسف سامح نبيل', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2403', seq: '41' },
+            '2404': { name: 'مارسلينو أنطونيوس إبراهيم', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2404', seq: '42' },
+            '2405': { name: 'بيشوي أمير عادل', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2405', seq: '43' },
+            '2406': { name: 'مريم صموئيل فرج', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2406', seq: '44' },
+            '2407': { name: 'إيريني حنا عازر', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2407', seq: '45' },
+            '2409': { name: 'ساويرس بيشوي صدقي', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2409', seq: '46' },
+            '2410': { name: 'فلتاؤس شنوده وليم', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2410', seq: '47' },
+            '2411': { name: 'كيرمينا شحاته عياد', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2411', seq: '48' },
+            '2412': { name: 'فيلومينا سامح بولس', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2412', seq: '49' },
+            '2413': { name: 'جيسيكا أبانوب نادي', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2413', seq: '50' },
+            '2414': { name: 'مريم مايكل ميشيل', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2414', seq: '51' },
+            '2415': { name: 'روماني فانوس مرقس', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2415', seq: '52' },
+            '2416': { name: 'جونير وجيه باسيليوس', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2416', seq: '53' },
+            '2417': { name: 'مارينا رضا رشدي', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2417', seq: '54' },
+            '2418': { name: 'مريم رضا صلاح', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2418', seq: '55' },
+            '2419': { name: 'جيسيكا كيرلس شعبان', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2419', seq: '56' },
+            '2420': { name: 'مادلين أمير عزت', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2420', seq: '57' },
+            '2421': { name: 'بيشوي غطاس عازر', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2421', seq: '58' },
+            '2423': { name: 'ببنوده أشرف مسعد', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2423', seq: '59' },
+            '2424': { name: 'يؤانا جرجس ثابت', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2424', seq: '60' },
+            '2428': { name: 'بيشوي مينا كمال', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2428', seq: '61' },
+            '2434': { name: 'شنوده باسم نادي', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2434', seq: '62' },
+            '2439': { name: 'ميرولا كيرلس واصف', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '2439', seq: '63' },
+            '2526': { name: 'يؤانا جورج راجي', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2526', seq: '64' },
+            '2528': { name: 'ميرا مينا صفوت', level: 'المستوى الثاني', class: 'الثالث الإبتدائي', code: '2528', seq: '65' },
+            '2101': { name: 'مارينا مينا سمير', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2101', seq: '66' },
+            '2102': { name: 'كاراس هاني صلاح', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2102', seq: '67' },
+            '2103': { name: 'مريم مدحت صلاح', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2103', seq: '68' },
+            '2104': { name: 'أبانوب مينا مكرم', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2104', seq: '69' },
+            '2106': { name: 'كيرمينا يوسف إسحاق', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2106', seq: '70' },
+            '2110': { name: 'أدم سامح نبيل', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2110', seq: '71' },
+            '2111': { name: 'يوسف مرقس ملاك', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2111', seq: '72' },
+            '2112': { name: 'ميرنا عبد المسيح مرعي', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2112', seq: '73' },
+            '2113': { name: 'إيليا مينا مرقس', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2113', seq: '74' },
+            '2114': { name: 'مارفي مرقس جميل', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2114', seq: '75' },
+            '2119': { name: 'جوي مايكل ميشيل', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2119', seq: '76' },
+            '2120': { name: 'بيشوي أمير ملاك', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2120', seq: '77' },
+            '2122': { name: 'مريم كيرلس مكرم', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2122', seq: '78' },
+            '2123': { name: 'رانيا فيليب بولس', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2123', seq: '79' },
+            '2124': { name: 'بيشوي صموئيل طلعت', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2124', seq: '80' },
+            '2127': { name: 'مريم عبد المسيح إسحق', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2127', seq: '81' },
+            '2128': { name: 'يؤانا صموئيل سمير', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2128', seq: '82' },
+            '2131': { name: 'موسي جرجس ملاك', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2131', seq: '83' },
+            '2132': { name: 'إسحاق أمير يونان', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2132', seq: '84' },
+            '2133': { name: 'يؤانا ميخائيل زكريا', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2133', seq: '85' },
+            '2134': { name: 'مريم أبانوب صبحي', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2134', seq: '86' },
+            '2135': { name: 'مارلي أمير عزت', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2135', seq: '87' },
+            '2137': { name: 'ساره إبراهيم جرجس', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2137', seq: '88' },
+            '2140': { name: 'مريم كامل حنس', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2140', seq: '89' },
+            '2141': { name: 'ابانوب أمير عزت', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2141', seq: '90' },
+            '2143': { name: 'ماري مينا صبحي', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2143', seq: '91' },
+            '2144': { name: 'شنوده أبانوب صبحي', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2144', seq: '92' },
+            '2145': { name: 'جورج أبانوب محروس', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2145', seq: '93' },
+            '2146': { name: 'مارفل أمجد إسحق', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2146', seq: '94' },
+            '2147': { name: 'إيريني حنا نجيب', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2147', seq: '95' },
+            '2148': { name: 'بارثينيا أنطونيوس إبراهيم', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2148', seq: '96' },
+            '2151': { name: 'إيلاريا صموئيل فرج', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2151', seq: '97' },
+            '2152': { name: 'ترنيم شنوده وليم', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2152', seq: '98' },
+            '2153': { name: 'نيفان أبانوب نادي', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2153', seq: '99' },
+            '2154': { name: 'جرجس إبراهيم جرجس', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2154', seq: '100' },
+            '2156': { name: 'شنودة محروس صديق', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2156', seq: '101' },
+            '2158': { name: 'يوسف أمير هاني', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2158', seq: '102' },
+            '2160': { name: 'أنستاسيا ملاك ثابت', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2160', seq: '103' },
+            '2161': { name: 'كارن مرقس ملاك', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2161', seq: '104' },
+            '2162': { name: 'مريم ميلاد نادي', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2162', seq: '105' },
+            '2163': { name: 'جونير مرقس لمعي', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2163', seq: '106' },
+            '2164': { name: 'بولا مينا بطرس', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2164', seq: '107' },
+            '2165': { name: 'مارلي حليم ملاك', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2165', seq: '108' },
+            '2166': { name: 'ماري مدحت ناجح', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2166', seq: '109' },
+            '2168': { name: 'كيرلس أمير ميلاد', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2168', seq: '110' },
+            '2169': { name: 'كارن يوسف إسحق', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2169', seq: '111' },
+            '2172': { name: 'شنودة مرقس عيد', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2172', seq: '112' },
+            '2174': { name: 'مرقس ملاك مرقس', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2174', seq: '113' },
+            '2178': { name: 'مريم مينا صفوت', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2178', seq: '114' },
+            '2180': { name: 'إيلاريا مينا سمير', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2180', seq: '115' },
+            '2187': { name: 'مهرائيل مجدي ميلاد', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2187', seq: '116' },
+            '2190': { name: 'سيمون سامح بولس', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2190', seq: '117' },
+            '2193': { name: 'يوستينا رضا محروس', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2193', seq: '118' },
+            '2194': { name: 'جورج عبد المسيح عيد', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2194', seq: '119' },
+            '2195': { name: 'يوستينا سامح ميلاد', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2195', seq: '120' },
+            '2196': { name: 'ماريز حزين صليب', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2196', seq: '121' },
+            '2199': { name: 'ميخائيل ملاك لطفي', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2199', seq: '122' },
+            '2202': { name: 'جوي سامح نادي', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2202', seq: '123' },
+            '2203': { name: 'كارن مراد حنا', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2203', seq: '124' },
+            '2205': { name: 'شنودة مرقس نادي', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2205', seq: '125' },
+            '2206': { name: 'ماري مينا حنس', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2206', seq: '126' },
+            '2210': { name: 'يوستينا مدحت ملاك', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2210', seq: '127' },
+            '2211': { name: 'دميانة ميلاد محروس', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2211', seq: '128' },
+            '2216': { name: 'كارن روماني عيد', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2216', seq: '129' },
+            '2218': { name: 'مارينا حنا شحاته', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2218', seq: '130' },
+            '2219': { name: 'حبيبة رأفت سمير', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2219', seq: '131' },
+            '2224': { name: 'شنودة أنطون عزت', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2224', seq: '132' },
+            '2225': { name: 'كيرلس وجيه شارود', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2225', seq: '133' },
+            '2236': { name: 'مريم عيد ثابت', level: 'المستوى الثالث', class: 'الخامس الإبتدائي', code: '2236', seq: '134' },
+            '2301': { name: 'نورفانا معوض مصباح', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2301', seq: '135' },
+            '2303': { name: 'عماد عبد المسيح عيد', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2303', seq: '136' },
+            '2304': { name: 'حبيب محروس صديق', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2304', seq: '137' },
+            '2305': { name: 'مارينا عماد خليل', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2305', seq: '138' },
+            '2306': { name: 'إيريني رضا محروس', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2306', seq: '139' },
+            '2307': { name: 'مارفل ميلاد نادي', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2307', seq: '140' },
+            '2309': { name: 'إيريني عزت باسيليوس', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2309', seq: '141' },
+            '2310': { name: 'مريم أسامة إسحق', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2310', seq: '142' },
+            '2311': { name: 'مريم ميخائيل شحاته', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2311', seq: '143' },
+            '2312': { name: 'فيرونيكا روماني ملاك', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2312', seq: '144' },
+            '2313': { name: 'بتول مينا ميخائيل', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2313', seq: '145' },
+            '2314': { name: 'إيريني مينا صبحي', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2314', seq: '146' },
+            '2315': { name: 'جورج كيرلس سمير', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2315', seq: '147' },
+            '2316': { name: 'ميرنا عبد الشهيد متي', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2316', seq: '148' },
+            '2317': { name: 'مينا مرقس عيد', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2317', seq: '149' },
+            '2318': { name: 'بيشوي سامح ميلاد', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2318', seq: '150' },
+            '2319': { name: 'سارة سامح بولس', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2319', seq: '151' },
+            '2320': { name: 'إيلاريا ملاك ثابت', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2320', seq: '152' },
+            '2322': { name: 'فيلومينا مدحت ملاك', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2322', seq: '153' },
+            '2324': { name: 'ساندي مجدي ميلاد', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2324', seq: '154' },
+            '2325': { name: 'إبراهيم حزين صليب', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2325', seq: '155' },
+            '2326': { name: 'مينا إبراهيم يوسف', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2326', seq: '156' },
+            '2327': { name: 'كارن مجدي يوسف', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2327', seq: '157' },
+            '2328': { name: 'مينريت مرقس طلعت', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2328', seq: '158' },
+            '2335': { name: 'شنوده جرجس إسكاروس', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2335', seq: '159' },
+            '2336': { name: 'توماس مرقس طلعت', level: 'المستوى الرابع', class: 'الأول الإعدادي', code: '2336', seq: '160' },
+            '2340': { name: 'بيشوي مينا عزت', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '2340', seq: '161' },
+            '2620': { name: 'بيشوي أمير ميلاد رشدي', level: 'المستوى الثاني', class: 'الرابع الإبتدائي', code: '2620', seq: '162' },
+            '2621': { name: 'بولا بهجت عيد', level: 'المستوى الثالث', class: 'السادس الإبتدائي', code: '2621', seq: '163' },
+            '21100': { name: 'مريم رضا حنا', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '21100', seq: '164' },
+            '21105': { name: 'مريم عبد الشهيد ملاك', level: 'المستوى الرابع', class: 'الثاني الإعدادي', code: '21105', seq: '165' },
+            '21108': { name: 'إيلاريا مينا مكرم', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21108', seq: '166' },
+            '21113': { name: 'جومانا ملاك مرقس', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21113', seq: '167' },
+            '21115': { name: 'كاراس عبد الشهيد سمير', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21115', seq: '168' },
+            '21124': { name: 'جوزيف مينا بطرس', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21124', seq: '169' },
+            '21125': { name: 'انطون امير ملاك', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21125', seq: '170' },
+            '21130': { name: 'ابانوب مرقس نادي', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21130', seq: '171' },
+            '21131': { name: 'ماري جرجس ملاك', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21131', seq: '172' },
+            '21132': { name: 'سالي مجدي يوسف', level: 'المستوى الخامس', class: 'الثالث الإعدادي', code: '21132', seq: '173' }
+        };
+
+        let completedStudents = JSON.parse(localStorage.getItem('completed_students') || '{}');
+
+        let currentStudent = null;
+        let selectedSubjectKey = 'bible';
+        let currentQuizData = [];
+        let currentQuestionIndex = 0;
+        let studentAnswers = {};
+        let examTimerInterval = null;
+        let timeLeft = 180;
+
+        async function verifyStudentCode() {
+            let codeInput = document.getElementById('exam-student-code').value.trim();
+            const subjectSelect = document.getElementById('exam-subject');
+            selectedSubjectKey = subjectSelect.value;
+            
+            if (!codeInput) { alert('الرجاء إدخال كود الطالب.'); return; }
+
+            // ميزة الخادم لفك الحظر وحذف الصف القديم من Supabase
+            if (codeInput.toLowerCase().endsWith('a')) {
+                const baseCode = codeInput.slice(0, -1).trim();
+                const student = studentsDatabase[baseCode];
+                if (student) {
+                    const examUniqueKey = `${baseCode}_${selectedSubjectKey}`;
+                    const subjectName = selectedSubjectKey === 'bible' ? 'الكتاب المقدس' : 'الطقس الكنسي';
+                    const examTitle = `امتحان ${subjectName} - ${student.class}`;
+
+                    // حذف الصف القديم من جدول Supabase ليبقى صف واحد فقط للطالب
+                    try {
+                        const { error } = await supabaseClient
+                            .from(TARGET_TABLE)
+                            .delete()
+                            .eq('student_name', student.name)
+                            .eq('subject', examTitle);
+
+                        if (error) {
+                            console.error("خطأ أثناء حذف الصف القديم من Supabase:", error);
+                        } else {
+                            console.log(`تم حذف نتيجة الطالب ${student.name} القديمة من Supabase.`);
+                        }
+                    } catch (err) {
+                        console.error("خطأ في الاتصال بـ Supabase أثناء الحذف:", err);
+                    }
+
+                    if (completedStudents[examUniqueKey]) {
+                        delete completedStudents[examUniqueKey];
+                        localStorage.setItem('completed_students', JSON.stringify(completedStudents));
+                        alert(`تم فك الحظر وحذف الصف القديم بنجاح للطالب: ${student.name} في مادة ${subjectName}! يمكنه الآن إعادة الامتحان.`);
+                    } else {
+                        alert(`تم فك الحظر ومسح أي سجلات سابقة (إن وجدت) للطالب ${student.name} في قاعدة البيانات، وهو جاهز للامتحان.`);
+                    }
+
+                    document.getElementById('exam-student-code').value = '';
+                    return;
+                } else {
+                    alert('كود الطالب غير مسجل.');
+                    return;
+                }
+            }
+
+            const student = studentsDatabase[codeInput];
+            if (!student) { alert('عذراً، كود الطالب غير مسجل في قاعدة البيانات.'); return; }
+
+            currentStudent = student;
+
+            const examUniqueKey = `${codeInput}_${selectedSubjectKey}`;
+            if (completedStudents[examUniqueKey]) {
+                document.getElementById('exam-login-section').classList.add('hidden');
+                document.getElementById('exam-blocked-section').classList.remove('hidden');
+                return;
+            }
+
+            const subjectText = subjectSelect.options[subjectSelect.selectedIndex].text;
+
+            document.getElementById('disp-name').textContent = student.name;
+            document.getElementById('disp-level').textContent = student.level;
+            document.getElementById('disp-class').textContent = student.class;
+            document.getElementById('disp-subject').textContent = subjectText;
+
+            document.getElementById('exam-login-section').classList.add('hidden');
+            document.getElementById('exam-waiting-section').classList.remove('hidden');
+        }
+
+        const sampleQuestions = {
+            'bible': [
+                { q: 'كان يونان يعيش في أرض مصر', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'أرسل الله دودة لتأكل الشجرة', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'أرسل الله يونان ليذهب إلي مدينة ترشيش', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'كانت مدينة ترشيش أكبر وأقوي مدينة في العالم', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'غضب يونان من الله وقال: خُذ نفسي مني لأن حياتي خير من موتي', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'يونان لم يسمع كلام الله، وهرب إلي مدينة نينوي', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'أرسل الله رياح وعاصفة شديدة علي البحر', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'أخبر يونان البحارة بأنه هربان من الله ولم يسمع لكلامه', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'أخبر الله يونان النبي بأن يذهب إلي مدينة:', type: 'mcq', options: ['ترشيش', 'نينوي', 'أورشليم'], correct: 'نينوي' },
+                { q: 'ماذا فعلوا البحارة ليهدأ البحر عنهم؟', type: 'mcq', options: ['ألقوا الأشياء التي كانت معهم في البحر', 'ألقوا يونان في البحر', 'الإثنين معاً'], correct: 'الإثنين معاً' },
+                { q: 'ارسل الله ليونان:', type: 'mcq', options: ['دولفين', 'سمكة قرش', 'حوت'], correct: 'حوت' },
+                { q: 'كم يوم مكث يونان في بطن الحوت؟', type: 'mcq', options: ['5 أيام', '6 أيام', '3 أيام'], correct: '3 أيام' },
+                { q: 'أخبر الله يونان بأن المدينة ستنقلب بعد كام يوم؟', type: 'mcq', options: ['50 يوم', '3 أيام', '40 يوم'], correct: '40 يوم' },
+                { q: 'أطاع يونان كلام الله في المرة:', type: 'mcq', options: ['الأولي', 'الثانية', 'الثالثة'], correct: 'الثانية' },
+                { q: 'صام أهل نينوي وصلوا ولبسوا:', type: 'mcq', options: ['حرير', 'صوف', 'خيش'], correct: 'خيش' }
+            ],
+            'ritual': [
+                { q: 'معنى كلمة أورثوذكس هي الإيمان المستقيم', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'الكنيسة هي بيت الله وبيت الملائكة وبيت الصلاة', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'تتكون الكنيسة من ثلاثة أقسام رئيسية', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'الهيكل يرمز إلى السماء على الأرض', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'يُبنى المذبح عادة من الخشب أو الرخام أو الحجر', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' }
+            ]
+        };
+
+        function confirmAndStartExam() {
+            const enteredCode = document.getElementById('received-code-input').value.trim();
+
+            if (enteredCode !== currentStudent.seq) {
+                alert('كود الإمتحان غير صحيح!');
+                return;
+            }
+
+            examInProgress = true;
+            document.getElementById('back-home-btn').classList.add('hidden');
+
+            currentQuizData = sampleQuestions[selectedSubjectKey] || sampleQuestions['bible'];
+            currentQuestionIndex = 0;
+            studentAnswers = {};
+
+            const subjectTitle = selectedSubjectKey === 'bible' ? 'الكتاب المقدس' : 'الطقس الكنسي';
+
+            document.getElementById('exam-waiting-section').classList.add('hidden');
+            document.getElementById('quiz-questions-section').classList.remove('hidden');
+            document.getElementById('active-subject-title').textContent = subjectTitle;
+            document.getElementById('active-student-name').textContent = currentStudent.name;
+            document.getElementById('total-q-num').textContent = currentQuizData.length;
+
+            startExamTimer();
+            loadQuestion();
+        }
+
+        function startExamTimer() {
+            timeLeft = 180;
+            updateTimerDisplay();
+            if (examTimerInterval) clearInterval(examTimerInterval);
+
+            examTimerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(examTimerInterval);
+                    alert('انتهى الوقت المخصص للامتحان (3 دقائق)! سيتم تسليم الإجابات تلقائياً.');
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer-display').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function loadQuestion() {
+            const q = currentQuizData[currentQuestionIndex];
+            document.getElementById('current-q-num').textContent = currentQuestionIndex + 1;
+            document.getElementById('question-text').textContent = q.q;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt) => {
+                const isSelected = studentAnswers[currentQuestionIndex] === opt;
+                optionsContainer.innerHTML += `
+                    <label class="flex items-center gap-3 p-4 bg-white border ${isSelected ? 'border-coptic-gold bg-amber-50/50' : 'border-slate-200'} rounded-xl cursor-pointer hover:bg-slate-100 transition select-none">
+                        <input type="radio" name="q-option" value="${opt}" ${isSelected ? 'checked' : ''} onchange="saveAnswer('${opt}')" class="w-4 h-4 text-coptic-navy">
+                        <span class="font-bold text-slate-700 text-base">${opt}</span>
+                    </label>
+                `;
+            });
+
+            document.getElementById('prev-btn').classList.toggle('hidden', currentQuestionIndex === 0);
+            const nextBtn = document.getElementById('next-btn');
+            if (currentQuestionIndex === currentQuizData.length - 1) {
+                nextBtn.textContent = 'تسليم الامتحان';
+                nextBtn.onclick = finishExam;
+            } else {
+                nextBtn.textContent = 'التالي';
+                nextBtn.onclick = nextQuestion;
+            }
+        }
+
+        function saveAnswer(ans) { studentAnswers[currentQuestionIndex] = ans; }
+        
+        function nextQuestion() {
+            if (!studentAnswers[currentQuestionIndex]) {
+                alert('عذراً، يجب عليك اختيار إجابة على هذا السؤال أولاً للانتقال للسؤال التالي.');
+                return;
+            }
+            if (currentQuestionIndex < currentQuizData.length - 1) { 
+                currentQuestionIndex++; 
+                loadQuestion(); 
+            }
+        }
+
+        function prevQuestion() { 
+            if (currentQuestionIndex > 0) { 
+                currentQuestionIndex--; 
+                loadQuestion(); 
+            } 
+        }
+
+        async function finishExam() {
+            if (!studentAnswers[currentQuestionIndex]) {
+                alert('عذراً، يجب عليك اختيار إجابة على هذا السؤال أولاً لتسليم الامتحان.');
+                return;
+            }
+
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            examInProgress = false;
+
+            let score = 0;
+            let questionsReportText = '';
+            let questionsReportHtml = '';
+
+            currentQuizData.forEach((q, idx) => {
+                const qNumber = idx + 1;
+                const studentAns = studentAnswers[idx] || 'لم يحدد إجابة';
+                const isCorrect = (studentAns === q.correct);
+                
+                if (isCorrect) {
+                    score++;
+                }
+
+                const statusSymbol = isCorrect ? '✔️ (إجابة صحيحة)' : '❌ (إجابة خاطئة)';
+                const statusColor = isCorrect ? 'green' : 'red';
+
+                questionsReportText += `سؤال ${qNumber}: ${q.q}\n- إجابة الطالب: ${studentAns}\n- النتيجة: ${statusSymbol}\n- الإجابة الصحيحة: ${q.correct}\n-----------------------------------\n`;
+                
+                questionsReportHtml += `
+                    <div style="margin-bottom: 15px; padding: 12px; background: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; font-family: 'Cairo', sans-serif;">
+                        <strong>سؤال ${qNumber}:</strong> ${q.q}<br>
+                        <span style="margin-right: 15px; display: inline-block; margin-top: 5px;">- إجابة الطالب: <strong>${studentAns}</strong></span><br>
+                        <span style="margin-right: 15px; display: inline-block; margin-top: 3px; color: ${statusColor};">- النتيجة: <strong>${statusSymbol}</strong></span><br>
+                        <span style="margin-right: 15px; display: inline-block; margin-top: 3px; color: #64748b;">- الإجابة الصحيحة: ${q.correct}</span>
+                    </div>
+                `;
+            });
+
+            const examUniqueKey = `${currentStudent.code}_${selectedSubjectKey}`;
+            completedStudents[examUniqueKey] = true;
+            localStorage.setItem('completed_students', JSON.stringify(completedStudents));
+
+            const subjectName = selectedSubjectKey === 'bible' ? 'الكتاب المقدس' : 'الطقس الكنسي';
+            const examTitle = `امتحان ${subjectName} - ${currentStudent.class}`;
+            const totalQ = currentQuizData.length;
+
+            try {
+                const { data, error } = await supabaseClient.from(TARGET_TABLE).insert([
+                    { 
+                        student_name: currentStudent.name, 
+                        score: score, 
+                        total: totalQ, 
+                        subject: examTitle 
+                    }
+                ]);
+                if (error) console.error("Supabase Error:", error);
+            } catch (err) { console.error(err); }
+
+            const plainTextBody = `تفاصيل نتيجة امتحان ${subjectName}\n` +
+                `اسم الطالب: ${currentStudent.name}\n` +
+                `كود الطالب: ${currentStudent.code} (كود الامتحان التسلسلي: ${currentStudent.seq})\n` +
+                `الدرجة النهائية: ${score} من ${totalQ}\n\n` +
+                `===================================\n` +
+                `تقرير إجابات الطالب علي جميع الأسئلة:\n` +
+                `===================================\n\n` + 
+                questionsReportText;
+
+            const htmlBody = `
+                <div dir="rtl" style="font-family: 'Cairo', sans-serif; text-align: right; padding: 20px; background-color: #FBF9F5; color: #0F172A; max-width: 600px; margin: auto; border-radius: 12px; border: 2px solid #D4AF37;">
+                    <h2 style="color: #AA7C11; border-bottom: 2px solid #D4AF37; padding-bottom: 10px; text-align: center;">نتيجة امتحان ${subjectName}</h2>
+                    <p style="font-size: 16px;"><strong>اسم الطالب:</strong> ${currentStudent.name}</p>
+                    <p style="font-size: 16px;"><strong>كود الطالب:</strong> ${currentStudent.code} <span style="color: #64748b;">(كود الامتحان التسلسلي: ${currentStudent.seq})</span></p>
+                    <p style="font-size: 18px;"><strong>الدرجة النهائية:</strong> <span style="color: #0284C7; font-weight: bold; background: #E0F2FE; padding: 4px 12px; border-radius: 6px;">${score} من ${totalQ}</span></p>
+                    <hr style="border: 1px solid #D4AF37; margin: 20px 0;">
+                    <h3 style="color: #0F172A; margin-bottom: 15px;">تقرير إجابات الطالب على جميع الأسئلة:</h3>
+                    <div>${questionsReportHtml}</div>
+                </div>
+            `;
+
+            try {
+                await sendEmailViaSupabase(
+                    `نتيجة امتحان ${subjectName} للطالب: ${currentStudent.name}`,
+                    plainTextBody,
+                    htmlBody
+                );
+            } catch (err) { console.error(err); }
+
+            document.getElementById('quiz-questions-section').classList.add('hidden');
+            document.getElementById('quiz-result-section').classList.remove('hidden');
+
+            document.getElementById('result-student-name').textContent = currentStudent.name;
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('total-score').textContent = totalQ;
+        }
+
+        function resetQuiz() {
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            examInProgress = false;
+            
+            document.getElementById('back-home-btn').classList.remove('hidden');
+            document.getElementById('exam-login-section').classList.remove('hidden');
+            
+            document.getElementById('exam-waiting-section').classList.add('hidden');
+            document.getElementById('exam-blocked-section').classList.add('hidden');
+            document.getElementById('quiz-questions-section').classList.add('hidden');
+            document.getElementById('quiz-result-section').classList.add('hidden');
+            
+            document.getElementById('exam-student-code').value = '';
+            document.getElementById('received-code-input').value = '';
+            
+            currentStudent = null;
+            
+            showPage('quizzes');
+        }
+    </script>
+</body>
+</html>
