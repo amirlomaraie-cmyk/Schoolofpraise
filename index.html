@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدرسة التسبيح - كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coptic: {
+                            gold: '#D4AF37',
+                            darkGold: '#AA7C11',
+                            navy: '#0F172A',
+                            sky: '#0284C7',
+                            lightSky: '#E0F2FE',
+                            deepSky: '#0F172A',
+                            burgundy: '#800020',
+                            cream: '#FBF9F5'
+                        }
+                    },
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #FBF9F5; text-align: center; }
+        .coptic-pattern {
+            background-color: #0F172A;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .fade-word {
+            opacity: 0;
+            transform: translateY(10px);
+            display: inline-block;
+            animation: fadeInWord 0.5s forwards;
+        }
+        @keyframes fadeInWord {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between" onload="initHomeAnimations()">
+
+    <!-- Header / Navbar -->
+    <header class="bg-coptic-navy text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center border-b border-amber-500/20 gap-2">
+            <div class="flex items-center justify-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-coptic-gold/20 flex items-center justify-center border border-coptic-gold">
+                    <i class="fa-solid fa-cross text-coptic-gold text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white leading-tight">مدرسة التسبيح</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="text-center text-xs md:text-sm text-amber-100 font-semibold flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-full border border-coptic-gold/40">
+                    <i class="fa-solid fa-church text-coptic-gold"></i>
+                    <span>كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</span>
+                </div>
+                <a href="servant.html" class="bg-coptic-gold text-coptic-navy border border-coptic-gold px-3 py-1.5 rounded-xl text-xs font-extrabold hover:bg-amber-400 transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>بوابة الخادم</span>
+                </a>
+                <button onclick="toggleMobileMenu()" class="text-white text-2xl p-1.5 bg-slate-800 rounded-lg border border-coptic-gold/40 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <nav class="max-w-7xl mx-auto px-4">
+            <ul class="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm font-semibold py-2">
+                <li><button onclick="showPage('home')" class="nav-btn px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200">الرئيسية</button></li>
+                
+                <li class="relative dropdown">
+                    <button class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 flex items-center gap-1">
+                        كنيستنا <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="dropdown-menu hidden absolute right-0 w-52 bg-coptic-navy border border-coptic-gold/40 rounded-lg shadow-2xl py-2 z-50 text-right">
+                        <li><a href="church.html#church-history" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">تاريخ الكنيسة</a></li>
+                        <li><a href="church.html#ebrahim" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">القُمُّص إبراهيم البسيط</a></li>
+                        <li><a href="church.html#fathers" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">الآباء كهنة الكنيسة</a></li>
+                    </ul>
+                </li>
+
+                <li class="relative dropdown">
+                    <button class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 flex items-center gap-1">
+                        مدرسة التسبيح <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="dropdown-menu hidden absolute right-0 w-52 bg-coptic-navy border border-coptic-gold/40 rounded-lg shadow-2xl py-2 z-50 text-right">
+                        <li><a href="library.html#subjects" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">تاريخ المدرسة</a></li>
+                        <li><a href="library.html#subjects" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">لائحة المدرسة</a></li>
+                        <li><a href="results.html" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">نتائج الطلاب</a></li>
+                        <li><a href="servant.html" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy font-bold text-coptic-gold border-t border-coptic-gold/20">بوابة الخادم</a></li>
+                    </ul>
+                </li>
+
+                <!-- قائمة المكتبات المحدثة لتشير إلى library.html -->
+                <li class="relative dropdown">
+                    <button class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 flex items-center gap-1">
+                        المكتبات <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="dropdown-menu hidden absolute right-0 w-64 bg-coptic-navy border border-coptic-gold/40 rounded-lg shadow-2xl py-2 z-50 text-right">
+                        <li><a href="library.html#subjects" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">مكتبة الكُتب (المناهج)</a></li>
+                        <li><a href="library.html#publications" class="block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy">المكتبة الصوتية والكتب الطقسية</a></li>
+                        <li><button onclick="showPage('quizzes')" class="w-full text-right block px-4 py-2 hover:bg-coptic-gold hover:text-coptic-navy font-bold text-coptic-gold border-t border-coptic-gold/20">المسابقات الدراسية</button></li>
+                    </ul>
+                </li>
+
+                <li><a href="library.html#publications" class="nav-btn px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 block">الإصدارات</a></li>
+                <li><button onclick="showPage('contact')" class="nav-btn px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200">التواصل والاقتراحات</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity duration-300">
+        <div class="fixed top-0 left-0 w-72 h-full bg-coptic-navy text-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto text-right border-l border-coptic-gold/30">
+            <div>
+                <div class="flex justify-between items-center mb-6 pb-3 border-b border-coptic-gold/30">
+                    <h3 class="font-bold text-lg text-coptic-gold">قائمة الموقع</h3>
+                    <button onclick="toggleMobileMenu()" class="text-white text-xl p-1"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <ul class="space-y-4 text-sm font-semibold">
+                    <li><button onclick="showPage('home'); toggleMobileMenu();" class="w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">الرئيسية</button></li>
+                    <hr class="border-coptic-gold/20">
+                    <p class="text-xs text-coptic-gold font-bold px-3">كنيستنا</p>
+                    <li><a href="church.html#church-history" class="block w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">تاريخ الكنيسة</a></li>
+                    <li><a href="church.html#ebrahim" class="block w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">القُمُّص إبراهيم البسيط</a></li>
+                    <li><a href="church.html#fathers" class="block w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">الآباء كهنة الكنيسة</a></li>
+                    <hr class="border-coptic-gold/20">
+                    <p class="text-xs text-coptic-gold font-bold px-3">المكتبات والمناهج</p>
+                    <li><a href="library.html#subjects" class="block w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">مكتبة الكُتب (المناهج)</a></li>
+                    <li><a href="library.html#publications" class="block w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">الإصدارات والكتب الطقسية</a></li>
+                    <li><button onclick="showPage('quizzes'); toggleMobileMenu();" class="w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20 text-coptic-gold font-bold">المسابقات الدراسية</button></li>
+                    <hr class="border-coptic-gold/20">
+                    <li><button onclick="showPage('contact'); toggleMobileMenu();" class="w-full text-right py-2 px-3 rounded-lg hover:bg-coptic-gold/20">التواصل والاقتراحات</button></li>
+                </ul>
+            </div>
+            <div class="text-center text-xs text-coptic-gold pt-4 border-t border-coptic-gold/30">
+                مدرسة التسبيح ببني صامت © 2026
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow">
+        
+        <!-- HOME PAGE -->
+        <div id="page-home" class="page-content">
+            <section class="coptic-pattern text-white py-16 px-4 text-center relative overflow-hidden border-b-4 border-coptic-gold flex flex-col items-center justify-center">
+                <div class="max-w-4xl mx-auto space-y-4">
+                    <div id="daily-verse" class="text-2xl md:text-3xl font-extrabold text-coptic-gold leading-relaxed drop-shadow-md flex flex-wrap justify-center items-center gap-x-2"></div>
+                    <div id="daily-verse-ref" class="text-amber-200 text-base md:text-lg font-semibold tracking-wide opacity-0 transition-opacity duration-700"></div>
+                    <p id="welcome-message" class="text-slate-200 text-lg max-w-2xl mx-auto pt-4 flex flex-wrap justify-center items-center gap-x-1.5"></p>
+                </div>
+            </section>
+
+            <section class="max-w-7xl mx-auto px-4 py-12 flex flex-col items-center justify-center text-right">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-extrabold text-coptic-navy mb-2">أقسام المنصة الكنسية</h3>
+                    <p class="text-slate-600">تعرف على كافة خدمات وأقسام مدرسة التسبيح واستعرض المحتوى بسهولة</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+                    <div class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-navy overflow-hidden flex flex-col justify-between hover:shadow-2xl transition duration-300">
+                        <div class="p-8 flex-grow flex flex-col items-start">
+                            <div class="w-16 h-16 bg-coptic-navy text-coptic-gold rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md border border-coptic-gold/30"><i class="fa-solid fa-book-bookmark"></i></div>
+                            <h4 class="font-bold text-2xl text-coptic-navy mb-2">مكتبة المناهج الدراسية</h4>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">تصفح مناهج الكتاب المقدس، الطقس الكنسي، الألحان، واللغة القبطية لكافة المراحل التعليمية.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 w-full">
+                            <a href="library.html#subjects" class="w-full bg-coptic-navy text-coptic-gold font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition flex items-center justify-center gap-2 border border-coptic-gold/40 block text-center"><span>استعراض المناهج</span><i class="fa-solid fa-arrow-left text-xs"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-gold overflow-hidden flex flex-col justify-between hover:shadow-2xl transition duration-300">
+                        <div class="p-8 flex-grow flex flex-col items-start">
+                            <div class="w-16 h-16 bg-coptic-gold text-coptic-navy rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md"><i class="fa-solid fa-landmark"></i></div>
+                            <h4 class="font-bold text-2xl text-coptic-darkGold mb-2">القُمُّص إبراهيم البسيط</h4>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">سيرة عطرة، معجزات، تعاليم مباركة، تمجيد، وذكصولوجية الأب القمص إبراهيم البسيط.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 w-full">
+                            <a href="church.html#ebrahim" class="w-full bg-coptic-gold text-coptic-navy font-bold py-3 px-4 rounded-xl hover:bg-coptic-darkGold hover:text-white transition flex items-center justify-center gap-2 block text-center"><span>زيارة القسم</span><i class="fa-solid fa-arrow-left text-xs"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-burgundy overflow-hidden flex flex-col justify-between hover:shadow-2xl transition duration-300">
+                        <div class="p-8 flex-grow flex flex-col items-start">
+                            <div class="w-16 h-16 bg-coptic-burgundy text-white rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md"><i class="fa-solid fa-book-open-reader"></i></div>
+                            <h4 class="font-bold text-2xl text-coptic-burgundy mb-2">الإصدارات والكتب الطقسية</h4>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">مكتبة متكاملة للكتب الليتورجية، صلوات الأعياد، البصخة، والسنكسار بوضع القراءة الآمن.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 w-full">
+                            <a href="library.html#publications" class="w-full bg-coptic-burgundy text-white font-bold py-3 px-4 rounded-xl hover:opacity-90 transition flex items-center justify-center gap-2 block text-center"><span>تصفح الإصدارات</span><i class="fa-solid fa-arrow-left text-xs"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-navy overflow-hidden flex flex-col justify-between hover:shadow-2xl transition duration-300">
+                        <div class="p-8 flex-grow flex flex-col items-start">
+                            <div class="w-16 h-16 bg-coptic-navy text-coptic-gold rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md border border-coptic-gold/30"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <h4 class="font-bold text-2xl text-coptic-navy mb-2">نتائج الطلاب والفصول</h4>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">اختر العام الدراسي واستعلم عن النتيجة باستخدام كود الطالب أو اسمه.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 w-full">
+                            <a href="results.html" class="w-full bg-coptic-navy text-coptic-gold font-bold py-3 px-4 rounded-xl hover:bg-slate-800 transition flex items-center justify-center gap-2 border border-coptic-gold/40 block text-center"><span>عرض النتائج</span><i class="fa-solid fa-arrow-left text-xs"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-gold overflow-hidden flex flex-col justify-between hover:shadow-2xl transition duration-300">
+                        <div class="p-8 flex-grow flex flex-col items-start">
+                            <div class="w-16 h-16 bg-coptic-gold text-coptic-navy rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md"><i class="fa-solid fa-award"></i></div>
+                            <h4 class="font-bold text-2xl text-coptic-darkGold mb-2">المسابقات الدراسية التفاعلية</h4>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">اختر المادة والفصل الدراسي لاختبار معلوماتك (صح وخطأ واختيارات) واستعراض النتيجة.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 w-full">
+                            <button onclick="showPage('quizzes')" class="w-full bg-coptic-gold text-coptic-navy font-bold py-3 px-4 rounded-xl hover:bg-coptic-darkGold hover:text-white transition flex items-center justify-center gap-2"><span>بدء المسابقات</span><i class="fa-solid fa-arrow-left text-xs"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg border-t-4 border-coptic-burgundy overflow-hidden flex flex-col justify-between hover:shadow-2xl transition duration-300">
+                        <div class="p-8 flex-grow flex flex-col items-start">
+                            <div class="w-16 h-16 bg-coptic-burgundy text-white rounded-2xl flex items-center justify-center mb-4 text-3xl shadow-md"><i class="fa-solid fa-headset"></i></div>
+                            <h4 class="font-bold text-2xl text-coptic-burgundy mb-2">التواصل والاقتراحات</h4>
+                            <p class="text-slate-500 text-sm leading-relaxed mb-6">تواصل مع فريق العمل أو أرسل مقترحك السري مباشرة لمدرسة التسبيح.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border-t border-slate-100 w-full">
+                            <button onclick="showPage('contact')" class="w-full bg-coptic-burgundy text-white font-bold py-3 px-4 rounded-xl hover:opacity-90 transition flex items-center justify-center gap-2"><span>التواصل والاقتراحات</span><i class="fa-solid fa-arrow-left text-xs"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- QUIZZES PAGE -->
+        <div id="page-quizzes" class="page-content hidden max-w-5xl mx-auto px-4 py-12 text-right">
+            <button onclick="showPage('home')" class="mb-6 text-coptic-navy font-bold hover:underline flex items-center gap-2"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></button>
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-slate-200">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-coptic-gold/20 text-coptic-darkGold rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner border border-coptic-gold"><i class="fa-solid fa-award"></i></div>
+                    <h3 class="text-3xl font-extrabold text-coptic-navy mb-2">المسابقات الدراسية التفاعلية</h3>
+                    <p class="text-slate-600">اختر المادة والفصل الدراسي لاختبار معلوماتك (صح وخطأ واختيارات)</p>
+                </div>
+                <div id="quiz-setup-section" class="space-y-6 max-w-xl mx-auto bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <div>
+                        <label class="block font-bold text-slate-700 text-sm mb-2">اسم الطالب (الثلاثي):</label>
+                        <input type="text" id="quiz-student-name" placeholder="اكتب اسمك هنا..." class="w-full p-3 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:border-coptic-navy text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 text-sm mb-2">اختر المادة الدراسية:</label>
+                        <select id="quiz-subject" class="w-full p-3 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:border-coptic-navy text-sm">
+                            <option value="bible">الكتاب المقدس</option>
+                            <option value="rituals">الطقس الكنسي</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 text-sm mb-2">اختر الفصل الدراسي:</label>
+                        <select id="quiz-class" class="w-full p-3 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:border-coptic-navy text-sm">
+                            <option value="1">الصَّف الأول الإبتدائي</option>
+                            <option value="2">الصَّف الثاني الإبتدائي</option>
+                            <option value="3">الصَّف الثالث الإبتدائي</option>
+                            <option value="4">الصَّف الرابع الإبتدائي</option>
+                            <option value="5">الصَّف الخامس الإبتدائي</option>
+                            <option value="6">الصَّف السادس الإبتدائي</option>
+                            <option value="prep1">الصَّف الأول الإعدادي</option>
+                            <option value="prep2">الصَّف الثاني الإعدادي</option>
+                            <option value="prep3">الصَّف الثالث الإعدادي</option>
+                        </select>
+                    </div>
+                    <button onclick="startQuiz()" class="w-full bg-coptic-navy text-coptic-gold font-bold py-3.5 rounded-xl hover:bg-slate-800 transition shadow-md border border-coptic-gold/40 flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-play"></i><span>بدء المسابقة الآن</span>
+                    </button>
+                </div>
+                <div id="quiz-notice-section" class="hidden text-center py-12 space-y-4">
+                    <div class="w-16 h-16 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto text-2xl"><i class="fa-solid fa-clock"></i></div>
+                    <h4 class="text-2xl font-bold text-coptic-navy">عذراً، مسابقات هذه المادة أو هذا الفصل غير متوفرة حالياً</h4>
+                    <p class="text-slate-600 font-semibold text-lg">سيتم إضافته قريباً!</p>
+                    <button onclick="resetQuiz()" class="bg-coptic-navy text-coptic-gold font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800 transition text-sm">العودة للخيار</button>
+                </div>
+                <div id="quiz-questions-section" class="hidden space-y-6">
+                    <div class="flex justify-between items-center bg-slate-100 p-4 rounded-xl border border-slate-200">
+                        <span id="quiz-info-header" class="font-bold text-coptic-navy text-sm">الصف السادس الابتدائي - الدرس الأول: يونان النبي</span>
+                        <span id="quiz-timer" class="bg-coptic-navy text-coptic-gold text-xs font-bold px-3 py-1 rounded-full">سؤال <span id="current-q-num">1</span> من <span id="total-q-num">14</span></span>
+                    </div>
+                    <div id="question-card" class="bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6 text-right">
+                        <h4 id="question-text" class="text-xl font-bold text-slate-800 leading-relaxed"></h4>
+                        <div id="options-container" class="space-y-3"></div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="prevQuestion()" id="prev-btn" class="hidden bg-slate-200 text-slate-700 font-bold px-6 py-2.5 rounded-xl hover:bg-slate-300 transition text-sm">السابق</button>
+                        <button onclick="nextQuestion()" id="next-btn" class="mr-auto bg-coptic-navy text-coptic-gold font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800 transition text-sm border border-coptic-gold/30">التالي</button>
+                    </div>
+                </div>
+                <div id="quiz-result-section" class="hidden text-center space-y-6 py-8">
+                    <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner border border-emerald-300"><i class="fa-solid fa-trophy"></i></div>
+                    <h4 class="text-3xl font-extrabold text-coptic-navy">أهلاً بك، <span id="result-student-name"></span></h4>
+                    <p class="text-xl text-slate-700 font-bold">لقد أنهيت مسابقة الدرس الأول: يونان النبي بنجاح!</p>
+                    <div class="inline-block bg-coptic-navy text-coptic-gold px-8 py-4 rounded-2xl border-2 border-coptic-gold text-2xl font-extrabold shadow-lg">
+                        نتيجتك: <span id="final-score">0</span> / <span id="total-score">0</span>
+                    </div>
+                    <div id="wrong-answers-container" class="mt-8 text-right space-y-4 max-w-2xl mx-auto"></div>
+                    <div class="pt-4">
+                        <button onclick="resetQuiz()" class="bg-coptic-gold text-coptic-navy font-bold px-8 py-3 rounded-xl hover:bg-coptic-darkGold hover:text-white transition shadow">إعادة المسابقة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT & SUGGESTIONS PAGE -->
+        <div id="page-contact" class="page-content hidden max-w-6xl mx-auto px-4 py-12 text-right">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 space-y-8">
+                <button onclick="showPage('home')" class="text-coptic-navy font-bold hover:underline flex items-center gap-2 mb-4"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></button>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-coptic-navy text-coptic-gold rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-md border border-coptic-gold/30"><i class="fa-solid fa-headset"></i></div>
+                    <h3 class="text-3xl font-bold text-coptic-navy mb-2">التواصل والاقتراحات</h3>
+                    <p class="text-slate-600">يسعدنا تواصلكم دائماً، أو استقبال مقترحاتكم السرية لتطوير الخدمة</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-slate-50 border border-slate-200 p-6 md:p-8 rounded-2xl shadow-sm border-t-4 border-coptic-navy flex flex-col justify-between space-y-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 bg-coptic-navy text-coptic-gold rounded-xl flex items-center justify-center text-xl shadow border border-coptic-gold/30"><i class="fa-solid fa-address-book"></i></div>
+                                <h4 class="font-bold text-2xl text-coptic-navy">فريق التواصل</h4>
+                            </div>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm border-r-4 border-coptic-gold">
+                                    <h5 class="font-bold text-slate-800">القس كاراس سمير</h5>
+                                    <span class="inline-block bg-amber-100 text-coptic-darkGold text-xs font-semibold px-2.5 py-0.5 rounded-full my-1">مُشرف المدرسة</span>
+                                    <a href="tel:01120439415" dir="ltr" class="font-bold text-coptic-darkGold text-sm hover:underline block">01120439415</a>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm">
+                                    <h5 class="font-bold text-slate-800">الأستاذ مرقس توفيق</h5>
+                                    <span class="inline-block bg-amber-100 text-coptic-darkGold text-xs font-semibold px-2 py-0.5 rounded-full my-1">مُدير المدرسة</span>
+                                    <a href="tel:01145617227" dir="ltr" class="font-bold text-coptic-darkGold text-sm hover:underline block">01145617227</a>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm">
+                                    <h5 class="font-bold text-slate-800">الأستاذ عازر عيد</h5>
+                                    <span class="inline-block bg-rose-100 text-coptic-burgundy text-xs font-semibold px-2.5 py-0.5 rounded-full my-1">أمين عام الخدمة</span>
+                                    <a href="tel:01129526795" dir="ltr" class="font-bold text-coptic-burgundy text-sm hover:underline block">01129526795</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-5 rounded-xl text-center shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div class="text-right">
+                                <h5 class="font-bold">جروب واتساب مدرسة التسبيح</h5>
+                                <p class="text-emerald-100 text-xs">تابع الإشعارات والأخبار أولاً بأول</p>
+                            </div>
+                            <a href="https://chat.whatsapp.com/F8zIxrOdS5qBPNGSLzBG3l" target="_blank" class="bg-white text-emerald-700 font-extrabold px-5 py-2.5 rounded-lg hover:bg-emerald-50 transition text-xs whitespace-nowrap shadow">انضم للجروب</a>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 p-6 md:p-8 rounded-2xl shadow-sm border-t-4 border-coptic-gold flex flex-col justify-between space-y-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 bg-coptic-gold text-coptic-navy rounded-xl flex items-center justify-center text-xl shadow"><i class="fa-solid fa-lightbulb"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-2xl text-coptic-navy">صندوق الاقتراحات السرية</h4>
+                                    <p class="text-xs text-slate-500">اقتراحاتك تصل مباشرة لمدرسة التسبيح وفي سرية تامة</p>
+                                </div>
+                            </div>
+                            <form id="suggestion-form" onsubmit="submitSuggestion(event)" class="space-y-4">
+                                <div>
+                                    <label class="block font-bold text-slate-700 text-sm mb-1.5">اسم المُقترح:</label>
+                                    <input type="text" id="suggestion-name" required placeholder="اكتب اسمك هنا..." class="w-full p-3 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:border-coptic-navy text-sm">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 text-sm mb-1.5">نص الاقتراح:</label>
+                                    <textarea id="suggestion-text" rows="5" required placeholder="اكتب مقترحك لتطوير الخدمة هنا..." class="w-full p-3 bg-white border border-slate-300 rounded-xl font-semibold text-slate-700 focus:outline-none focus:border-coptic-navy text-sm"></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-coptic-navy text-coptic-gold font-bold py-3.5 rounded-xl hover:bg-slate-800 transition shadow-md border border-coptic-gold/40 flex items-center justify-center gap-2 text-sm">
+                                    <i class="fa-solid fa-paper-plane"></i><span>إرسال الاقتراح سرياً</span>
+                                </button>
+                            </form>
+                            <div id="suggestion-alert" class="hidden mt-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl text-center text-sm font-bold">
+                                تم إرسال مقترحك بنجاح وسريّة تامة لمدرسة التسبيح، شكراً لمشاركتك!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-coptic-navy text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+        <p class="text-xs text-slate-400">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+    </footer>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://lbsesqswjizxhtimuzan.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_XdBm9Pdk2MFq8QCrWTXjqQ_Rel5TKDz';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const dailyVerses = [
+            { text: '"أُرَنِّمُ لِلرَّبِّ فِي حَيَاتِي. أَزْمُرُ لإِلهِي مَا دُمْتُ مَوْجُوداً"', ref: "(مز 104: 33)" },
+            { text: '"سِرَاجٌ لِرِجْلِي كَلاَمُكَ وَنُورٌ لِسَبِيلِي"', ref: "(مز 119: 105)" },
+            { text: '"الرَّبُّ رَاعِيَّ فَلاَ يُعْوِزُنِي شَيْءٌ"', ref: "(مز 23: 1)" },
+            { text: '"تَوَكَّلْ عَلَى الرَّبِّ بِكُلِّ قَلْبِكَ، وَعَلَى فَهْمِكَ لاَ تَتَكَّلْ"', ref: "(أم 3: 5)" },
+            { text: '"اَلرَّبُّ نُورِي وَخَلاَصِي، مِمَّنْ أَخَافُ؟"', ref: "(مز 27: 1)" },
+            { text: '"فَرَحُ الرَّبِّ هُوَ قُوَّتُكُمْ"', ref: "(نح 8: 10)" },
+            { text: '"اِسْأَلُوا تُعْطَوْا. اُطْلُبُوا تَجِدُوا. اِقْرَعُوا يُفْتَحْ لَكُمْ"', ref: "(مت 7: 7)" },
+            { text: '"رَبِّي وَإلهِي"', ref: "(يو 20: 28)" },
+            { text: '"طُوبَى لِلأنْقِيَاءِ الْقُلُوبِ، لأَنَّهُمْ يُعَاينُونَ اللهَ"', ref: "(مت 5: 8)" },
+            { text: '"أستَطِيعُ كُلَّ شَيْءٍ فِي المَسِيحِ الَّذِي يُقَوِّينِي"', ref: "(في 4: 13)" },
+            { text: '"السَّلاَمَ أْتْرُكُ لَكُمْ. سَلاَمِي أُعْطِيكُمْ"', ref: "(يو 14: 27)" },
+            { text: '"بُعْدًا عَنْكَ لاَ أُرِيدُ شَيْئًا عَلَى الأَرْضِ"', ref: "(مز 73: 25)" },
+            { text: '"الْمَحَبَّةُ لاَ تَسْقُطُ أَبَداً"', ref: "(1كو 13: 8)" },
+            { text: '"أَنَا هُوَ الْقِيَامَةُ وَالْحَيَاةُ، مَنْ آمَنَ بِي وَلَوْ مَاتَ فَسَيَحْيَا"', ref: "(يو 11: 25)" },
+            { text: '"طُوبَى لِلْجِيَاعِ وَالْعِطَاشِ إِلَى الْبِرِّ، لأَّنهمْ يُشْبَعُونَ"', ref: "(مت 5: 6)" },
+            { text: '"اِفْرَحُوا فِي الرَّبِّ كُلَّ حِينٍ، وَأَقُولُ أَيْضاً افْرَحُوا"', ref: "(في 4: 4)" },
+            { text: '"لأَنَّ حَيْثُمَا اجْتَمَعَ اثْنَانِ أَوْ ثَلاَثَةٌ بِاسْمِي فَهُنَاكَ أَكُونُ فِي وَسْطِهِمْ"', ref: "(مت 18: 20)" },
+            { text: '"عَظَّمَ الرَّبُّ الْعَمَلَ مَعَنَا وَصِرْنَا فَرِحِينَ"', ref: "(مز 126: 3)" },
+            { text: '"طُوبَى لِصَانِعِي السَّلاَمِ، لأَنَّهُمْ أَبْنَاءَ اللهِ يُدْعَوْنَ"', ref: "(مت 5: 9)" },
+            { text: '"رُوحُكَ الْقُدُوسُ لاَ تَنْزِعْهُ مِنِّي"', ref: "(مز 51: 11)" }
+        ];
+
+        const welcomeText = "مرحباً بكم في الموقع الرسمي لـ مدرسة التسبيح.";
+
+        function animateTextWordByWord(elementId, text, delayOffset = 0) {
+            const container = document.getElementById(elementId);
+            if (!container) return;
+            container.innerHTML = '';
+            const words = text.split(' ');
+            words.forEach((word, index) => {
+                const span = document.createElement('span');
+                span.className = 'fade-word mx-1';
+                span.style.animationDelay = `${delayOffset + (index * 0.08)}s`;
+                span.textContent = word;
+                container.appendChild(span);
+            });
+        }
+
+        function loadDailyVerse() {
+            const now = new Date();
+            const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+            const selected = dailyVerses[dayOfYear % dailyVerses.length];
+            animateTextWordByWord('daily-verse', selected.text, 0);
+            const refEl = document.getElementById('daily-verse-ref');
+            if (refEl) {
+                refEl.style.opacity = '0';
+                refEl.textContent = selected.ref;
+                setTimeout(() => { refEl.style.opacity = '1'; }, (selected.text.split(' ').length * 80) + 200);
+            }
+            setTimeout(() => { animateTextWordByWord('welcome-message', welcomeText, 0.2); }, 500);
+        }
+
+        function initHomeAnimations() { loadDailyVerse(); }
+        function toggleMobileMenu() { document.getElementById('mobile-sidebar').classList.toggle('hidden'); }
+
+        let activePage = 'home';
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.remove('hidden');
+                activePage = pageId;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (pageId === 'home') { loadDailyVerse(); }
+            }
+        }
+
+        async function sendEmailViaSupabase(fromName, messageText, subjectTitle) {
+            try {
+                await supabaseClient.functions.invoke('send-email', {
+                    body: { from_name: fromName, message: messageText, subject: subjectTitle }
+                });
+            } catch (err) { console.error('فشل الاتصال:', err); }
+        }
+
+        const sampleQuestions = {
+            'bible-6': [
+                { q: 'كان يونان يعيش في أرض مصر', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'أرسل الله دودة لتأكل الشجرة', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'أرسل الله يونان ليذهب إلي مدينة ترشيش', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'كانت مدينة ترشيش أكبر وأقوي مدينة في العالم', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'غضب يونان من الله وقال: خُذ نفسي مني لأن حياتي خير من موتي', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'يونان لم يسمع كلام الله، وهرب إلي مدينة نينوي', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة خاطئة' },
+                { q: 'أرسل الله رياح وعاصفة شديدة علي البحر', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'أخبر يونان البحارة بأنه هربان من الله ولم يسمع لكلامه', type: 'tf', options: ['العبارة صحيحة', 'العبارة خاطئة'], correct: 'العبارة صحيحة' },
+                { q: 'أخبر الله يونان النبي بأن يذهب إلي مدينة:', type: 'mcq', options: ['ترشيش', 'نينوي', 'أورشليم'], correct: 'نينوي' },
+                { q: 'ماذا فعلوا البحارة ليهدأ البحر عنهم؟', type: 'mcq', options: ['ألقوا الأشياء التي كانت معهم في البحر', 'ألقوا يونان في البحر', 'الإثنين معاً'], correct: 'الإثنين معاً' },
+                { q: 'ارسل الله ليونان:', type: 'mcq', options: ['دولفين', 'سمكة قرش', 'حوت'], correct: 'حوت' },
+                { q: 'كم يوم مكث يونان في بطن الحوت؟', type: 'mcq', options: ['5 أيام', '6 أيام', '3 أيام'], correct: '3 أيام' },
+                { q: 'أخبر الله يونان بأن المدينة ستنقلب بعد كام يوم؟', type: 'mcq', options: ['50 يوم', '3 أيام', '40 يوم'], correct: '40 يوم' },
+                { q: 'أطاع يونان كلام الله في المرة:', type: 'mcq', options: ['الأولي', 'الثانية', 'الثالثة'], correct: 'الثانية' },
+                { q: 'صام أهل نينوي وصلوا ولبسوا:', type: 'mcq', options: ['حرير', 'صوف', 'خيش'], correct: 'خيش' }
+            ]
+        };
+
+        let currentQuizData = [];
+        let currentQuestionIndex = 0;
+        let studentAnswers = {};
+        let studentName = '';
+
+        function startQuiz() {
+            const nameInput = document.getElementById('quiz-student-name').value.trim();
+            if (!nameInput) { alert('الرجاء إدخال اسم الطالب ثلاثياً أولاً.'); return; }
+            studentName = nameInput;
+            const subject = document.getElementById('quiz-subject').value;
+            const classVal = document.getElementById('quiz-class').value;
+            const key = subject + '-' + classVal;
+            if (sampleQuestions[key]) {
+                currentQuizData = sampleQuestions[key];
+                currentQuestionIndex = 0;
+                studentAnswers = {};
+                document.getElementById('quiz-setup-section').classList.add('hidden');
+                document.getElementById('quiz-notice-section').classList.add('hidden');
+                document.getElementById('quiz-questions-section').classList.remove('hidden');
+                document.getElementById('quiz-result-section').classList.add('hidden');
+                document.getElementById('total-q-num').textContent = currentQuizData.length;
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-setup-section').classList.add('hidden');
+                document.getElementById('quiz-questions-section').classList.add('hidden');
+                document.getElementById('quiz-result-section').classList.add('hidden');
+                document.getElementById('quiz-notice-section').classList.remove('hidden');
+            }
+        }
+
+        function loadQuestion() {
+            const q = currentQuizData[currentQuestionIndex];
+            document.getElementById('current-q-num').textContent = currentQuestionIndex + 1;
+            document.getElementById('question-text').textContent = q.q;
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt) => {
+                const isSelected = studentAnswers[currentQuestionIndex] === opt;
+                optionsContainer.innerHTML += `
+                    <label class="flex items-center gap-3 p-4 bg-white border ${isSelected ? 'border-coptic-gold bg-amber-50/50' : 'border-slate-200'} rounded-xl cursor-pointer hover:bg-slate-100 transition">
+                        <input type="radio" name="q-option" value="${opt}" ${isSelected ? 'checked' : ''} onchange="saveAnswer('${opt}')" class="w-4 h-4 text-coptic-navy focus:ring-coptic-gold">
+                        <span class="font-bold text-slate-700 text-base">${opt}</span>
+                    </label>
+                `;
+            });
+            document.getElementById('prev-btn').classList.toggle('hidden', currentQuestionIndex === 0);
+            const nextBtn = document.getElementById('next-btn');
+            if (currentQuestionIndex === currentQuizData.length - 1) {
+                nextBtn.textContent = 'إنهاء وإرسال النتيجة';
+                nextBtn.onclick = finishQuiz;
+            } else {
+                nextBtn.textContent = 'التالي';
+                nextBtn.onclick = nextQuestion;
+            }
+        }
+
+        function saveAnswer(answer) { studentAnswers[currentQuestionIndex] = answer; }
+        function nextQuestion() {
+            if (studentAnswers[currentQuestionIndex] === undefined) { alert('الرجاء اختيار إجابة على السؤال الحالي.'); return; }
+            if (currentQuestionIndex < currentQuizData.length - 1) { currentQuestionIndex++; loadQuestion(); }
+        }
+        function prevQuestion() { if (currentQuestionIndex > 0) { currentQuestionIndex--; loadQuestion(); } }
+
+        async function finishQuiz() {
+            if (studentAnswers[currentQuestionIndex] === undefined) { alert('الرجاء اختيار إجابة على السؤال الحالي.'); return; }
+            let score = 0;
+            let wrongQuestionsHTML = '';
+            let emailDetails = '';
+            currentQuizData.forEach((q, idx) => {
+                const studentAns = studentAnswers[idx] || 'لم تقم بالإجابة';
+                if (studentAns === q.correct) { score++; }
+                else {
+                    wrongQuestionsHTML += `<div class="bg-rose-50 border border-rose-200 p-4 rounded-xl space-y-2"><p class="font-bold text-slate-800 text-sm">السؤال: ${q.q}</p><p class="text-rose-600 text-xs font-semibold">إجابتك: ${studentAns}</p><p class="text-emerald-700 text-xs font-bold">الإجابة الصحيحة: ${q.correct}</p></div>`;
+                    emailDetails += `- السؤال: ${q.q}\n  إجابة الطالب: ${studentAns} (خطأ)\n  الإجابة الصحيحة: ${q.correct}\n\n`;
+                }
+            });
+            const examName = 'الكتاب المقدس - الصف السادس (الدرس الأول: يونان النبي)';
+            try {
+                await supabaseClient.from('quiz_results').insert([{ student_name: studentName, score: score, total: currentQuizData.length, subject: examName }]);
+            } catch (err) { console.error(err); }
+            sendEmailViaSupabase(studentName, `الطالب: ${studentName}\nامتحان: ${examName}\nالدرجة: ${score} من ${currentQuizData.length}\n\nالأخطاء:\n${emailDetails || 'درجة نهائية كاملة!'}`, `نتيجة اختبار: ${studentName}`);
+            document.getElementById('quiz-questions-section').classList.add('hidden');
+            document.getElementById('quiz-result-section').classList.remove('hidden');
+            document.getElementById('result-student-name').textContent = studentName;
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('total-score').textContent = currentQuizData.length;
+            document.getElementById('wrong-answers-container').innerHTML = wrongQuestionsHTML || '<div class="bg-emerald-50 text-emerald-700 p-4 rounded-xl font-bold text-center">ممتاز جداً! إجابات صحيحة بالكامل.</div>';
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-setup-section').classList.remove('hidden');
+            document.getElementById('quiz-result-section').classList.add('hidden');
+            document.getElementById('quiz-notice-section').classList.add('hidden');
+            document.getElementById('quiz-student-name').value = '';
+        }
+
+        async function submitSuggestion(event) {
+            event.preventDefault();
+            const name = document.getElementById('suggestion-name').value.trim();
+            const text = document.getElementById('suggestion-text').value.trim();
+            const alertBox = document.getElementById('suggestion-alert');
+            if (!name || !text) return;
+            try {
+                await supabaseClient.from('suggestions').insert([{ name: name, suggestion: text }]);
+                sendEmailViaSupabase(name, text, `اقتراح جديد من: ${name}`);
+                alertBox.classList.remove('hidden');
+                document.getElementById('suggestion-form').reset();
+                setTimeout(() => { alertBox.classList.add('hidden'); }, 5000);
+            } catch (err) { console.error(err); }
+        }
+    </script>
+</body>
+</html>
