@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كنيستنا - كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coptic: {
+                            gold: '#D4AF37',
+                            darkGold: '#AA7C11',
+                            navy: '#0F172A',
+                            sky: '#0284C7',
+                            burgundy: '#800020',
+                            cream: '#FBF9F5'
+                        }
+                    },
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #FBF9F5; text-align: center; }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .fade-word {
+            opacity: 0;
+            transform: translateY(10px);
+            display: inline-block;
+            animation: fadeInWord 0.5s forwards;
+        }
+        @keyframes fadeInWord {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-coptic-cream text-slate-800 font-cairo antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-coptic-navy text-white shadow-xl sticky top-0 z-50 border-b-2 border-coptic-gold">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center border-b border-amber-500/20 gap-2">
+            <div class="flex items-center justify-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-full bg-coptic-gold/20 flex items-center justify-center border border-coptic-gold">
+                    <i class="fa-solid fa-cross text-coptic-gold text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-white leading-tight">مدرسة التسبيح</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="text-center text-xs md:text-sm text-amber-100 font-semibold flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-full border border-coptic-gold/40">
+                    <i class="fa-solid fa-church text-coptic-gold"></i>
+                    <span>كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</span>
+                </div>
+                <a href="servant.html" class="bg-coptic-gold text-coptic-navy border border-coptic-gold px-3 py-1.5 rounded-xl text-xs font-extrabold hover:bg-amber-400 transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>بوابة الخادم</span>
+                </a>
+            </div>
+        </div>
+
+        <nav class="max-w-7xl mx-auto px-4">
+            <ul class="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm font-semibold py-2">
+                <li><a href="index.html" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 block">الرئيسية</a></li>
+                <li><a href="church.html" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg bg-coptic-gold text-coptic-navy transition duration-200 block font-bold">كنيستنا</a></li>
+                <li><a href="results.html" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 block">نتائج الطلاب</a></li>
+                <li><a href="index.html#publications" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 block">الإصدارات</a></li>
+                <li><a href="index.html#contact" class="px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg hover:bg-coptic-gold hover:text-coptic-navy transition duration-200 block">التواصل والاقتراحات</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-12 text-right space-y-16">
+        
+        <!-- قسم تاريخ الكنيسة -->
+        <section id="church-history" class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 space-y-6">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-coptic-gold/20 text-coptic-darkGold rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner border border-coptic-gold"><i class="fa-solid fa-church"></i></div>
+                <h3 class="text-3xl font-bold text-coptic-navy mb-2">تاريخ كنيسة الشهيد العظيم مارمرقس ببني صامت</h3>
+            </div>
+            <div class="prose max-w-none text-slate-700 leading-relaxed space-y-4">
+                <p>تعتبر كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت منارة روحية مباركة تخدم أبناء القرية والمنطقة المحيطة، حيث تقام الصلوات والقداسات الإلهية وخدمات مدارس الأحد ومدرسة التسبيح بانتظام لتربية النشء في مخافة الرب.</p>
+                <p>تأسست الخدمة وتطورت عبر السنين لتشمل العديد من الأنشطة الروحية والتعليمية والطقسية، مستظلة بشفاعة مارمرقس الرسول وقديسي الكنيسة الأجلاء.</p>
+            </div>
+        </section>
+
+        <!-- قسم القمص إبراهيم البسيط -->
+        <section id="ebrahim" class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-coptic-navy mb-2">القُمُّص إبراهيم البسيط</h3>
+                <p class="text-slate-600">سيرة عطرة، معجزات، وتعاليم مباركة</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition border-t-4 border-coptic-navy flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-navy text-coptic-gold rounded-xl flex items-center justify-center mb-4 text-xl shadow border border-coptic-gold/30"><i class="fa-solid fa-book-open"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">من بساطة الحياة إلي معني المواطنة</h4>
+                        <p class="text-slate-500 text-sm mb-6">قراءة كتاب من بساطة الحياة إلى معنى المواطنة للقمص إبراهيم البسيط.</p>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1dbHbiXeem4zGEji47271M0fpGeAhoKVi/preview" target="_blank" class="w-full bg-coptic-navy text-coptic-gold font-bold py-3 rounded-xl hover:bg-slate-800 transition text-sm border border-coptic-gold/30 text-center block">قراءة الملف أونلاين</a>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition border-t-4 border-coptic-gold flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-gold text-coptic-navy rounded-xl flex items-center justify-center mb-4 text-xl shadow"><i class="fa-solid fa-landmark"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">من مدرسة البساطة نتعلم</h4>
+                        <p class="text-slate-500 text-sm mb-6">قراءة كتاب من مدرسة البساطة نتعلم للقمص إبراهيم البسيط.</p>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1O0vXvdqxVJqlubg2f8tZVrGICZ0-T1hb/preview" target="_blank" class="w-full bg-coptic-gold text-coptic-navy font-bold py-3 rounded-xl hover:bg-coptic-darkGold hover:text-white transition text-sm text-center block">قراءة الملف أونلاين</a>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition border-t-4 border-coptic-burgundy flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-coptic-burgundy text-white rounded-xl flex items-center justify-center mb-4 text-xl shadow"><i class="fa-solid fa-scroll"></i></div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">رجل البساطة وعمل النعمة</h4>
+                        <p class="text-slate-500 text-sm mb-6">قراءة كتاب رجل البساطة وعمل النعمة للقمص إبراهيم البسيط.</p>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1vL3DjpooqOahDKmYM0z-MR2FjGbJD_d0/preview" target="_blank" class="w-full bg-coptic-burgundy text-white font-bold py-3 rounded-xl hover:opacity-90 transition text-sm text-center block">قراءة الملف أونلاين</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الآباء الكهنة -->
+        <section id="fathers" class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200">
+            <div class="text-center mb-10">
+                <div class="w-16 h-16 bg-coptic-gold/20 text-coptic-darkGold rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner border border-coptic-gold"><i class="fa-solid fa-cross"></i></div>
+                <h3 class="text-3xl font-extrabold text-coptic-navy mb-2">الآباء كهنة الكنيسة الأجلاء</h3>
+                <p class="text-slate-600">رعاة الكنيسة والمحبة وقادة الخدمة الروحية ببني صامت</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div onclick="openFatherModal('القُمُّص موسى أنسوفيروس', ['تاريخ الميلاد: 25 ديسمبر 1968م', 'المؤهل: ليسانس الحقوق 1993م', 'الكلية الإكليريكية: بكالوريوس امتياز 1999م', 'تاريخ الرسامة: 25 نوفمبر 2001م', 'درجة القمصية: 12 أكتوبر 2010م', 'حاصل على الماجستير والدكتوراه بتقدير امتياز مع مرتبة الشرف.'])" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center cursor-pointer shadow hover:shadow-xl transition border-t-4 border-coptic-navy">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-coptic-gold shadow-md">
+                        <img src="https://i.ibb.co/8Lg2C9t4/01.png" alt="القمص موسى" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-extrabold text-xl text-coptic-navy mb-2">القُمُّص موسي أنسوفيروس</h4>
+                    <p class="text-xs text-coptic-navy font-bold">اضغط لقراءة السيرة الذاتية</p>
+                </div>
+
+                <div onclick="openFatherModal('القس أنسطاسي ملاك', ['تاريخ الميلاد: 22 يناير 1987م', 'المؤهل: ليسانس آداب 2010م', 'الإكليريكية: فرع المنيا بتقدير جيد جداً', 'تاريخ الرسامة: 28 أبريل 2012م', 'له عدة مؤلفات لاهوتية وطقسية ورعوية.'])" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center cursor-pointer shadow hover:shadow-xl transition border-t-4 border-coptic-gold">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-coptic-gold shadow-md">
+                        <img src="https://i.ibb.co/8gby93zH/an.png" alt="القس أنسطاسي" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-extrabold text-xl text-coptic-darkGold mb-2">القس أنسطاسي ملاك</h4>
+                    <p class="text-xs text-coptic-darkGold font-bold">اضغط لقراءة السيرة الذاتية</p>
+                </div>
+
+                <div onclick="openFatherModal('القس كاراس سمير', ['تاريخ الميلاد: 20 فبراير 1987م', 'المؤهل: ليسانس آداب لغة إنجليزية 2008م', 'الإكليريكية: الأنبا رويس بتقدير عام امتياز 2014م', 'تاريخ الرسامة: 18 يوليو 2016م', 'بدء الخدمة ببني صامت: 14 نوفمبر 2017م.'])" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center cursor-pointer shadow hover:shadow-xl transition border-t-4 border-coptic-burgundy">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-coptic-gold shadow-md">
+                        <img src="https://i.ibb.co/wrQSDx1V/03.png" alt="القس كاراس" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-extrabold text-xl text-coptic-burgundy mb-2">القس كاراس سمير</h4>
+                    <p class="text-xs text-coptic-burgundy font-bold">اضغط لقراءة السيرة الذاتية</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal الآباء الكهنة -->
+    <div id="father-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-8 text-right shadow-2xl relative">
+            <button onclick="closeFatherModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700 text-2xl font-bold"><i class="fa-solid fa-xmark"></i></button>
+            <h4 id="modal-title" class="text-2xl font-extrabold text-coptic-navy mb-4"></h4>
+            <ul id="modal-points-container" class="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-6 text-sm"></ul>
+            <button onclick="closeFatherModal()" class="w-full bg-coptic-navy text-coptic-gold font-bold py-3 rounded-xl">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-coptic-navy text-slate-200 py-8 px-4 border-t-2 border-coptic-gold mt-12 text-center">
+        <p class="text-coptic-gold font-bold text-lg">كنيسة الشهيد العظيم مارمرقس الرسول ببني صامت</p>
+        <p class="text-xs text-slate-400">جميع الحقوق محفوظة © 2026 - مدرسة التسبيح</p>
+    </footer>
+
+    <script>
+        function openFatherModal(name, pointsArray) {
+            document.getElementById('modal-title').textContent = name;
+            const container = document.getElementById('modal-points-container');
+            container.innerHTML = pointsArray.map(pt => `<li class="flex items-center gap-2 text-slate-700"><i class="fa-solid fa-circle-check text-coptic-gold"></i><span>${pt}</span></li>`).join('');
+            document.getElementById('father-modal').classList.remove('hidden');
+        }
+        function closeFatherModal() {
+            document.getElementById('father-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
